@@ -3,6 +3,7 @@ using UnityEngine;
 public class SceneView : MonoBehaviour
 {
     public MouseInputView MouseInput { get; private set; }
+    public TapInputView TapInputView { get; private set; }
 
     public void Initialize ()
     {
@@ -14,5 +15,9 @@ public class SceneView : MonoBehaviour
         GameObject mouseInput = new("MouseInput");
         mouseInput.transform.SetParent(transform);
         MouseInput = mouseInput.AddComponent<MouseInputView>();
+
+        GameObject touchInput = new("TouchInputView");
+        touchInput.transform.SetParent(transform);
+        TapInputView = touchInput.AddComponent<TapInputView>();
     }
 }

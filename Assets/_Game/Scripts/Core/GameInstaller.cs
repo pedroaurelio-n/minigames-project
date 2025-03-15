@@ -45,14 +45,18 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_gameUIView);
         builder.RegisterInstance(_sceneView);
         builder.RegisterInstance(_sceneView.MouseInput);
+        builder.RegisterInstance(_sceneView.TapInputView);
         builder.RegisterInstance(_uiViewFactory);
 
-        builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Scoped);
+        //TODO pedro: delete mouse input classes
+        // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Scoped);
+        builder.Register<ITouchInputModel, TouchInputModel>(Lifetime.Scoped);
         
         builder.Register<ISceneChangerModel, SceneChangerModel>(Lifetime.Scoped);
         builder.Register<IGameModel, GameModel>(Lifetime.Scoped);
 
-        builder.Register<MouseInputController>(Lifetime.Scoped);
+        // builder.Register<MouseInputController>(Lifetime.Scoped);
+        builder.Register<TouchInputController>(Lifetime.Scoped);
         
         builder.Register<SceneChangerUIController>(Lifetime.Scoped);
         builder.Register<GameController>(Lifetime.Scoped);

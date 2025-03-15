@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameGlobalOptions", menuName = "GameGlobalOptions")]
@@ -8,6 +6,7 @@ public class GameGlobalOptions : ScriptableObject
 {
     [field: SerializeField] public LayerMasksOptions LayerMasks { get; private set; }
     [field: SerializeField] public FadeTransitionOptions FadeTransition { get; private set; }
+    [field: SerializeField] public TapInputOptions TapInputOptions { get; private set; }
 
     public static GameGlobalOptions Instance
     {
@@ -37,4 +36,11 @@ public class LayerMasksOptions
 public class FadeTransitionOptions
 {
     [field: SerializeField] public float FadeDuration { get; private set; } = 0.8f;
+}
+
+[Serializable]
+public class TapInputOptions
+{
+    [field: SerializeField] public float TapTimeThreshold { get; private set; }
+    [field: SerializeField] public float TapMovementThreshold { get; private set; }
 }
