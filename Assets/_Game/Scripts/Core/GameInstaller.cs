@@ -46,6 +46,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_sceneView);
         builder.RegisterInstance(_sceneView.MouseInput);
         builder.RegisterInstance(_sceneView.TapInputView);
+        builder.RegisterInstance(_sceneView.SwipeInputView);
         builder.RegisterInstance(_uiViewFactory);
 
         //TODO pedro: delete mouse input classes

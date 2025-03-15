@@ -7,6 +7,7 @@ public class GameGlobalOptions : ScriptableObject
     [field: SerializeField] public LayerMasksOptions LayerMasks { get; private set; }
     [field: SerializeField] public FadeTransitionOptions FadeTransition { get; private set; }
     [field: SerializeField] public TapInputOptions TapInputOptions { get; private set; }
+    [field: SerializeField] public SwipeInputOptions SwipeInputOptions { get; private set; }
 
     public static GameGlobalOptions Instance
     {
@@ -35,12 +36,20 @@ public class LayerMasksOptions
 [Serializable]
 public class FadeTransitionOptions
 {
-    [field: SerializeField] public float FadeDuration { get; private set; } = 0.8f;
+    [field: SerializeField] public float Duration { get; private set; } = 0.8f;
 }
 
 [Serializable]
 public class TapInputOptions
 {
-    [field: SerializeField] public float TapTimeThreshold { get; private set; }
-    [field: SerializeField] public float TapMovementThreshold { get; private set; }
+    [field: SerializeField] public float TimeThreshold { get; private set; }
+    [field: SerializeField] public float MovementThreshold { get; private set; }
+}
+
+[Serializable]
+public class SwipeInputOptions
+{
+    [field: SerializeField] public float TimeThreshold { get; private set; }
+    [field: SerializeField] public float MovementThreshold { get; private set; }
+    [field: SerializeField] public float DiagonalThreshold { get; private set; }
 }

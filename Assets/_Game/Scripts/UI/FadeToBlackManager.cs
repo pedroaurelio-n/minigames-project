@@ -10,14 +10,14 @@ public class FadeToBlackManager : MonoBehaviour
     
     public void FadeIn (Action completeCallback)
     {
-        DOTween.To(() => fadeToBlackObject.alpha, x => fadeToBlackObject.alpha = x, 1, Options.FadeDuration)
+        DOTween.To(() => fadeToBlackObject.alpha, x => fadeToBlackObject.alpha = x, 1, Options.Duration)
             .OnComplete(() => completeCallback?.Invoke());
     }
     
     public void FadeOut (Action completeCallback)
     {
         fadeToBlackObject.alpha = 1;
-        DOTween.To(() => fadeToBlackObject.alpha, x => fadeToBlackObject.alpha = x, 0, Options.FadeDuration)
+        DOTween.To(() => fadeToBlackObject.alpha, x => fadeToBlackObject.alpha = x, 0, Options.Duration)
             .OnComplete(() => completeCallback?.Invoke());
     }
 }

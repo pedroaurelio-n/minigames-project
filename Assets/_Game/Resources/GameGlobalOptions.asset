@@ -15,9 +15,13 @@ MonoBehaviour:
   <LayerMasks>k__BackingField:
     <InteractableLayers>k__BackingField:
       serializedVersion: 2
-      m_Bits: 64
+      m_Bits: 0
   <FadeTransition>k__BackingField:
-    <FadeDuration>k__BackingField: 0.8
+    <Duration>k__BackingField: 0.8
   <TapInputOptions>k__BackingField:
-    <TapTimeThreshold>k__BackingField: 0.3
-    <TapMovementThreshold>k__BackingField: 15
+    <TimeThreshold>k__BackingField: 0.3
+    <MovementThreshold>k__BackingField: 15
+  <SwipeInputOptions>k__BackingField:
+    <TimeThreshold>k__BackingField: 1
+    <MovementThreshold>k__BackingField: 100
+    <DiagonalThreshold>k__BackingField: 0.5
