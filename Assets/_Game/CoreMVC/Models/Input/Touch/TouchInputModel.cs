@@ -2,6 +2,8 @@
 
 public class TouchInputModel : ITouchInputModel
 {
+    public bool LongPressStarted { get; private set; }
+    
     readonly IPhysicsProvider _physicsProvider;
     readonly LayerMasksOptions _options;
     
@@ -44,5 +46,23 @@ public class TouchInputModel : ITouchInputModel
                         : "Down Left swipe"
             );
         }
+    }
+
+    public void StartLongPress (Vector2 position)
+    {
+        LongPressStarted = true;
+        Debug.Log($"Long press started at: {position}");
+    }
+    
+    public void EndLongPress (Vector2 position)
+    {
+        LongPressStarted = false;
+        Debug.Log($"Long press finished at: {position}");
+    }
+
+    public void CancelLongPress (Vector2 position)
+    {
+        LongPressStarted = false;
+        Debug.Log($"Long press cancelled at: {position}");
     }
 }

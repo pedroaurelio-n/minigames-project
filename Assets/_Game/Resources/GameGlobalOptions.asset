@@ -19,9 +19,13 @@ MonoBehaviour:
   <FadeTransition>k__BackingField:
     <Duration>k__BackingField: 0.8
   <TapInputOptions>k__BackingField:
-    <TimeThreshold>k__BackingField: 0.3
-    <MovementThreshold>k__BackingField: 15
+    <MaxTimeThreshold>k__BackingField: 0.3
+    <MaxMovementThreshold>k__BackingField: 15
   <SwipeInputOptions>k__BackingField:
-    <TimeThreshold>k__BackingField: 1
-    <MovementThreshold>k__BackingField: 100
+    <MaxTimeThreshold>k__BackingField: 1.25
+    <MinMovementThreshold>k__BackingField: 100
     <DiagonalThreshold>k__BackingField: 0.5
+  <LongPressInputOptions>k__BackingField:
+    <MinTimeThreshold>k__BackingField: 1
+    <MaxMovementStartThreshold>k__BackingField: 25
+    <MaxMovementCancelThreshold>k__BackingField: 100

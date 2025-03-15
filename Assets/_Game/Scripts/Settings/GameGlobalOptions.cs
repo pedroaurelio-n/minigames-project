@@ -8,6 +8,7 @@ public class GameGlobalOptions : ScriptableObject
     [field: SerializeField] public FadeTransitionOptions FadeTransition { get; private set; }
     [field: SerializeField] public TapInputOptions TapInputOptions { get; private set; }
     [field: SerializeField] public SwipeInputOptions SwipeInputOptions { get; private set; }
+    [field: SerializeField] public LongPressInputOptions LongPressInputOptions { get; private set; }
 
     public static GameGlobalOptions Instance
     {
@@ -42,14 +43,22 @@ public class FadeTransitionOptions
 [Serializable]
 public class TapInputOptions
 {
-    [field: SerializeField] public float TimeThreshold { get; private set; }
-    [field: SerializeField] public float MovementThreshold { get; private set; }
+    [field: SerializeField] public float MaxTimeThreshold { get; private set; }
+    [field: SerializeField] public float MaxMovementThreshold { get; private set; }
 }
 
 [Serializable]
 public class SwipeInputOptions
 {
-    [field: SerializeField] public float TimeThreshold { get; private set; }
-    [field: SerializeField] public float MovementThreshold { get; private set; }
+    [field: SerializeField] public float MaxTimeThreshold { get; private set; }
+    [field: SerializeField] public float MinMovementThreshold { get; private set; }
     [field: SerializeField] public float DiagonalThreshold { get; private set; }
+}
+
+[Serializable]
+public class LongPressInputOptions
+{
+    [field: SerializeField] public float MinTimeThreshold { get; private set; }
+    [field: SerializeField] public float MaxMovementStartThreshold { get; private set; }
+    [field: SerializeField] public float MaxMovementCancelThreshold { get; private set; }
 }
