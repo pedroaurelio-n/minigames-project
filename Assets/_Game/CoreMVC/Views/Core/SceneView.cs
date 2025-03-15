@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SceneView : MonoBehaviour
 {
-    [field: SerializeField] public Transform CardContainer { get; private set; }
-
     public MouseInputView MouseInput { get; private set; }
 
     public void Initialize ()
