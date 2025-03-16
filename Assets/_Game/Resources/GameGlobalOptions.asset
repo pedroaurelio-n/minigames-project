@@ -29,3 +29,5 @@ MonoBehaviour:
     <MinTimeThreshold>k__BackingField: 1
     <MaxMovementStartThreshold>k__BackingField: 25
     <MaxMovementCancelThreshold>k__BackingField: 100
+  <TwoPointMoveInputOptions>k__BackingField:
+    <MoveSpeed>k__BackingField: 10

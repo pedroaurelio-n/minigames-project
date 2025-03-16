@@ -6,36 +6,44 @@ public class TouchInputController
     readonly TapInputView _tapInputView;
     readonly SwipeInputView _swipeInputView;
     readonly LongPressInputView _longPressInputView;
+    readonly TwoPointMoveInputView _twoPointMoveInputView;
     
     readonly TapInputOptions _tapInputOptions;
     readonly SwipeInputOptions _swipeInputOptions;
     readonly LongPressInputOptions _longPressInputOptions;
+    readonly TwoPointMoveInputOptions _twoPointMoveInputOptions;
     
-    float _startTapTime;
-    Vector2 _startTapPosition;
+    float _tapStartTime;
+    Vector2 _tapStartPosition;
 
-    float _startSwipeTime;
-    Vector2 _startSwipePosition;
+    float _swipeStartTime;
+    Vector2 _swipeStartPosition;
     
-    float _startLongPressTime;
-    Vector2 _startLongPressPosition;
+    float _longPressStartTime;
+    Vector2 _longPressStartPosition;
     bool _longPressCancelled;
+
+    bool _twoPointMoveStarted;
+    Vector2 _twoPointMoveStartPosition;
     
     public TouchInputController (
         ITouchInputModel touchInputModel,
         TapInputView tapInputView,
         SwipeInputView swipeInputView,
-        LongPressInputView longPressInputView
+        LongPressInputView longPressInputView,
+        TwoPointMoveInputView twoPointMoveInputView
     )
     {
         _touchInputModel = touchInputModel;
         _tapInputView = tapInputView;
         _swipeInputView = swipeInputView;
         _longPressInputView = longPressInputView;
+        _twoPointMoveInputView = twoPointMoveInputView;
 
         _tapInputOptions = GameGlobalOptions.Instance.TapInputOptions;
         _swipeInputOptions = GameGlobalOptions.Instance.SwipeInputOptions;
         _longPressInputOptions = GameGlobalOptions.Instance.LongPressInputOptions;
+        _twoPointMoveInputOptions = GameGlobalOptions.Instance.TwoPointMoveInputOptions;
     }
 
     public void Initialize ()
@@ -54,6 +62,8 @@ public class TouchInputController
         _longPressInputView.OnLongPressBegan += HandleLongPressBegan;
         _longPressInputView.OnLongPressUpdated += HandleLongPressUpdated;
         _longPressInputView.OnLongPressEnded += HandleLongPressEnded;
+
+        _twoPointMoveInputView.OnTwoPointMoveUpdated += HandleTwoPointMoveUpdated;
     }
 
     void RemoveListeners ()
@@ -63,14 +73,14 @@ public class TouchInputController
 
     void HandleTapBegan (Touch touch)
     {
-        _startTapTime = Time.time;
-        _startTapPosition = touch.position;
+        _tapStartTime = Time.time;
+        _tapStartPosition = touch.position;
     }
 
     void HandleTapEnded (Touch touch)
     {
-        float duration = Time.time - _startTapTime;
-        float distanceSquared = (touch.position - _startTapPosition).sqrMagnitude;
+        float duration = Time.time - _tapStartTime;
+        float distanceSquared = (touch.position - _tapStartPosition).sqrMagnitude;
 
         if (duration > _tapInputOptions.MaxTimeThreshold
             || distanceSquared > _tapInputOptions.MaxMovementThreshold * _tapInputOptions.MaxMovementThreshold)
@@ -81,15 +91,15 @@ public class TouchInputController
 
     void HandleSwipeBegan (Touch touch)
     {
-        _startSwipeTime = Time.time;
-        _startSwipePosition = touch.position;
+        _swipeStartTime = Time.time;
+        _swipeStartPosition = touch.position;
     }
 
     void HandleSwipeEnded (Touch touch)
     {
-        float duration = Time.time - _startSwipeTime;
+        float duration = Time.time - _swipeStartTime;
         Vector2 endPosition = touch.position;
-        Vector2 delta = endPosition - _startSwipePosition;
+        Vector2 delta = endPosition - _swipeStartPosition;
 
         if (duration > _swipeInputOptions.MaxTimeThreshold
             || delta.sqrMagnitude < _swipeInputOptions.MinMovementThreshold * _swipeInputOptions.MinMovementThreshold)
@@ -100,14 +110,14 @@ public class TouchInputController
     
     void HandleLongPressBegan (Touch touch)
     {
-        _startLongPressTime = Time.time;
-        _startLongPressPosition = touch.position;
+        _longPressStartTime = Time.time;
+        _longPressStartPosition = touch.position;
         _longPressCancelled = false;
     }
     
     void HandleLongPressUpdated (Touch touch)
     {
-        float distanceSquared = (touch.position - _startLongPressPosition).sqrMagnitude;
+        float distanceSquared = (touch.position - _longPressStartPosition).sqrMagnitude;
 
         if (_touchInputModel.LongPressStarted)
         {
@@ -120,7 +130,7 @@ public class TouchInputController
             return;
         }
         
-        float duration = Time.time - _startLongPressTime;
+        float duration = Time.time - _longPressStartTime;
         if (duration < _longPressInputOptions.MinTimeThreshold
             || distanceSquared > _longPressInputOptions.MaxMovementStartThreshold
             * _longPressInputOptions.MaxMovementStartThreshold)
@@ -134,7 +144,7 @@ public class TouchInputController
         if (_longPressCancelled)
             return;
         
-        float duration = Time.time - _startLongPressTime;
+        float duration = Time.time - _longPressStartTime;
         if (duration < _longPressInputOptions.MinTimeThreshold)
             return;
         
@@ -144,11 +154,41 @@ public class TouchInputController
             return;
         }
 
-        float distanceSquared = (touch.position - _startLongPressPosition).sqrMagnitude;
+        float distanceSquared = (touch.position - _longPressStartPosition).sqrMagnitude;
         if (distanceSquared > _longPressInputOptions.MaxMovementCancelThreshold
             * _longPressInputOptions.MaxMovementCancelThreshold)
             return;
 
         _touchInputModel.EndLongPress(touch.position);
+    }
+
+    void HandleTwoPointMoveUpdated (Touch touch1, Touch touch2)
+    {
+        bool touch1Active = touch1.phase is TouchPhase.Began or TouchPhase.Moved or TouchPhase.Stationary;
+        bool touch2Active = touch2.phase is TouchPhase.Began or TouchPhase.Moved or TouchPhase.Stationary;
+
+        if (!_twoPointMoveStarted)
+        {
+            if ((touch1.phase == TouchPhase.Began && touch2Active) ||
+                (touch2.phase == TouchPhase.Began && touch1Active))
+            {
+                _twoPointMoveStarted = true;
+                _twoPointMoveStartPosition = (touch1.position + touch2.position) * 0.5f;
+                _touchInputModel.StartTwoPointMove(_twoPointMoveStartPosition);
+            }
+            
+            return;
+        }
+        
+        if (touch1.phase == TouchPhase.Ended || touch2.phase == TouchPhase.Ended)
+        {
+            _twoPointMoveStarted = false;
+            return;
+        }
+        
+        Vector2 middlePosition = (touch1.position + touch2.position) * 0.5f;
+        Vector2 delta = middlePosition - _twoPointMoveStartPosition;
+        _touchInputModel.PerformTwoPointMove(_twoPointMoveInputOptions.MoveSpeed * Time.deltaTime * delta / Screen.dpi);
+        _twoPointMoveStartPosition = middlePosition;
     }
 }

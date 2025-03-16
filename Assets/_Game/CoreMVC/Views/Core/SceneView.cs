@@ -6,6 +6,7 @@ public class SceneView : MonoBehaviour
     public TapInputView TapInputView { get; private set; }
     public SwipeInputView SwipeInputView { get; private set; }
     public LongPressInputView LongPressInputView { get; private set; }
+    public TwoPointMoveInputView TwoPointMoveInputView { get; private set; }
 
     public void Initialize ()
     {
@@ -23,5 +24,6 @@ public class SceneView : MonoBehaviour
         TapInputView = touchInput.AddComponent<TapInputView>();
         SwipeInputView = touchInput.AddComponent<SwipeInputView>();
         LongPressInputView = touchInput.AddComponent<LongPressInputView>();
+        TwoPointMoveInputView = touchInput.AddComponent<TwoPointMoveInputView>();
     }
 }

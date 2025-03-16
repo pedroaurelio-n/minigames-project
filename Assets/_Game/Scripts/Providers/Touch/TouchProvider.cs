@@ -44,6 +44,15 @@ public class TouchProvider
 #endif
     }
     
+    public static Touch GetSecondTouch ()
+    {
+#if UNITY_EDITOR
+        return GetTouches()[1];
+#else
+        return Input.GetTouch(1);
+#endif
+    }
+    
     public static int GetTouchCount ()
     {
 #if UNITY_EDITOR

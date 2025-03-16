@@ -65,4 +65,14 @@ public class TouchInputModel : ITouchInputModel
         LongPressStarted = false;
         Debug.Log($"Long press cancelled at: {position}");
     }
+
+    public void StartTwoPointMove (Vector2 middlePosition)
+    {
+        Debug.Log($"Two point started with middle: {middlePosition}");
+    }
+
+    public void PerformTwoPointMove (Vector2 deltaPosition)
+    {
+        Debug.Log($"Two point moved by: {deltaPosition}");
+    }
 }

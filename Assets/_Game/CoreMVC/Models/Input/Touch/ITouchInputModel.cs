@@ -10,4 +10,6 @@ public interface ITouchInputModel
     void StartLongPress (Vector2 position);
     void EndLongPress (Vector2 position);
     void CancelLongPress (Vector2 position);
+    void StartTwoPointMove (Vector2 middlePosition);
+    void PerformTwoPointMove (Vector2 deltaPosition);
 }
