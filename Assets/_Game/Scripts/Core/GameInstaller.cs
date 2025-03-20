@@ -51,6 +51,13 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_sceneView.TwoPointMoveInputView);
         builder.RegisterInstance(_uiViewFactory);
 
+        builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.FadeTransitionOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.TapInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.SwipeInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.LongPressInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.TwoPointMoveInputOptions);
+
         //TODO pedro: delete mouse input classes
         // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Scoped);
         builder.Register<ITouchInputModel, TouchInputModel>(Lifetime.Scoped);

@@ -6,7 +6,7 @@ public class MouseInputModel : IMouseInputModel
     public bool IsHoveringInteractable => _currentInteractable != null;
 
     readonly IPhysicsProvider _physicsProvider;
-    readonly LayerMasksOptions _options;
+    readonly LayerMaskOptions _options;
 
     Camera _mainCamera;
     IMouseInteractable _currentInteractable;
@@ -15,7 +15,7 @@ public class MouseInputModel : IMouseInputModel
 
     public MouseInputModel (IPhysicsProvider physicsProvider)
     {
-        _options = GameGlobalOptions.Instance.LayerMasks;
+        _options = GameGlobalOptions.Instance.LayerMaskOptions;
         
         _physicsProvider = physicsProvider;
     }

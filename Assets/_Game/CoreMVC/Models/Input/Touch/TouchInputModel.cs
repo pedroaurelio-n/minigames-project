@@ -1,38 +1,79 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class TouchInputModel : ITouchInputModel
 {
-    public bool LongPressStarted { get; private set; }
+    public event Action<Vector2> OnTapPerformed;
+    public event OnSwipePerformedHandler OnSwipePerformed;
+    public event Action<Vector2> OnLongPressStarted;
+    public event Action<Vector2, float> OnLongPressEnded;
+    public event Action<Vector2> OnLongPressCancelled;
+    public event Action<Vector2> OnTwoPointMoveStarted;
+    public event Action<Vector2> OnTwoPointMovePerformed;
     
     readonly IPhysicsProvider _physicsProvider;
-    readonly LayerMasksOptions _options;
+    
+    readonly LayerMaskOptions _layerMaskOptions;
+    readonly TapInputOptions _tapInputOptions;
+    readonly SwipeInputOptions _swipeInputOptions;
+    readonly LongPressInputOptions _longPressInputOptions;
+    readonly TwoPointMoveInputOptions _twoPointMoveInputOptions;
     
     Camera _mainCamera;
     
-    public TouchInputModel (IPhysicsProvider physicsProvider)
+    bool _longPressStarted;
+
+    bool _twoPointMoveStarted;
+    Vector2 _twoPointMoveStartPosition;
+    
+    public TouchInputModel (
+        IPhysicsProvider physicsProvider,
+        LayerMaskOptions layerMaskOptions,
+        TapInputOptions tapInputOptions,
+        SwipeInputOptions swipeInputOptions,
+        LongPressInputOptions longPressInputOptions,
+        TwoPointMoveInputOptions twoPointMoveInputOptions
+    )
     {
         _physicsProvider = physicsProvider;
 
-        _options = GameGlobalOptions.Instance.LayerMasks;
+        _layerMaskOptions = layerMaskOptions;
+        _tapInputOptions = tapInputOptions;
+        _swipeInputOptions = swipeInputOptions;
+        _longPressInputOptions = longPressInputOptions;
+        _twoPointMoveInputOptions = twoPointMoveInputOptions;
     }
     
     public void SetMainCamera (Camera mainCamera) => _mainCamera = mainCamera;
 
-    public void PerformTap (Vector2 position)
+    public void PerformTap (Vector2 startPosition, Vector2 endPosition, float duration)
     {
-        Debug.Log($"Tap performed at: {position}");
+        float distanceSquared = (endPosition - startPosition).sqrMagnitude;
+        
+        if (duration > _tapInputOptions.MaxTimeThreshold
+            || distanceSquared > _tapInputOptions.MaxMovementThreshold * _tapInputOptions.MaxMovementThreshold)
+            return;
+        
+        OnTapPerformed?.Invoke(endPosition);
+        Debug.Log($"Tap performed at: {endPosition}");
     }
 
-    public void PerformSwipe (Vector2 swipeDelta, float diagonalThreshold)
+    public void PerformSwipe (Vector2 startPosition, Vector2 endPosition, float duration)
     {
-        float x = swipeDelta.x;
-        float y = swipeDelta.y;
+        Vector2 delta = endPosition - startPosition;
+        if (duration > _swipeInputOptions.MaxTimeThreshold
+            || delta.sqrMagnitude < _swipeInputOptions.MinMovementThreshold * _swipeInputOptions.MinMovementThreshold)
+            return;
+        
+        float x = delta.x;
+        float y = delta.y;
         float absX = Mathf.Abs(x);
         float absY = Mathf.Abs(y);
 
-        if (absX > absY + diagonalThreshold * absY)
+        OnSwipePerformed?.Invoke(startPosition, endPosition, delta.normalized, delta, duration);
+        if (absX > absY + _swipeInputOptions.DiagonalThreshold * absY)
             Debug.Log(x > 0 ? "Right swipe" : "Left swipe");
-        else if (absY > absX + diagonalThreshold * absX)
+        else if (absY > absX + _swipeInputOptions.DiagonalThreshold * absX)
             Debug.Log(y > 0 ? "Up swipe" : "Down swipe");
         else
         {
@@ -48,31 +89,128 @@ public class TouchInputModel : ITouchInputModel
         }
     }
 
-    public void StartLongPress (Vector2 position)
+    public void EvaluateLongPressUpdate (
+        Vector2 startPosition,
+        Vector2 currentPosition,
+        float startTime,
+        ref bool longPressCancelled
+    )
     {
-        LongPressStarted = true;
+        float distanceSquared = (currentPosition - startPosition).sqrMagnitude;
+
+        if (_longPressStarted)
+        {
+            if (distanceSquared > _longPressInputOptions.MaxMovementCancelThreshold
+                * _longPressInputOptions.MaxMovementCancelThreshold)
+            {
+                CancelLongPress(currentPosition);
+                longPressCancelled = true;
+            }
+            return;
+        }
+        
+        float duration = Time.time - startTime;
+        if (duration < _longPressInputOptions.MinTimeThreshold
+            || distanceSquared > _longPressInputOptions.MaxMovementStartThreshold
+            * _longPressInputOptions.MaxMovementStartThreshold)
+            return;
+
+        StartLongPress(currentPosition);
+    }
+
+    public void EvaluateLongPressEnd (
+        Vector2 startPosition,
+        Vector2 endPosition,
+        float startTime,
+        ref bool longPressCancelled
+    )
+    {
+        if (longPressCancelled)
+            return;
+        
+        float duration = Time.time - startTime;
+        if (duration < _longPressInputOptions.MinTimeThreshold)
+            return;
+        
+        if (!_longPressStarted)
+        {
+            CancelLongPress(endPosition);
+            return;
+        }
+
+        float distanceSquared = (endPosition - startPosition).sqrMagnitude;
+        if (distanceSquared > _longPressInputOptions.MaxMovementCancelThreshold
+            * _longPressInputOptions.MaxMovementCancelThreshold)
+            return;
+
+        EndLongPress(endPosition, duration);
+    }
+
+    public void EvaluateTwoPointMoveUpdate (
+        TouchPhase touch1Phase,
+        TouchPhase touch2Phase,
+        Vector2 touch1Position,
+        Vector2 touch2Position
+    )
+    {
+        bool touch1Active = touch1Phase is TouchPhase.Began or TouchPhase.Moved or TouchPhase.Stationary;
+        bool touch2Active = touch2Phase is TouchPhase.Began or TouchPhase.Moved or TouchPhase.Stationary;
+
+        if (!_twoPointMoveStarted)
+        {
+            if ((touch1Phase == TouchPhase.Began && touch2Active) ||
+                (touch2Phase == TouchPhase.Began && touch1Active))
+            {
+                _twoPointMoveStarted = true;
+                _twoPointMoveStartPosition = (touch1Position + touch2Position) * 0.5f;
+                StartTwoPointMove(_twoPointMoveStartPosition);
+            }
+            
+            return;
+        }
+        
+        if (touch1Phase == TouchPhase.Ended || touch2Phase == TouchPhase.Ended)
+        {
+            _twoPointMoveStarted = false;
+            return;
+        }
+        
+        Vector2 middlePosition = (touch1Position + touch2Position) * 0.5f;
+        Vector2 delta = middlePosition - _twoPointMoveStartPosition;
+        PerformTwoPointMove(_twoPointMoveInputOptions.MoveSpeed * Time.deltaTime * delta / Screen.dpi);
+        _twoPointMoveStartPosition = middlePosition;
+    }
+    
+    void StartLongPress (Vector2 position)
+    {
+        _longPressStarted = true;
+        OnLongPressStarted?.Invoke(position);
         Debug.Log($"Long press started at: {position}");
     }
     
-    public void EndLongPress (Vector2 position)
+    void EndLongPress (Vector2 position, float duration)
     {
-        LongPressStarted = false;
+        _longPressStarted = false;
+        OnLongPressEnded?.Invoke(position, duration);
         Debug.Log($"Long press finished at: {position}");
     }
 
-    public void CancelLongPress (Vector2 position)
+    void CancelLongPress (Vector2 position)
     {
-        LongPressStarted = false;
+        _longPressStarted = false;
+        OnLongPressCancelled?.Invoke(position);
         Debug.Log($"Long press cancelled at: {position}");
     }
 
-    public void StartTwoPointMove (Vector2 middlePosition)
+    void StartTwoPointMove (Vector2 middlePosition)
     {
+        OnTwoPointMoveStarted?.Invoke(middlePosition);
         Debug.Log($"Two point started with middle: {middlePosition}");
     }
 
-    public void PerformTwoPointMove (Vector2 deltaPosition)
+    void PerformTwoPointMove (Vector2 deltaPosition)
     {
+        OnTwoPointMovePerformed?.Invoke(deltaPosition);
         Debug.Log($"Two point moved by: {deltaPosition}");
     }
 }

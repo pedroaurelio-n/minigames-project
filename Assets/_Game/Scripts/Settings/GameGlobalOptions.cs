@@ -1,11 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameGlobalOptions", menuName = "GameGlobalOptions")]
 public class GameGlobalOptions : ScriptableObject
 {
-    [field: SerializeField] public LayerMasksOptions LayerMasks { get; private set; }
-    [field: SerializeField] public FadeTransitionOptions FadeTransition { get; private set; }
+    [field: SerializeField] public LayerMaskOptions LayerMaskOptions { get; private set; }
+    [field: SerializeField] public FadeTransitionOptions FadeTransitionOptions { get; private set; }
     [field: SerializeField] public TapInputOptions TapInputOptions { get; private set; }
     [field: SerializeField] public SwipeInputOptions SwipeInputOptions { get; private set; }
     [field: SerializeField] public LongPressInputOptions LongPressInputOptions { get; private set; }
@@ -30,7 +32,7 @@ public class GameGlobalOptions : ScriptableObject
 }
 
 [Serializable]
-public class LayerMasksOptions
+public class LayerMaskOptions
 {
     [field: SerializeField] public LayerMask InteractableLayers { get; private set; }
 }
@@ -42,14 +44,14 @@ public class FadeTransitionOptions
 }
 
 [Serializable]
-public class TapInputOptions
+public class TapInputOptions : BaseInputOptions
 {
     [field: SerializeField] public float MaxTimeThreshold { get; private set; }
     [field: SerializeField] public float MaxMovementThreshold { get; private set; }
 }
 
 [Serializable]
-public class SwipeInputOptions
+public class SwipeInputOptions : BaseInputOptions
 {
     [field: SerializeField] public float MaxTimeThreshold { get; private set; }
     [field: SerializeField] public float MinMovementThreshold { get; private set; }
@@ -57,7 +59,7 @@ public class SwipeInputOptions
 }
 
 [Serializable]
-public class LongPressInputOptions
+public class LongPressInputOptions : BaseInputOptions
 {
     [field: SerializeField] public float MinTimeThreshold { get; private set; }
     [field: SerializeField] public float MaxMovementStartThreshold { get; private set; }
@@ -65,7 +67,26 @@ public class LongPressInputOptions
 }
 
 [Serializable]
-public class TwoPointMoveInputOptions
+public class TwoPointMoveInputOptions : BaseInputOptions
 {
     [field: SerializeField] public float MoveSpeed { get; private set; }
+}
+
+[Serializable]
+public abstract class BaseInputOptions
+{
+    public void SetValues(Dictionary<string, object> values)
+    {
+        PropertyInfo[] fields = GetType().GetProperties(
+            BindingFlags.Public
+            | BindingFlags.NonPublic
+            | BindingFlags.Instance
+        );
+
+        foreach (var field in fields)
+        {
+            if (values.TryGetValue(field.Name, out object value))
+                field.SetValue(this, value);
+        }
+    }
 }

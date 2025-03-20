@@ -6,7 +6,7 @@ public class FadeToBlackManager : MonoBehaviour
 {
     [SerializeField] CanvasGroup fadeToBlackObject;
 
-    FadeTransitionOptions Options => GameGlobalOptions.Instance.FadeTransition;
+    FadeTransitionOptions Options => GameGlobalOptions.Instance.FadeTransitionOptions;
     
     public void FadeIn (Action completeCallback)
     {
