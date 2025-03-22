@@ -19,6 +19,9 @@ public interface ITouchInputModel
     event Action<Vector2> OnTwoPointMoveStarted;
     event Action<Vector2> OnTwoPointMovePerformed;
     event Action<float> OnTwoPointZoomPerformed;
+    event Action<IDraggable, Vector3> OnTouchDragBegan;
+    event Action<Vector3> OnTouchDragMoved;
+    event Action<Vector3> OnTouchDragEnded;
     
     void SetMainCamera (Camera mainCamera);
     void PerformTap (Vector2 startPosition, Vector2 endPosition, float duration);
@@ -47,4 +50,5 @@ public interface ITouchInputModel
         Vector2 touch1DeltaPosition,
         Vector2 touch2DeltaPosition
     );
+    void EvaluateTouchDrag (TouchPhase touchPhase, Vector2 touchPosition);
 }

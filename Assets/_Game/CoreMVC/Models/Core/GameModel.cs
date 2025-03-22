@@ -4,6 +4,7 @@ public class GameModel : IGameModel
 {
     // public IMouseInputModel MouseInputModel { get; }
     public ITouchInputModel TouchInputModel { get; }
+    public IDragModel DragModel { get; }
     
     public ISceneChangerModel SceneChangerModel { get; }
     
@@ -12,11 +13,13 @@ public class GameModel : IGameModel
     public GameModel (
         // IMouseInputModel mouseInputModel,
         ITouchInputModel touchInputModel,
+        IDragModel dragModel,
         ISceneChangerModel sceneChangerModel
     )
     {
         // MouseInputModel = mouseInputModel;
         TouchInputModel = touchInputModel;
+        DragModel = dragModel;
         SceneChangerModel = sceneChangerModel;
     }
 
@@ -25,5 +28,6 @@ public class GameModel : IGameModel
         MainCamera = Camera.main;
         // MouseInputModel.SetMainCamera(MainCamera);
         TouchInputModel.SetMainCamera(MainCamera);
+        DragModel.Initialize();
     }
 }

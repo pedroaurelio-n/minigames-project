@@ -11,7 +11,10 @@ public class TouchInputModel : ITouchInputModel
     public event Action<Vector2> OnTwoPointMoveStarted;
     public event Action<Vector2> OnTwoPointMovePerformed;
     public event Action<float> OnTwoPointZoomPerformed;
-    
+    public event Action<IDraggable, Vector3> OnTouchDragBegan;
+    public event Action<Vector3> OnTouchDragMoved;
+    public event Action<Vector3> OnTouchDragEnded;
+
     readonly IPhysicsProvider _physicsProvider;
     
     readonly LayerMaskOptions _layerMaskOptions;
@@ -21,12 +24,15 @@ public class TouchInputModel : ITouchInputModel
     readonly TwoPointMoveInputOptions _twoPointMoveInputOptions;
     readonly TwoPointZoomInputOptions _twoPointZoomInputOptions;
     
+    //TODO pedro: create camera interface
     Camera _mainCamera;
     
     bool _longPressStarted;
 
     bool _twoPointMoveStarted;
     Vector2 _twoPointMoveStartPosition;
+
+    Collider _currentDraggableCollider;
     
     public TouchInputModel (
         IPhysicsProvider physicsProvider,
@@ -200,7 +206,33 @@ public class TouchInputModel : ITouchInputModel
         if (difference < _twoPointZoomInputOptions.MinZoomDistance)
             return;
         OnTwoPointZoomPerformed?.Invoke(difference);
-        
+    }
+
+    public void EvaluateTouchDrag (TouchPhase touchPhase, Vector2 touchPosition)
+    {
+        switch (touchPhase)
+        {
+            case TouchPhase.Began:
+                EvaluateDraggableRaycast(touchPosition);
+                break;
+            case TouchPhase.Stationary:
+            case TouchPhase.Moved:
+                float depth = Mathf.Abs(_mainCamera.transform.position.z);
+                Vector3 touchCorrectedPosition = new Vector3(touchPosition.x, touchPosition.y, depth);
+                Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(touchCorrectedPosition);
+                OnTouchDragMoved?.Invoke(worldPosition);
+                break;
+            case TouchPhase.Ended:
+            case TouchPhase.Canceled:
+                if (_currentDraggableCollider == null)
+                    return;
+                depth = Mathf.Abs(_mainCamera.transform.position.z);
+                touchCorrectedPosition = new Vector3(touchPosition.x, touchPosition.y, depth);
+                worldPosition = _mainCamera.ScreenToWorldPoint(touchCorrectedPosition);
+                OnTouchDragEnded?.Invoke(worldPosition);
+                _currentDraggableCollider = null;
+                break;
+        }
     }
     
     void StartLongPress (Vector2 position)
@@ -234,5 +266,31 @@ public class TouchInputModel : ITouchInputModel
     {
         OnTwoPointMovePerformed?.Invoke(deltaPosition);
         Debug.Log($"Two point moved by: {deltaPosition}");
+    }
+
+    void EvaluateDraggableRaycast (Vector2 touchPosition)
+    {
+        if (_mainCamera == null)
+            return;
+        
+        Ray ray = _mainCamera.ScreenPointToRay(touchPosition);
+
+        if (_physicsProvider.Raycast(ray, _layerMaskOptions.InteractableLayers, out RaycastHit hit))
+        {
+            if (hit.collider == _currentDraggableCollider)
+                return;
+
+            _currentDraggableCollider = hit.collider;
+            
+            IDraggable draggable = _currentDraggableCollider.GetComponent<IDraggable>();
+            
+            if (draggable == null)
+                return;
+
+            float depth = Mathf.Abs(_mainCamera.transform.position.z);
+            Vector3 touchCorrectedPosition = new Vector3(touchPosition.x, touchPosition.y, depth);
+            Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(touchCorrectedPosition);
+            OnTouchDragBegan?.Invoke(draggable, worldPosition);
+        }
     }
 }

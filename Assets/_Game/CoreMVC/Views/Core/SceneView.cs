@@ -8,6 +8,7 @@ public class SceneView : MonoBehaviour
     public LongPressInputView LongPressInputView { get; private set; }
     public TwoPointMoveInputView TwoPointMoveInputView { get; private set; }
     public TwoPointZoomInputView TwoPointZoomInputView { get; private set; }
+    public TouchDragInputView TouchDragInputView { get; private set; }
 
     public void Initialize ()
     {
@@ -27,5 +28,6 @@ public class SceneView : MonoBehaviour
         LongPressInputView = touchInput.AddComponent<LongPressInputView>();
         TwoPointMoveInputView = touchInput.AddComponent<TwoPointMoveInputView>();
         TwoPointZoomInputView = touchInput.AddComponent<TwoPointZoomInputView>();
+        TouchDragInputView = touchInput.AddComponent<TouchDragInputView>();
     }
 }

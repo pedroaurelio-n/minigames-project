@@ -8,6 +8,7 @@ public class TouchInputController
     readonly LongPressInputView _longPressInputView;
     readonly TwoPointMoveInputView _twoPointMoveInputView;
     readonly TwoPointZoomInputView _twoPointZoomInputView;
+    readonly TouchDragInputView _touchDragInputView;
     
     float _tapStartTime;
     Vector2 _tapStartPosition;
@@ -25,7 +26,8 @@ public class TouchInputController
         SwipeInputView swipeInputView,
         LongPressInputView longPressInputView,
         TwoPointMoveInputView twoPointMoveInputView,
-        TwoPointZoomInputView twoPointZoomInputView
+        TwoPointZoomInputView twoPointZoomInputView,
+        TouchDragInputView touchDragInputView
     )
     {
         _touchInputModel = touchInputModel;
@@ -34,6 +36,7 @@ public class TouchInputController
         _longPressInputView = longPressInputView;
         _twoPointMoveInputView = twoPointMoveInputView;
         _twoPointZoomInputView = twoPointZoomInputView;
+        _touchDragInputView = touchDragInputView;
     }
 
     public void Initialize ()
@@ -56,6 +59,8 @@ public class TouchInputController
         _twoPointMoveInputView.OnTwoPointMoveUpdated += HandleTwoPointMoveUpdated;
         
         _twoPointZoomInputView.OnTwoPointZoomUpdated += HandleTwoPointZoomUpdated;
+
+        _touchDragInputView.OnTouchDragUpdated += HandleTouchDragUpdated;
     }
 
     void RemoveListeners ()
@@ -127,5 +132,10 @@ public class TouchInputController
             touch1.deltaPosition,
             touch2.deltaPosition
         );
+    }
+
+    void HandleTouchDragUpdated (Touch touch)
+    {
+        _touchInputModel.EvaluateTouchDrag(touch.phase, touch.position);
     }
 }
