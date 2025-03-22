@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChangerUIController
+public class SceneChangerUIController : IDisposable
 {
     readonly ISceneChangerModel _model;
     readonly GameUIView _gameUIView;
@@ -37,7 +38,6 @@ public class SceneChangerUIController
         _view.OnClick += HandleViewClick;
     }
     
-    //TODO pedro: views don't need to remove listeners yet because there's no persistent ui
     void RemoveViewListeners ()
     {
         _view.OnClick -= HandleViewClick;
@@ -64,5 +64,10 @@ public class SceneChangerUIController
         string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
 
         return sceneName;
+    }
+
+    public void Dispose ()
+    {
+        RemoveViewListeners();
     }
 }

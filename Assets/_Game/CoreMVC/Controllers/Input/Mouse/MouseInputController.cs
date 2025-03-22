@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class MouseInputController
+public class MouseInputController : IDisposable
 {
     readonly IMouseInputModel _model;
     readonly MouseInputView _view;
@@ -38,4 +39,9 @@ public class MouseInputController
     void HandleLeftClick () => _model.LeftClick();
     
     void HandleRightClick () => _model.RightClick();
+
+    public void Dispose ()
+    {
+        RemoveViewListeners();
+    }
 }

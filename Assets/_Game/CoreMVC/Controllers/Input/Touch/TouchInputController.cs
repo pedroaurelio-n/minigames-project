@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class TouchInputController
+public class TouchInputController : IDisposable
 {
     readonly ITouchInputModel _touchInputModel;
     readonly TapInputView _tapInputView;
@@ -65,7 +66,21 @@ public class TouchInputController
 
     void RemoveListeners ()
     {
-        //TODO pedro: 
+        _tapInputView.OnTapBegan -= HandleTapBegan;
+        _tapInputView.OnTapEnded -= HandleTapEnded;
+
+        _swipeInputView.OnSwipeBegan -= HandleSwipeBegan;
+        _swipeInputView.OnSwipeEnded -= HandleSwipeEnded;
+        
+        _longPressInputView.OnLongPressBegan -= HandleLongPressBegan;
+        _longPressInputView.OnLongPressUpdated -= HandleLongPressUpdated;
+        _longPressInputView.OnLongPressEnded -= HandleLongPressEnded;
+
+        _twoPointMoveInputView.OnTwoPointMoveUpdated -= HandleTwoPointMoveUpdated;
+        
+        _twoPointZoomInputView.OnTwoPointZoomUpdated -= HandleTwoPointZoomUpdated;
+
+        _touchDragInputView.OnTouchDragUpdated -= HandleTouchDragUpdated;
     }
 
     void HandleTapBegan (Touch touch)
@@ -137,5 +152,10 @@ public class TouchInputController
     void HandleTouchDragUpdated (Touch touch)
     {
         _touchInputModel.EvaluateTouchDrag(touch.phase, touch.position);
+    }
+
+    public void Dispose ()
+    {
+        RemoveListeners();
     }
 }

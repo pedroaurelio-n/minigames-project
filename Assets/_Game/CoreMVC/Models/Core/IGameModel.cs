@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public interface IGameModel
+public interface IGameModel : IDisposable
 {
     // IMouseInputModel MouseInputModel { get; }
     ITouchInputModel TouchInputModel { get; }

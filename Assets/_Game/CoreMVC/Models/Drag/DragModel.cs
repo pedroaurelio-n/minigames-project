@@ -26,6 +26,9 @@ public class DragModel : IDragModel
 
     void RemoveListeners ()
     {
+        _touchInputModel.OnTouchDragBegan -= HandleTouchDragBegan;
+        _touchInputModel.OnTouchDragMoved -= HandleTouchDragMoved;
+        _touchInputModel.OnTouchDragEnded -= HandleTouchDragEnded;
     }
 
     void HandleTouchDragBegan (IDraggable draggable, Vector3 worldPosition)
@@ -54,5 +57,10 @@ public class DragModel : IDragModel
         CurrentDraggable.OnDragEnded();
         CurrentDraggable = null;
         IsDragging = false;
+    }
+
+    public void Dispose ()
+    {
+        RemoveListeners();
     }
 }

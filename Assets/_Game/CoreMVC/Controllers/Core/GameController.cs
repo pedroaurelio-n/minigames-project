@@ -1,4 +1,6 @@
-public class GameController
+using System;
+
+public class GameController : IDisposable
 {
     // public MouseInputController MouseInputController { get; }
     public TouchInputController TouchInputController { get; }
@@ -21,4 +23,6 @@ public class GameController
         TouchInputController.Initialize();
         SceneChangerUIController.Initialize();
     }
+
+    public void Dispose () { }
 }

@@ -1,0 +1,84 @@
+﻿using System;
+using UnityEngine;
+using VContainer;
+using VContainer.Unity;
+using Object = UnityEngine.Object;
+
+public class GameCore : IDisposable
+{
+    public event Action OnInitializationComplete;
+
+    public IGameModel GameModel { get; private set; }
+    public GameController GameController { get; private set; }
+    public GameUIView GameUIView { get; private set; }
+    
+    public SceneView SceneView { get; private set; }
+
+    readonly LifetimeScope _gameScope;
+    readonly IGameSessionInfoProvider _gameSessionInfoProvider;
+    readonly ILoadingManager _loadingManager;
+    readonly SettingsManager _settingsManager;
+    readonly IRandomProvider _randomProvider;
+    readonly IPhysicsProvider _physicsProvider;
+
+    LifetimeScope _coreScope;
+
+    public GameCore (
+        LifetimeScope gameScope,
+        IGameSessionInfoProvider gameSessionInfoProvider,
+        ILoadingManager loadingManager,
+        SettingsManager settingsManager,
+        IRandomProvider randomProvider,
+        IPhysicsProvider physicsProvider
+    )
+    {
+        _gameScope = gameScope;
+        _gameSessionInfoProvider = gameSessionInfoProvider;
+        _loadingManager = loadingManager;
+        _settingsManager = settingsManager;
+        _randomProvider = randomProvider;
+        _physicsProvider = physicsProvider;
+    }
+
+    public void Initialize ()
+    {
+        _coreScope = CreateGameScope();
+
+        GameModel = _coreScope.Container.Resolve<IGameModel>();
+        GameModel.Initialize();
+    
+        GameController = _coreScope.Container.Resolve<GameController>();
+        GameController.Initialize();
+
+        GameUIView.FadeToBlackManager.FadeOut(null);
+        OnInitializationComplete?.Invoke();
+    }
+
+    LifetimeScope CreateGameScope ()
+    {
+        GameUIView = Object.Instantiate(Resources.Load<GameUIView>("GameUIView"));
+
+        SceneView = Object.Instantiate(Resources.Load<SceneView>($"{_gameSessionInfoProvider.CurrentScene}View"));
+        SceneView.Initialize();
+    
+        UIViewFactory uiViewFactory = new();
+        
+        GameInstaller installer = new(
+            _loadingManager,
+            _gameSessionInfoProvider,
+            GameUIView,
+            SceneView,
+            uiViewFactory,
+            _settingsManager,
+            _randomProvider,
+            _physicsProvider
+        );
+        
+        return _gameScope.CreateChild(installer, $"CoreScope");
+    }
+
+    public void Dispose ()
+    {
+        _coreScope.Dispose();
+    }
+}

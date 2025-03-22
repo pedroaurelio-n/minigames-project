@@ -30,4 +30,6 @@ public class GameModel : IGameModel
         TouchInputModel.SetMainCamera(MainCamera);
         DragModel.Initialize();
     }
+
+    public void Dispose () { }
 }

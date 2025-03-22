@@ -1,31 +1,21 @@
 using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using VContainer;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 public class GameSession : IGameSessionInfoProvider, IDisposable
 {
     public event Action OnInitializationComplete;
-
-    public IGameModel GameModel { get; private set; }
-    public GameController GameController { get; private set; }
-    public GameUIView GameUIView { get; private set; }
     
-    //TODO pedro: Separate Game scope from Map scope
-    public SceneView SceneView { get; private set; }
-    
-    public string CurrentScene { get; set; }
-
+    public string CurrentScene { get; private set; }
     public int CurrentSceneIndex => SceneManager.GetSceneByName(CurrentScene).buildIndex;
 
     GameLifetimeScope MainScope => GameLifetimeScope.Instance;
 
     readonly ILoadingManager _loadingManager;
-
+    
     LifetimeScope _gameScope;
     
+    GameCore _gameCore;
     SettingsManager _settingsManager;
     IRandomProvider _randomProvider;
     IPhysicsProvider _physicsProvider;
@@ -42,16 +32,13 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     public void Initialize ()
     {
         CreateProviders();
-        _gameScope = CreateGameScope();
+        CreateGameCore();
+    }
 
-        GameModel = _gameScope.Container.Resolve<IGameModel>();
-        GameModel.Initialize();
-    
-        GameController = _gameScope.Container.Resolve<GameController>();
-        GameController.Initialize();
-
-        GameUIView.FadeToBlackManager.FadeOut(null);
-        OnInitializationComplete?.Invoke();
+    public void ChangeScene (string newScene)
+    {
+        CurrentScene = newScene;
+        CreateGameCore();
     }
     
     void CreateProviders ()
@@ -61,31 +48,30 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _physicsProvider = new PhysicsProvider();
     }
 
-    LifetimeScope CreateGameScope ()
+    void CreateGameCore ()
     {
-        GameUIView = Object.Instantiate(Resources.Load<GameUIView>("GameUIView"));
+        _gameScope = MainScope.CreateChild(childScopeName: "GameScope");
         
-        SceneView = Object.Instantiate(Resources.Load<SceneView>($"{CurrentScene}View"));
-        SceneView.Initialize();
-    
-        UIViewFactory uiViewFactory = new();
-        
-        GameInstaller installer = new(
-            _loadingManager,
+        _gameCore = new GameCore(
+            _gameScope,
             this,
-            GameUIView,
-            SceneView,
-            uiViewFactory,
+            _loadingManager,
             _settingsManager,
             _randomProvider,
             _physicsProvider
         );
-        
-        return MainScope.CreateChild(installer);
+        _gameCore.OnInitializationComplete += HandleCoreInitializationComplete;
+        _gameCore.Initialize();
+    }
+
+    void HandleCoreInitializationComplete ()
+    {
+        _gameCore.OnInitializationComplete -= HandleCoreInitializationComplete;
+        OnInitializationComplete?.Invoke();
     }
 
     public void Dispose ()
     {
-        _gameScope.Dispose();
+        _gameCore.Dispose();
     }
 }
