@@ -12,24 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef4f68145864fac84ff8fc19d14529c, type: 3}
   m_Name: GameGlobalOptions
   m_EditorClassIdentifier: 
+  <DebugOptions>k__BackingField:
+    <EnableLogging>k__BackingField: 0
   <LayerMaskOptions>k__BackingField:
     <InteractableLayers>k__BackingField:
       serializedVersion: 2
       m_Bits: 64
   <FadeTransitionOptions>k__BackingField:
     <Duration>k__BackingField: 0.8
-  <TapInputOptions>k__BackingField:
-    <MaxTimeThreshold>k__BackingField: 0.3
-    <MaxMovementThreshold>k__BackingField: 15
-  <SwipeInputOptions>k__BackingField:
-    <MaxTimeThreshold>k__BackingField: 1.25
-    <MinMovementThreshold>k__BackingField: 100
-    <DiagonalThreshold>k__BackingField: 0.5
-  <LongPressInputOptions>k__BackingField:
-    <MinTimeThreshold>k__BackingField: 1
-    <MaxMovementStartThreshold>k__BackingField: 25
-    <MaxMovementCancelThreshold>k__BackingField: 100
-  <TwoPointMoveInputOptions>k__BackingField:
-    <MoveSpeed>k__BackingField: 10
-  <TwoPointZoomInputOptions>k__BackingField:
-    <MinZoomDistance>k__BackingField: 0
+  <InputOptions>k__BackingField:
+    <TapInputOptions>k__BackingField:
+      <MaxTimeThreshold>k__BackingField: 0.3
+      <MaxMovementThreshold>k__BackingField: 15
+    <SwipeInputOptions>k__BackingField:
+      <MaxTimeThreshold>k__BackingField: 1.25
+      <MinMovementThreshold>k__BackingField: 100
+      <DiagonalThreshold>k__BackingField: 0.5
+    <LongPressInputOptions>k__BackingField:
+      <MinTimeThreshold>k__BackingField: 1
+      <MaxMovementStartThreshold>k__BackingField: 25
+      <MaxMovementCancelThreshold>k__BackingField: 100
+    <TwoPointMoveInputOptions>k__BackingField:
+      <MoveSpeed>k__BackingField: 10
+    <TwoPointZoomInputOptions>k__BackingField:
+      <MinZoomDistance>k__BackingField: 10

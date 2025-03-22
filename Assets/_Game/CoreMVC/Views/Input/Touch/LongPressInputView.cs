@@ -9,10 +9,10 @@ public class LongPressInputView : MonoBehaviour
     
     void Update ()
     {
-        if (TouchProvider.GetTouchCount() == 0)
+        if (TouchUtils.GetTouchCount() == 0)
             return;
 
-        Touch touch = TouchProvider.GetFirstTouch();
+        Touch touch = TouchUtils.GetFirstTouch();
 
         switch (touch.phase)
         {

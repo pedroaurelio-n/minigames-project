@@ -7,10 +7,10 @@ public class TouchDragInputView : MonoBehaviour
 
     void Update ()
     {
-        if (TouchProvider.GetTouchCount() != 1)
+        if (TouchUtils.GetTouchCount() != 1)
             return;
 
-        Touch touch = TouchProvider.GetFirstTouch();
+        Touch touch = TouchUtils.GetFirstTouch();
         OnTouchDragUpdated(touch);
     }
 }

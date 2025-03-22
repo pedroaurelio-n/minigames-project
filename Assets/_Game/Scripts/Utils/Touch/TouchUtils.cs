@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TouchProvider
+public static class TouchUtils
 {
     static Vector3 _lastMousePosition;
     

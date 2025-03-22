@@ -7,11 +7,11 @@ public class TwoPointZoomInputView : MonoBehaviour
     
     void Update ()
     {
-        if (TouchProvider.GetTouchCount() != 2)
+        if (TouchUtils.GetTouchCount() != 2)
             return;
 
-        Touch touch1 = TouchProvider.GetFirstTouch();
-        Touch touch2 = TouchProvider.GetSecondTouch();
+        Touch touch1 = TouchUtils.GetFirstTouch();
+        Touch touch2 = TouchUtils.GetSecondTouch();
 
         OnTwoPointZoomUpdated(touch1, touch2);
     }

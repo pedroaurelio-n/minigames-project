@@ -65,7 +65,7 @@ public class TouchInputModel : ITouchInputModel
             return;
         
         OnTapPerformed?.Invoke(endPosition);
-        Debug.Log($"Tap performed at: {endPosition}");
+        DebugUtils.Log($"Tap performed at: {endPosition}");
     }
 
     public void PerformSwipe (Vector2 startPosition, Vector2 endPosition, float duration)
@@ -82,12 +82,12 @@ public class TouchInputModel : ITouchInputModel
 
         OnSwipePerformed?.Invoke(startPosition, endPosition, delta.normalized, delta, duration);
         if (absX > absY + _swipeInputOptions.DiagonalThreshold * absY)
-            Debug.Log(x > 0 ? "Right swipe" : "Left swipe");
+            DebugUtils.Log(x > 0 ? "Right swipe" : "Left swipe");
         else if (absY > absX + _swipeInputOptions.DiagonalThreshold * absX)
-            Debug.Log(y > 0 ? "Up swipe" : "Down swipe");
+            DebugUtils.Log(y > 0 ? "Up swipe" : "Down swipe");
         else
         {
-            Debug.Log(
+            DebugUtils.Log(
                 x > 0
                     ? y > 0
                         ? "Up Right swipe"
@@ -239,33 +239,33 @@ public class TouchInputModel : ITouchInputModel
     {
         _longPressStarted = true;
         OnLongPressStarted?.Invoke(position);
-        Debug.Log($"Long press started at: {position}");
+        DebugUtils.Log($"Long press started at: {position}");
     }
     
     void EndLongPress (Vector2 position, float duration)
     {
         _longPressStarted = false;
         OnLongPressEnded?.Invoke(position, duration);
-        Debug.Log($"Long press finished at: {position}");
+        DebugUtils.Log($"Long press finished at: {position}");
     }
 
     void CancelLongPress (Vector2 position)
     {
         _longPressStarted = false;
         OnLongPressCancelled?.Invoke(position);
-        Debug.Log($"Long press cancelled at: {position}");
+        DebugUtils.Log($"Long press cancelled at: {position}");
     }
 
     void StartTwoPointMove (Vector2 middlePosition)
     {
         OnTwoPointMoveStarted?.Invoke(middlePosition);
-        Debug.Log($"Two point started with middle: {middlePosition}");
+        DebugUtils.Log($"Two point started with middle: {middlePosition}");
     }
 
     void PerformTwoPointMove (Vector2 deltaPosition)
     {
         OnTwoPointMovePerformed?.Invoke(deltaPosition);
-        Debug.Log($"Two point moved by: {deltaPosition}");
+        DebugUtils.Log($"Two point moved by: {deltaPosition}");
     }
 
     void EvaluateDraggableRaycast (Vector2 touchPosition)

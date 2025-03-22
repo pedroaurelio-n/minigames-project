@@ -33,7 +33,7 @@ public class DragModel : IDragModel
         IsDragging = true;
         CurrentDraggable = draggable;
         CurrentDraggable.OnDragBegan();
-        Debug.Log($"Touch drag began for {draggable.Name}, at {worldPosition}");
+        DebugUtils.Log($"Touch drag began for {draggable.Name}, at {worldPosition}");
     }
     
     void HandleTouchDragMoved (Vector3 worldPosition)
@@ -42,7 +42,7 @@ public class DragModel : IDragModel
             return;
         
         CurrentDraggable.OnDragMoved(worldPosition);
-        Debug.Log($"Touch drag moved for {CurrentDraggable.Name}, to {worldPosition}");
+        DebugUtils.Log($"Touch drag moved for {CurrentDraggable.Name}, to {worldPosition}");
     }
     
     void HandleTouchDragEnded (Vector3 worldPosition)
@@ -50,7 +50,7 @@ public class DragModel : IDragModel
         if (!IsDragging || CurrentDraggable == null)
             return;
         
-        Debug.Log($"Touch drag ended for {CurrentDraggable.Name}, at {worldPosition}");
+        DebugUtils.Log($"Touch drag ended for {CurrentDraggable.Name}, at {worldPosition}");
         CurrentDraggable.OnDragEnded();
         CurrentDraggable = null;
         IsDragging = false;
