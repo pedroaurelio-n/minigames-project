@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-public class TwoPointMoveInputView : MonoBehaviour
+public class TwoPointZoomInputView : MonoBehaviour
 {
-    public event Action<Touch, Touch> OnTwoPointMoveUpdated;
+    public event Action<Touch, Touch> OnTwoPointZoomUpdated;
     
     void Update ()
     {
@@ -13,6 +13,6 @@ public class TwoPointMoveInputView : MonoBehaviour
         Touch touch1 = TouchProvider.GetFirstTouch();
         Touch touch2 = TouchProvider.GetSecondTouch();
 
-        OnTwoPointMoveUpdated(touch1, touch2);
+        OnTwoPointZoomUpdated(touch1, touch2);
     }
 }

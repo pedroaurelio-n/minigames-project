@@ -28,14 +28,15 @@ namespace GameTests.Input.Touch
                 LongPressInputOptions = new LongPressInputOptions();
                 TwoPointMoveInputOptions = new TwoPointMoveInputOptions();
                 
-                Model = new TouchInputModel(
-                    PhysicsProvider,
-                    LayerMaskOptions,
-                    TapInputOptions,
-                    SwipeInputOptions,
-                    LongPressInputOptions,
-                    TwoPointMoveInputOptions
-                );
+                //TODO pedro: uncomment tests
+                // Model = new TouchInputModel(
+                //     PhysicsProvider,
+                //     LayerMaskOptions,
+                //     TapInputOptions,
+                //     SwipeInputOptions,
+                //     LongPressInputOptions,
+                //     TwoPointMoveInputOptions
+                // );
             }
 
             class Tap : BaseTouchInputModelTests

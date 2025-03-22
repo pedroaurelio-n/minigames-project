@@ -12,6 +12,7 @@ public class GameGlobalOptions : ScriptableObject
     [field: SerializeField] public SwipeInputOptions SwipeInputOptions { get; private set; }
     [field: SerializeField] public LongPressInputOptions LongPressInputOptions { get; private set; }
     [field: SerializeField] public TwoPointMoveInputOptions TwoPointMoveInputOptions { get; private set; }
+    [field: SerializeField] public TwoPointZoomInputOptions TwoPointZoomInputOptions { get; private set; }
 
     public static GameGlobalOptions Instance
     {
@@ -73,6 +74,11 @@ public class TwoPointMoveInputOptions : BaseInputOptions
 }
 
 [Serializable]
+public class TwoPointZoomInputOptions : BaseInputOptions
+{
+    [field: SerializeField] public float MinZoomDistance { get; private set; }
+}
+
 public abstract class BaseInputOptions
 {
     public void SetValues(Dictionary<string, object> values)

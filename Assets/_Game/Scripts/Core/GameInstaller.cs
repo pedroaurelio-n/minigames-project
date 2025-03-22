@@ -49,6 +49,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_sceneView.SwipeInputView);
         builder.RegisterInstance(_sceneView.LongPressInputView);
         builder.RegisterInstance(_sceneView.TwoPointMoveInputView);
+        builder.RegisterInstance(_sceneView.TwoPointZoomInputView);
         builder.RegisterInstance(_uiViewFactory);
 
         builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);
@@ -57,6 +58,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.SwipeInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.LongPressInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.TwoPointMoveInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.TwoPointZoomInputOptions);
 
         //TODO pedro: delete mouse input classes
         // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Scoped);

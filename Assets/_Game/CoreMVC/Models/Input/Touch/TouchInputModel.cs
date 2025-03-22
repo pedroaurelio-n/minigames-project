@@ -10,6 +10,7 @@ public class TouchInputModel : ITouchInputModel
     public event Action<Vector2> OnLongPressCancelled;
     public event Action<Vector2> OnTwoPointMoveStarted;
     public event Action<Vector2> OnTwoPointMovePerformed;
+    public event Action<float> OnTwoPointZoomPerformed;
     
     readonly IPhysicsProvider _physicsProvider;
     
@@ -18,6 +19,7 @@ public class TouchInputModel : ITouchInputModel
     readonly SwipeInputOptions _swipeInputOptions;
     readonly LongPressInputOptions _longPressInputOptions;
     readonly TwoPointMoveInputOptions _twoPointMoveInputOptions;
+    readonly TwoPointZoomInputOptions _twoPointZoomInputOptions;
     
     Camera _mainCamera;
     
@@ -32,7 +34,8 @@ public class TouchInputModel : ITouchInputModel
         TapInputOptions tapInputOptions,
         SwipeInputOptions swipeInputOptions,
         LongPressInputOptions longPressInputOptions,
-        TwoPointMoveInputOptions twoPointMoveInputOptions
+        TwoPointMoveInputOptions twoPointMoveInputOptions,
+        TwoPointZoomInputOptions twoPointZoomInputOptions
     )
     {
         _physicsProvider = physicsProvider;
@@ -42,6 +45,7 @@ public class TouchInputModel : ITouchInputModel
         _swipeInputOptions = swipeInputOptions;
         _longPressInputOptions = longPressInputOptions;
         _twoPointMoveInputOptions = twoPointMoveInputOptions;
+        _twoPointZoomInputOptions = twoPointZoomInputOptions;
     }
     
     public void SetMainCamera (Camera mainCamera) => _mainCamera = mainCamera;
@@ -179,6 +183,24 @@ public class TouchInputModel : ITouchInputModel
         Vector2 delta = middlePosition - _twoPointMoveStartPosition;
         PerformTwoPointMove(_twoPointMoveInputOptions.MoveSpeed * Time.deltaTime * delta / Screen.dpi);
         _twoPointMoveStartPosition = middlePosition;
+    }
+
+    public void EvaluateTwoPointZoomUpdate (
+        Vector2 touch1Position,
+        Vector2 touch2Position,
+        Vector2 touch1DeltaPosition,
+        Vector2 touch2DeltaPosition
+    )
+    {
+        float previousDistance = (touch1Position - touch1DeltaPosition - (touch2Position - touch2DeltaPosition))
+            .sqrMagnitude;
+        float currentDistance = (touch1Position - touch2Position).sqrMagnitude;
+        float difference = previousDistance - currentDistance;
+
+        if (difference < _twoPointZoomInputOptions.MinZoomDistance)
+            return;
+        OnTwoPointZoomPerformed?.Invoke(difference);
+        
     }
     
     void StartLongPress (Vector2 position)
