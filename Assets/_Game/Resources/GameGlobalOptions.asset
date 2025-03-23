@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameGlobalOptions
   m_EditorClassIdentifier: 
   <DebugOptions>k__BackingField:
-    <EnableLogging>k__BackingField: 0
+    <EnableLogging>k__BackingField: 1
   <LayerMaskOptions>k__BackingField:
     <InteractableLayers>k__BackingField:
       serializedVersion: 2
@@ -36,3 +36,5 @@ MonoBehaviour:
       <MoveSpeed>k__BackingField: 10
     <TwoPointZoomInputOptions>k__BackingField:
       <MinZoomDistance>k__BackingField: 10
+  <MiniGameOptions>k__BackingField:
+    <BaseMiniGameDuration>k__BackingField: 10

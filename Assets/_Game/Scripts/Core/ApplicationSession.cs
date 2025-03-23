@@ -23,8 +23,8 @@ public class ApplicationSession
     public void ChangeScene (string newScene)
     {
         GameSession.Dispose();
-        GameSession.ChangeScene(newScene);
         GameSession.OnInitializationComplete += HandleInitializationComplete;
+        GameSession.ChangeScene(newScene);
     }
 
     void HandleInitializationComplete ()

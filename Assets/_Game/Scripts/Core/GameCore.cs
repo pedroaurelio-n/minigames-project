@@ -53,6 +53,9 @@ public class GameCore : IDisposable
         GameController = _coreScope.Container.Resolve<GameController>();
         GameController.Initialize();
 
+        GameModel.LateInitialize();
+        GameController.LateInitialize();
+
         GameUIView.FadeToBlackManager.FadeOut(null);
         OnInitializationComplete?.Invoke();
     }

@@ -9,6 +9,8 @@ public class MiniGameTimerModel : IMiniGameTimerModel
     readonly MiniGameOptions _miniGameOptions;
     readonly UniqueCoroutine _timerCoroutine;
 
+    float _timer;
+
     public MiniGameTimerModel (
         MiniGameOptions miniGameOptions,
         ICoroutineRunner coroutineRunner
@@ -23,13 +25,18 @@ public class MiniGameTimerModel : IMiniGameTimerModel
         _timerCoroutine.Start(TimerCoroutine());
     }
 
+    public void ForceComplete ()
+    {
+        _timer = 0;
+    }
+
     IEnumerator TimerCoroutine ()
     {
-        float timer = _miniGameOptions.BaseMiniGameDuration;
+        _timer = _miniGameOptions.BaseMiniGameDuration;
 
-        while (timer > 0f)
+        while (_timer > 0f)
         {
-            timer -= Time.deltaTime;
+            _timer -= Time.deltaTime;
             yield return null;
         }
         

@@ -70,16 +70,23 @@ public class GameInstaller : IInstaller
         // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Scoped);
         builder.Register<ITouchInputModel, TouchInputModel>(Lifetime.Scoped);
         builder.Register<IDragModel, DragModel>(Lifetime.Scoped);
+        builder.Register<IPressModel, PressModel>(Lifetime.Scoped);
         
         builder.Register<ISceneChangerModel, SceneChangerModel>(Lifetime.Scoped);
 
         builder.Register<IMiniGameTimerModel, MiniGameTimerModel>(Lifetime.Scoped);
+        builder.Register<IMiniGameModelFactory, MiniGameModelFactory>(Lifetime.Scoped);
+        builder.Register<IMiniGameManagerModel, MiniGameManagerModel>(Lifetime.Scoped);
+        
         builder.Register<IGameModel, GameModel>(Lifetime.Scoped);
 
         // builder.Register<MouseInputController>(Lifetime.Scoped);
         builder.Register<TouchInputController>(Lifetime.Scoped);
         
         builder.Register<SceneChangerUIController>(Lifetime.Scoped);
+
+        builder.Register<TapObjectsMiniGameController>(Lifetime.Scoped);
+        
         builder.Register<GameController>(Lifetime.Scoped);
     }
 }

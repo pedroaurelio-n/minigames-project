@@ -19,9 +19,11 @@ public interface ITouchInputModel
     event Action<Vector2> OnTwoPointMoveStarted;
     event Action<Vector2> OnTwoPointMovePerformed;
     event Action<float> OnTwoPointZoomPerformed;
-    event Action<IDraggable, Vector3> OnTouchDragBegan;
-    event Action<Vector3> OnTouchDragMoved;
-    event Action<Vector3> OnTouchDragEnded;
+    event Action<Vector2> OnTouchDragBegan;
+    event Action<Vector2> OnTouchDragMoved;
+    event Action<Vector2> OnTouchDragEnded;
+    
+    Camera MainCamera { get; }
     
     void SetMainCamera (Camera mainCamera);
     void PerformTap (Vector2 startPosition, Vector2 endPosition, float duration);
