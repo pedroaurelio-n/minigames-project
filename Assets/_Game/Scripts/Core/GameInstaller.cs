@@ -11,6 +11,7 @@ public class GameInstaller : IInstaller
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
+    readonly ICoroutineRunner _coroutineRunner;
     
     public GameInstaller (
         ILoadingManager loadingManager,
@@ -20,7 +21,8 @@ public class GameInstaller : IInstaller
         UIViewFactory uiViewFactory,
         SettingsManager settings,
         IRandomProvider randomProvider,
-        IPhysicsProvider physicsProvider
+        IPhysicsProvider physicsProvider,
+        ICoroutineRunner coroutineRunner
     )
     {
         _loadingManager = loadingManager;
@@ -31,6 +33,7 @@ public class GameInstaller : IInstaller
         _settingsManager = settings;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
+        _coroutineRunner = coroutineRunner;
     }
     
     public void Install (IContainerBuilder builder)
@@ -41,6 +44,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_gameSessionInfoProvider);
         builder.RegisterInstance(_randomProvider);
         builder.RegisterInstance(_physicsProvider);
+        builder.RegisterInstance(_coroutineRunner);
         
         builder.RegisterInstance(_gameUIView);
         builder.RegisterInstance(_sceneView);
@@ -60,6 +64,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.LongPressInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointMoveInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointZoomInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions);
 
         //TODO pedro: delete mouse input classes
         // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Scoped);
@@ -67,6 +72,8 @@ public class GameInstaller : IInstaller
         builder.Register<IDragModel, DragModel>(Lifetime.Scoped);
         
         builder.Register<ISceneChangerModel, SceneChangerModel>(Lifetime.Scoped);
+
+        builder.Register<IMiniGameTimerModel, MiniGameTimerModel>(Lifetime.Scoped);
         builder.Register<IGameModel, GameModel>(Lifetime.Scoped);
 
         // builder.Register<MouseInputController>(Lifetime.Scoped);

@@ -1,6 +1,8 @@
 using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
+using Object = UnityEngine.Object;
 
 public class GameSession : IGameSessionInfoProvider, IDisposable
 {
@@ -19,6 +21,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     SettingsManager _settingsManager;
     IRandomProvider _randomProvider;
     IPhysicsProvider _physicsProvider;
+    CoroutineRunner _coroutineRunner;
     
     public GameSession (
         ILoadingManager loadingManager,
@@ -31,6 +34,8 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
 
     public void Initialize ()
     {
+        _gameScope = MainScope.CreateChild(childScopeName: "GameScope");
+        
         CreateProviders();
         CreateGameCore();
     }
@@ -46,19 +51,21 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _settingsManager = new SettingsManager();
         _randomProvider = new RandomProvider();
         _physicsProvider = new PhysicsProvider();
+
+        _coroutineRunner = new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
+        _coroutineRunner.transform.SetParent(_gameScope.transform);
     }
 
     void CreateGameCore ()
     {
-        _gameScope = MainScope.CreateChild(childScopeName: "GameScope");
-        
         _gameCore = new GameCore(
             _gameScope,
             this,
             _loadingManager,
             _settingsManager,
             _randomProvider,
-            _physicsProvider
+            _physicsProvider,
+            _coroutineRunner
         );
         _gameCore.OnInitializationComplete += HandleCoreInitializationComplete;
         _gameCore.Initialize();

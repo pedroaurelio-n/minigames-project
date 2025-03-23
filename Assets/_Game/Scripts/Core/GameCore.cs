@@ -20,6 +20,7 @@ public class GameCore : IDisposable
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
+    readonly ICoroutineRunner _coroutineRunner;
 
     LifetimeScope _coreScope;
 
@@ -29,7 +30,8 @@ public class GameCore : IDisposable
         ILoadingManager loadingManager,
         SettingsManager settingsManager,
         IRandomProvider randomProvider,
-        IPhysicsProvider physicsProvider
+        IPhysicsProvider physicsProvider,
+        ICoroutineRunner coroutineRunner
     )
     {
         _gameScope = gameScope;
@@ -38,6 +40,7 @@ public class GameCore : IDisposable
         _settingsManager = settingsManager;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
+        _coroutineRunner = coroutineRunner;
     }
 
     public void Initialize ()
@@ -56,11 +59,13 @@ public class GameCore : IDisposable
 
     LifetimeScope CreateGameScope ()
     {
+        //TODO pedro: don't recreate persistent ui view
         GameUIView = Object.Instantiate(Resources.Load<GameUIView>("GameUIView"));
 
         SceneView = Object.Instantiate(Resources.Load<SceneView>($"{_gameSessionInfoProvider.CurrentScene}View"));
         SceneView.Initialize();
     
+        //TODO pedro: don't recreate disabled pool transform parent
         UIViewFactory uiViewFactory = new();
         
         GameInstaller installer = new(
@@ -71,7 +76,8 @@ public class GameCore : IDisposable
             uiViewFactory,
             _settingsManager,
             _randomProvider,
-            _physicsProvider
+            _physicsProvider,
+            _coroutineRunner
         );
         
         return _gameScope.CreateChild(installer, $"CoreScope");
