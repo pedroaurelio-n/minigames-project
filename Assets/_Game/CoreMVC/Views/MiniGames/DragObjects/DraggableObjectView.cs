@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SceneInteractableObjectView : MonoBehaviour, IDraggable
+public class DraggableObjectView : MonoBehaviour, IDraggable
 {
     [SerializeField] Material dragMaterial;
     [SerializeField] MeshRenderer meshRenderer;

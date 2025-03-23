@@ -8,7 +8,7 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 {
     const string PERCENTAGE_FORMAT = "{0}%";
     const float LOADING_SPEED = 0.5f;
-    const string START_SCENE = "GameScene1";
+    const string START_SCENE = "MiniGame1";
     
     [SerializeField] GameObject[] loadingSceneObjects;
     [SerializeField] GameObject[] loadingUIObjects;
