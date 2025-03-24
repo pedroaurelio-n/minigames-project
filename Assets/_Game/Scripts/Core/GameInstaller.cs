@@ -86,6 +86,7 @@ public class GameInstaller : IInstaller
         builder.Register<SceneChangerUIController>(Lifetime.Scoped);
 
         builder.Register<TapObjectsMiniGameController>(Lifetime.Scoped);
+        builder.Register<ThrowObjectsMiniGameController>(Lifetime.Scoped);
         
         builder.Register<GameController>(Lifetime.Scoped);
     }

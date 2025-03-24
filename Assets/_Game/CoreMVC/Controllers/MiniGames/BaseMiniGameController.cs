@@ -52,7 +52,7 @@ public abstract class BaseMiniGameController : IDisposable
         CheckWinCondition(true);
     }
     
-    public void Dispose ()
+    public virtual void Dispose ()
     {
         RemoveListeners();
     }

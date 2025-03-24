@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SceneView : MonoBehaviour
 {
-    [field: SerializeField] public TappableObjectView TappableObjectPrefab { get; private set; }
-    
     public MouseInputView MouseInput { get; private set; }
     public TapInputView TapInputView { get; private set; }
     public SwipeInputView SwipeInputView { get; private set; }

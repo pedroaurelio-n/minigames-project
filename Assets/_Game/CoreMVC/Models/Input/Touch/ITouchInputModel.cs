@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public delegate Action OnSwipePerformedHandler (
+public delegate void OnSwipePerformedHandler (
     Vector2 startPosition,
     Vector2 endPosition,
     Vector2 normalizedDirection,

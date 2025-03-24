@@ -33,12 +33,12 @@ public abstract class BaseMiniGameModel : IMiniGameModel
         _miniGameTimerModel.ForceComplete();
     }
 
-    void AddListeners ()
+    protected virtual void AddListeners ()
     {
         _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
     }
 
-    void RemoveListeners ()
+    protected virtual void RemoveListeners ()
     {
         _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
     }

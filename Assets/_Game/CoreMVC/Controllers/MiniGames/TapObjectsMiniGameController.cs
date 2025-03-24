@@ -5,30 +5,24 @@ using Object = UnityEngine.Object;
 
 public class TapObjectsMiniGameController : BaseMiniGameController
 {
-    const int OBJECTS_TO_SPAWN = 5;
-    const int MAX_DISTANCE = 20;
-
     protected override MiniGameType MiniGameType => MiniGameType.TapObjects;
 
     ITapObjectsMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as ITapObjectsMiniGameModel;
-
-    readonly IPressModel _pressModel;
+    
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IRandomProvider _randomProvider;
-    readonly SceneView _sceneView;
+    readonly TapObjectsSceneView _sceneView;
 
     HashSet<IPressable> _spawnedObjects = new();
 
     public TapObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
-        IPressModel pressModel,
         IRandomProvider randomProvider
     ) : base(miniGameManagerModel, sceneView)
     {
         _miniGameManagerModel = miniGameManagerModel;
-        _pressModel = pressModel;
-        _sceneView = sceneView;
+        _sceneView = sceneView as TapObjectsSceneView;
         _randomProvider = randomProvider;
     }
 
@@ -43,12 +37,12 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
         base.Initialize();
 
-        for (int i = 0; i < OBJECTS_TO_SPAWN; i++)
+        for (int i = 0; i < MiniGameModel.BaseObjectsToSpawn; i++)
         {
             TappableObjectView obj = Object.Instantiate(_sceneView.TappableObjectPrefab, _sceneView.transform);
             obj.transform.position = _randomProvider.Range(
-                new Vector2(-MAX_DISTANCE, -MAX_DISTANCE),
-                new Vector2(MAX_DISTANCE, MAX_DISTANCE)
+                new Vector2(-MiniGameModel.MaxSpawnDistance, -MiniGameModel.MaxSpawnDistance),
+                new Vector2(MiniGameModel.MaxSpawnDistance, MiniGameModel.MaxSpawnDistance)
             );
             _spawnedObjects.Add(obj);
         }
@@ -68,13 +62,16 @@ public class TapObjectsMiniGameController : BaseMiniGameController
     protected override void AddListeners ()
     {
         base.AddListeners();
-        _pressModel.OnTapPerformed += HandleTapPerformed;
+        MiniGameModel.OnTapPerformed += HandleTapPerformed;
     }
 
     protected override void RemoveListeners ()
     {
+        if (MiniGameModel == null)
+            return;
+        
         base.RemoveListeners();
-        _pressModel.OnTapPerformed -= HandleTapPerformed;
+        MiniGameModel.OnTapPerformed -= HandleTapPerformed;
     }
 
     void HandleTapPerformed (IPressable pressable, Vector2 tapPosition)
@@ -88,5 +85,11 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
         if (CheckWinCondition(false))
             MiniGameModel.Complete();
+    }
+
+    public override void Dispose ()
+    {
+        base.Dispose();
+        _spawnedObjects.Clear();
     }
 }
