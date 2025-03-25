@@ -5,16 +5,19 @@ public class MiniGameModelFactory : IMiniGameModelFactory
     readonly IMiniGameTimerModel _miniGameTimerModel;
     readonly ITouchInputModel _touchInputModel;
     readonly IPressModel _pressModel;
+    readonly IDragModel _dragModel;
 
     public MiniGameModelFactory (
         IMiniGameTimerModel miniGameTimerModel,
         ITouchInputModel touchInputModel,
-        IPressModel pressModel
+        IPressModel pressModel,
+        IDragModel dragModel
     )
     {
         _miniGameTimerModel = miniGameTimerModel;
         _touchInputModel = touchInputModel;
         _pressModel = pressModel;
+        _dragModel = dragModel;
     }
     
     public IMiniGameModel CreateMiniGameBasedOnType (MiniGameType type)
@@ -28,14 +31,17 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                 );
                 return tapObjectsMiniGameModel;
             case MiniGameType.DragObjects:
-                return null;
+                IDragObjectsMiniGameModel dragObjectsMiniGameModel = new DragObjectsMiniGameModel(
+                    _miniGameTimerModel,
+                    _dragModel
+                );
+                return dragObjectsMiniGameModel;
             case MiniGameType.ThrowObjects:
                 IThrowObjectsMiniGameModel throwObjectsMiniGameModel = new ThrowObjectsMiniGameModel(
                     _miniGameTimerModel,
                     _touchInputModel
                 );
                 return throwObjectsMiniGameModel;
-                return null;
             case MiniGameType.LongPressObjects:
                 return null;
             case MiniGameType.FindObject:

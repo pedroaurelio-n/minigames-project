@@ -36,7 +36,10 @@ public class TapObjectsMiniGameController : BaseMiniGameController
             return;
 
         base.Initialize();
+    }
 
+    protected override void SetupMiniGame ()
+    {
         for (int i = 0; i < MiniGameModel.BaseObjectsToSpawn; i++)
         {
             TappableObjectView obj = Object.Instantiate(_sceneView.TappableObjectPrefab, _sceneView.transform);

@@ -87,6 +87,7 @@ public class GameInstaller : IInstaller
 
         builder.Register<TapObjectsMiniGameController>(Lifetime.Scoped);
         builder.Register<ThrowObjectsMiniGameController>(Lifetime.Scoped);
+        builder.Register<DragObjectsMiniGameController>(Lifetime.Scoped);
         
         builder.Register<GameController>(Lifetime.Scoped);
     }

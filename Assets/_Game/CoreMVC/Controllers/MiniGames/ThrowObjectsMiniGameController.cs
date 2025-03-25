@@ -11,6 +11,8 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     readonly IRandomProvider _randomProvider;
     readonly ThrowObjectsSceneView _sceneView;
 
+    bool _hasCompleted;
+
     public ThrowObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView
@@ -30,11 +32,21 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
             return;
 
         base.Initialize();
+        AddViewListeners();
     }
+
+    protected override void SetupMiniGame () { }
 
     protected override bool CheckWinCondition (bool timerEnded)
     {
-        return true;
+        //TODO pedro: avoid double method call when the game completes
+        if (timerEnded)
+        {
+            //TODO pedro: implement ui
+            string message = _hasCompleted ? "YOU WIN THE GAME" : "YOU LOSE THE GAME";
+            DebugUtils.Log(message);
+        }
+        return _hasCompleted;
     }
 
     protected override void AddListeners ()
@@ -52,6 +64,18 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         MiniGameModel.OnSwipePerformed -= HandleSwipePerformed;
     }
 
+    void AddViewListeners ()
+    {
+        _sceneView.Container.OnThrowableEnter += HandleThrowableEnter;
+    }
+
+    void RemoveViewListeners ()
+    {
+        if (_sceneView == null)
+            return;
+        _sceneView.Container.OnThrowableEnter -= HandleThrowableEnter;
+    }
+
     void HandleSwipePerformed (Vector3 swipeDirection)
     {
         ThrowableObjectView obj = Object.Instantiate(
@@ -61,5 +85,19 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
             _sceneView.transform
         );
         obj.Throw(swipeDirection);
+    }
+
+    void HandleThrowableEnter ()
+    {
+        _hasCompleted = true;
+        
+        if (CheckWinCondition(false))
+            MiniGameModel.Complete();
+    }
+
+    public override void Dispose ()
+    {
+        RemoveViewListeners();
+        base.Dispose();
     }
 }

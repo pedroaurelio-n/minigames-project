@@ -22,7 +22,10 @@ public abstract class BaseMiniGameController : IDisposable
     {
         _sceneView.SetActiveInputs(ActiveMiniGame.InputTypes);
         AddListeners();
+        SetupMiniGame();
     }
+
+    protected abstract void SetupMiniGame ();
 
     protected abstract bool CheckWinCondition (bool timerEnded);
 
