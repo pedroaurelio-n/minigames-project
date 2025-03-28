@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 public class GameSession : IGameSessionInfoProvider, IDisposable
 {
@@ -10,6 +9,8 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     
     public string CurrentScene { get; private set; }
     public int CurrentSceneIndex => SceneManager.GetSceneByName(CurrentScene).buildIndex;
+    
+    public IPlayerInfoModel PlayerInfoModel { get; private set; }
 
     GameLifetimeScope MainScope => GameLifetimeScope.Instance;
 
@@ -18,6 +19,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     LifetimeScope _gameScope;
     
     GameCore _gameCore;
+    
     SettingsManager _settingsManager;
     IRandomProvider _randomProvider;
     IPhysicsProvider _physicsProvider;
@@ -37,6 +39,10 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _gameScope = MainScope.CreateChild(childScopeName: "GameScope");
         
         CreateProviders();
+
+        PlayerInfoModel = new PlayerInfoModel();
+        PlayerInfoModel.Initialize();
+        
         CreateGameCore();
     }
 
@@ -62,6 +68,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _gameScope,
             this,
             _loadingManager,
+            PlayerInfoModel,
             _settingsManager,
             _randomProvider,
             _physicsProvider,

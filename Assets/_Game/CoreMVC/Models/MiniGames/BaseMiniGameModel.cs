@@ -3,7 +3,7 @@
 public abstract class BaseMiniGameModel : IMiniGameModel
 {
     public event Action OnMiniGameStarted;
-    public event Action OnMiniGameEnded;
+    public event Action<bool> OnMiniGameEnded;
     
     public abstract MiniGameType Type { get; }
     public abstract TouchInputType InputTypes { get; }
@@ -43,9 +43,9 @@ public abstract class BaseMiniGameModel : IMiniGameModel
         _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
     }
 
-    void HandleTimerEnded ()
+    void HandleTimerEnded (bool hasCompleted)
     {
-        OnMiniGameEnded?.Invoke();
+        OnMiniGameEnded?.Invoke(hasCompleted);
     }
 
     public void Dispose ()

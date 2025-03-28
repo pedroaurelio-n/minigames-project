@@ -2,7 +2,7 @@
 
 public interface IMiniGameTimerModel : IDisposable
 {
-    event Action OnTimerEnded;
+    event Action<bool> OnTimerEnded;
     
     void Initialize ();
     void ForceComplete ();

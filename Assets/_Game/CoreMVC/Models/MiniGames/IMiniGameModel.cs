@@ -3,7 +3,7 @@
 public interface IMiniGameModel : IDisposable
 {
     event Action OnMiniGameStarted;
-    event Action OnMiniGameEnded;
+    event Action<bool> OnMiniGameEnded;
     
     MiniGameType Type { get; }
     TouchInputType InputTypes { get; }

@@ -15,11 +15,13 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
 
     public ThrowObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
-        SceneView sceneView
+        SceneView sceneView,
+        IRandomProvider randomProvider
     ) : base(miniGameManagerModel, sceneView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as ThrowObjectsSceneView;
+        _randomProvider = randomProvider;
     }
 
     public override void Initialize ()
@@ -35,7 +37,11 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         AddViewListeners();
     }
 
-    protected override void SetupMiniGame () { }
+    protected override void SetupMiniGame()
+    {
+        _sceneView.Container.transform.position =
+            _sceneView.ContainerSpawnPoints[_randomProvider.Range(0, _sceneView.ContainerSpawnPoints.Length)].position;
+    }
 
     protected override bool CheckWinCondition (bool timerEnded)
     {
@@ -80,7 +86,7 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     {
         ThrowableObjectView obj = Object.Instantiate(
             _sceneView.ThrowableObjectPrefab,
-            _sceneView.SpawnPoint.transform.position,
+            _sceneView.ThrowableSpawnPoint.transform.position,
             Quaternion.identity,
             _sceneView.transform
         );

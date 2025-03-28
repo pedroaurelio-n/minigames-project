@@ -4,6 +4,7 @@ using VContainer.Unity;
 public class GameInstaller : IInstaller
 {
     readonly ILoadingManager _loadingManager;
+    readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly GameUIView _gameUIView;
     readonly SceneView _sceneView;
@@ -15,6 +16,7 @@ public class GameInstaller : IInstaller
     
     public GameInstaller (
         ILoadingManager loadingManager,
+        IPlayerInfoModel playerInfoModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         GameUIView gameUIView,
         SceneView sceneView,
@@ -26,6 +28,7 @@ public class GameInstaller : IInstaller
     )
     {
         _loadingManager = loadingManager;
+        _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _gameUIView = gameUIView;
         _sceneView = sceneView;
@@ -41,6 +44,7 @@ public class GameInstaller : IInstaller
         // builder.RegisterInstance(_settingsManager.CardListSettings.Instance);
         
         builder.RegisterInstance(_loadingManager);
+        builder.RegisterInstance(_playerInfoModel);
         builder.RegisterInstance(_gameSessionInfoProvider);
         builder.RegisterInstance(_randomProvider);
         builder.RegisterInstance(_physicsProvider);

@@ -17,6 +17,7 @@ public class GameCore : IDisposable
     readonly LifetimeScope _gameScope;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
+    readonly IPlayerInfoModel _playerInfoModel;
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
@@ -28,6 +29,7 @@ public class GameCore : IDisposable
         LifetimeScope gameScope,
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
+        IPlayerInfoModel playerInfoModel,
         SettingsManager settingsManager,
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
@@ -37,6 +39,7 @@ public class GameCore : IDisposable
         _gameScope = gameScope;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
+        _playerInfoModel = playerInfoModel;
         _settingsManager = settingsManager;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
@@ -73,6 +76,7 @@ public class GameCore : IDisposable
         
         GameInstaller installer = new(
             _loadingManager,
+            _playerInfoModel,
             _gameSessionInfoProvider,
             GameUIView,
             SceneView,

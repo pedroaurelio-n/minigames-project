@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MiniGameTimerModel : IMiniGameTimerModel
 {
-    public event Action OnTimerEnded;
+    public event Action<bool> OnTimerEnded;
 
     readonly MiniGameOptions _miniGameOptions;
     readonly UniqueCoroutine _timerCoroutine;
 
     float _timer;
+    bool _hasCompleted;
 
     public MiniGameTimerModel (
         MiniGameOptions miniGameOptions,
@@ -27,6 +28,7 @@ public class MiniGameTimerModel : IMiniGameTimerModel
 
     public void ForceComplete ()
     {
+        _hasCompleted = true;
         _timer = 0;
     }
 
@@ -40,7 +42,7 @@ public class MiniGameTimerModel : IMiniGameTimerModel
             yield return null;
         }
         
-        OnTimerEnded?.Invoke();
+        OnTimerEnded?.Invoke(_hasCompleted);
     }
 
     public void Dispose ()

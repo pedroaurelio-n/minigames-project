@@ -10,6 +10,8 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     const float LOADING_SPEED = 0.5f;
     const string START_SCENE = "MiniGame1";
     
+    [field: SerializeField] public LoadingInfoUIView LoadingInfoUIView { get; private set; }
+    
     [SerializeField] GameObject[] loadingSceneObjects;
     [SerializeField] GameObject[] loadingUIObjects;
     [SerializeField] Button startButton;
@@ -18,6 +20,8 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     [SerializeField] FadeToBlackManager fadeToBlackManager;
     
     public ApplicationSession ApplicationSession { get; private set; }
+    
+    LoadingInfoUIController _loadingInfoUIController;
 
     float _loadingProgress;
     float _targetProgress;
@@ -51,6 +55,13 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
         foreach (GameObject obj in loadingSceneObjects)
             obj.SetActive(true);
         
+        if (ApplicationSession?.GameSession?.PlayerInfoModel != null && _loadingInfoUIController == null)
+            _loadingInfoUIController = new LoadingInfoUIController(
+                LoadingInfoUIView,
+                ApplicationSession.GameSession.PlayerInfoModel
+            );
+        _loadingInfoUIController?.Enable();
+        
         fadeToBlackManager.FadeOut(CompleteFadeOut);
 
         void CompleteFadeOut ()
@@ -83,6 +94,7 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 
     void CompleteLoad ()
     {
+        _loadingInfoUIController?.Disable();
         ApplicationSession.OnInitializationComplete -= CompleteLoad;
         
         foreach (GameObject obj in loadingSceneObjects)

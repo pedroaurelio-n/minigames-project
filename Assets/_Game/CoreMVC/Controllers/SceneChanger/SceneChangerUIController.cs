@@ -59,7 +59,7 @@ public class SceneChangerUIController : IDisposable
         _view.OnClick -= HandleViewClick;
     }
 
-    void HandleTimerEnded () => ChangeScene();
+    void HandleTimerEnded (bool _) => ChangeScene();
 
     void HandleViewClick () => ChangeScene();
 

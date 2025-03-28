@@ -1,4 +1,6 @@
-﻿public interface IMiniGameManagerModel
+﻿using System;
+
+public interface IMiniGameManagerModel : IDisposable
 {
     IMiniGameModel ActiveMiniGame { get; }
     MiniGameType ActiveMiniGameType { get; }

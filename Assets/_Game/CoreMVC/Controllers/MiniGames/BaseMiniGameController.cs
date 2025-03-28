@@ -50,9 +50,10 @@ public abstract class BaseMiniGameController : IDisposable
         DebugUtils.Log(ActiveMiniGame.Instructions);
     }
 
-    void HandleMiniGameEnded ()
+    void HandleMiniGameEnded (bool hasCompleted)
     {
-        CheckWinCondition(true);
+        if (!hasCompleted)
+            CheckWinCondition(true);
     }
     
     public virtual void Dispose ()
