@@ -1,11 +1,10 @@
-using UnityEngine;
-
 public class GameModel : IGameModel
 {
     // public IMouseInputModel MouseInputModel { get; }
     public ITouchInputModel TouchInputModel { get; }
     public IDragModel DragModel { get; }
     public IPressModel PressModel { get; }
+    public ICameraMoveModel CameraMoveModel { get; }
     
     public ISceneChangerModel SceneChangerModel { get; }
     
@@ -13,13 +12,12 @@ public class GameModel : IGameModel
     public IMiniGameModelFactory MiniGameModelFactory { get; }
     public IMiniGameManagerModel MiniGameManagerModel { get; }
 
-    public Camera MainCamera { get; private set; }
-
     public GameModel (
         // IMouseInputModel mouseInputModel,
         ITouchInputModel touchInputModel,
         IDragModel dragModel,
         IPressModel pressModel,
+        ICameraMoveModel cameraMoveModel,
         ISceneChangerModel sceneChangerModel,
         IMiniGameTimerModel miniGameTimerModel,
         IMiniGameModelFactory miniGameModelFactory,
@@ -30,6 +28,7 @@ public class GameModel : IGameModel
         TouchInputModel = touchInputModel;
         DragModel = dragModel;
         PressModel = pressModel;
+        CameraMoveModel = cameraMoveModel;
         SceneChangerModel = sceneChangerModel;
         MiniGameTimerModel = miniGameTimerModel;
         MiniGameModelFactory = miniGameModelFactory;
@@ -38,11 +37,10 @@ public class GameModel : IGameModel
 
     public void Initialize ()
     {
-        MainCamera = Camera.main;
         // MouseInputModel.SetMainCamera(MainCamera);
-        TouchInputModel.SetMainCamera(MainCamera);
         DragModel.Initialize();
         PressModel.Initialize();
+        CameraMoveModel.Initialize();
         
         MiniGameTimerModel.Initialize();
         MiniGameManagerModel.Initialize();

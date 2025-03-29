@@ -14,17 +14,12 @@ public class TouchInputModel : ITouchInputModel
     public event Action<Vector2> OnTouchDragBegan;
     public event Action<Vector2> OnTouchDragMoved;
     public event Action<Vector2> OnTouchDragEnded;
-
-    public Camera MainCamera => _mainCamera;
     
     readonly TapInputOptions _tapInputOptions;
     readonly SwipeInputOptions _swipeInputOptions;
     readonly LongPressInputOptions _longPressInputOptions;
     readonly TwoPointMoveInputOptions _twoPointMoveInputOptions;
     readonly TwoPointZoomInputOptions _twoPointZoomInputOptions;
-    
-    //TODO pedro: create camera interface
-    Camera _mainCamera;
     
     bool _longPressStarted;
 
@@ -45,8 +40,6 @@ public class TouchInputModel : ITouchInputModel
         _twoPointMoveInputOptions = twoPointMoveInputOptions;
         _twoPointZoomInputOptions = twoPointZoomInputOptions;
     }
-    
-    public void SetMainCamera (Camera mainCamera) => _mainCamera = mainCamera;
 
     public void PerformTap (Vector2 startPosition, Vector2 endPosition, float duration)
     {

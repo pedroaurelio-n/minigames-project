@@ -84,6 +84,7 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
 
     void HandleSwipePerformed (Vector3 swipeDirection)
     {
+        //TODO pedro: use object pooling to reuse all these dynamically created objects
         ThrowableObjectView obj = Object.Instantiate(
             _sceneView.ThrowableObjectPrefab,
             _sceneView.ThrowableSpawnPoint.transform.position,

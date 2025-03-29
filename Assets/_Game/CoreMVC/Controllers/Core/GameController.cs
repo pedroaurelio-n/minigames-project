@@ -9,6 +9,7 @@ public class GameController : IDisposable
     public TapObjectsMiniGameController TapObjectsMiniGameController { get; }
     public ThrowObjectsMiniGameController ThrowObjectsMiniGameController { get; }
     public DragObjectsMiniGameController DragObjectsMiniGameController { get; }
+    public FindObjectMiniGameController FindObjectMiniGameController { get; }
 
     public GameController (
         // MouseInputController mouseInputController,
@@ -16,7 +17,8 @@ public class GameController : IDisposable
         SceneChangerUIController sceneChangerUIController,
         TapObjectsMiniGameController tapObjectsMiniGameController,
         ThrowObjectsMiniGameController throwObjectsMiniGameController,
-        DragObjectsMiniGameController dragObjectsMiniGameController
+        DragObjectsMiniGameController dragObjectsMiniGameController,
+        FindObjectMiniGameController findObjectMiniGameController
     )
     {
         // MouseInputController = mouseInputController;
@@ -25,6 +27,7 @@ public class GameController : IDisposable
         TapObjectsMiniGameController = tapObjectsMiniGameController;
         ThrowObjectsMiniGameController = throwObjectsMiniGameController;
         DragObjectsMiniGameController = dragObjectsMiniGameController;
+        FindObjectMiniGameController = findObjectMiniGameController;
     }
 
     public void Initialize ()
@@ -35,6 +38,7 @@ public class GameController : IDisposable
         TapObjectsMiniGameController.Initialize();
         ThrowObjectsMiniGameController.Initialize();
         DragObjectsMiniGameController.Initialize();
+        FindObjectMiniGameController.Initialize();
     }
 
     public void LateInitialize ()

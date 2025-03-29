@@ -21,6 +21,7 @@ public class GameCore : IDisposable
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
+    readonly ICameraProvider _cameraProvider;
     readonly ICoroutineRunner _coroutineRunner;
 
     LifetimeScope _coreScope;
@@ -33,6 +34,7 @@ public class GameCore : IDisposable
         SettingsManager settingsManager,
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
+        ICameraProvider cameraProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -43,12 +45,15 @@ public class GameCore : IDisposable
         _settingsManager = settingsManager;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
+        _cameraProvider = cameraProvider;
         _coroutineRunner = coroutineRunner;
     }
 
     public void Initialize ()
     {
         _coreScope = CreateGameScope();
+        
+        _cameraProvider.SetMainCamera(Camera.main);
 
         GameModel = _coreScope.Container.Resolve<IGameModel>();
         GameModel.Initialize();
@@ -84,6 +89,7 @@ public class GameCore : IDisposable
             _settingsManager,
             _randomProvider,
             _physicsProvider,
+            _cameraProvider,
             _coroutineRunner
         );
         

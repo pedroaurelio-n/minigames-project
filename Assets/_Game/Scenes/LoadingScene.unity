@@ -552,6 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <LoadingInfoUIView>k__BackingField: {fileID: 1903849697}
+  loadingText: {fileID: 1179340966}
   loadingSceneObjects:
   - {fileID: 767869152}
   - {fileID: 1432623890}

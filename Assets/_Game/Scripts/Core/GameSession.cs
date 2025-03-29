@@ -23,6 +23,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     SettingsManager _settingsManager;
     IRandomProvider _randomProvider;
     IPhysicsProvider _physicsProvider;
+    ICameraProvider _cameraProvider;
     CoroutineRunner _coroutineRunner;
     
     public GameSession (
@@ -57,6 +58,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _settingsManager = new SettingsManager();
         _randomProvider = new RandomProvider();
         _physicsProvider = new PhysicsProvider();
+        _cameraProvider = new CameraProvider();
 
         _coroutineRunner = new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
         _coroutineRunner.transform.SetParent(_gameScope.transform);
@@ -72,6 +74,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _settingsManager,
             _randomProvider,
             _physicsProvider,
+            _cameraProvider,
             _coroutineRunner
         );
         _gameCore.OnInitializationComplete += HandleCoreInitializationComplete;

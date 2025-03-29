@@ -5,6 +5,7 @@ public class DragModel : IDragModel
     public bool IsDragging { get; private set; }
     public IDraggable CurrentDraggable { get; private set; }
     
+    readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     readonly IPhysicsProvider _physicsProvider;
     readonly LayerMaskOptions _layerMaskOptions;
@@ -12,11 +13,13 @@ public class DragModel : IDragModel
     Collider _currentDraggableCollider;
 
     public DragModel (
+        ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel,
         IPhysicsProvider physicsProvider,
         LayerMaskOptions layerMaskOptions
     )
     {
+        _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;
         _physicsProvider = physicsProvider;
         _layerMaskOptions = layerMaskOptions;
@@ -43,10 +46,10 @@ public class DragModel : IDragModel
 
     void HandleTouchDragBegan (Vector2 touchPosition)
     {
-        if (_touchInputModel.MainCamera == null)
+        if (_cameraProvider.MainCamera == null)
             return;
         
-        Ray ray = _touchInputModel.MainCamera.ScreenPointToRay(touchPosition);
+        Ray ray = _cameraProvider.MainCamera.ScreenPointToRay(touchPosition);
 
         if (!_physicsProvider.Raycast(ray, _layerMaskOptions.InteractableLayers, out RaycastHit hit))
             return;
@@ -96,9 +99,9 @@ public class DragModel : IDragModel
 
     Vector3 GetCorrectedWorldPosition (Vector2 touchPosition)
     {
-        float depth = Mathf.Abs(_touchInputModel.MainCamera.transform.position.z);
+        float depth = Mathf.Abs(_cameraProvider.MainCamera.transform.position.z);
         Vector3 touchCorrectedPosition = new(touchPosition.x, touchPosition.y, depth);
-        return _touchInputModel.MainCamera.ScreenToWorldPoint(touchCorrectedPosition);
+        return _cameraProvider.MainCamera.ScreenToWorldPoint(touchCorrectedPosition);
     }
 
     public void Dispose ()

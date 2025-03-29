@@ -23,9 +23,6 @@ public interface ITouchInputModel
     event Action<Vector2> OnTouchDragMoved;
     event Action<Vector2> OnTouchDragEnded;
     
-    Camera MainCamera { get; }
-    
-    void SetMainCamera (Camera mainCamera);
     void PerformTap (Vector2 startPosition, Vector2 endPosition, float duration);
     void PerformSwipe (Vector2 startPosition, Vector2 endPosition, float duration);
     void EvaluateLongPressUpdate (

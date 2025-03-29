@@ -5,16 +5,19 @@ public class PressModel : IPressModel
 {
     public event Action<IPressable, Vector2> OnTapPerformed;
     
+    readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     readonly IPhysicsProvider _physicsProvider;
     readonly LayerMaskOptions _layerMaskOptions;
 
     public PressModel (
+        ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel,
         IPhysicsProvider physicsProvider,
         LayerMaskOptions layerMaskOptions
     )
     {
+        _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;
         _physicsProvider = physicsProvider;
         _layerMaskOptions = layerMaskOptions;
@@ -37,10 +40,10 @@ public class PressModel : IPressModel
 
     void HandleTapPerformed (Vector2 touchPosition)
     {
-        if (_touchInputModel.MainCamera == null)
+        if (_cameraProvider.MainCamera == null)
             return;
         
-        Ray ray = _touchInputModel.MainCamera.ScreenPointToRay(touchPosition);
+        Ray ray = _cameraProvider.MainCamera.ScreenPointToRay(touchPosition);
 
         if (!_physicsProvider.Raycast(ray, _layerMaskOptions.InteractableLayers, out RaycastHit hit))
             return;

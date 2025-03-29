@@ -31,7 +31,11 @@ public class PlayerInfoModel : IPlayerInfoModel
 
     public int GetLivesChangeType ()
     {
-        int changeType = _previousLives == CurrentLives ? 0 : _previousLives < CurrentLives ? 1 : -1;
+        int changeType = _previousLives == CurrentLives || CurrentLives == START_LIVES
+            ? 0
+            : _previousLives < CurrentLives
+                ? 1
+                : -1;
         _previousLives = CurrentLives;
         return changeType;
     }

@@ -3,18 +3,21 @@
 public class MiniGameModelFactory : IMiniGameModelFactory
 {
     readonly IMiniGameTimerModel _miniGameTimerModel;
+    readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     readonly IPressModel _pressModel;
     readonly IDragModel _dragModel;
 
     public MiniGameModelFactory (
         IMiniGameTimerModel miniGameTimerModel,
+        ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel,
         IPressModel pressModel,
         IDragModel dragModel
     )
     {
         _miniGameTimerModel = miniGameTimerModel;
+        _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;
         _pressModel = pressModel;
         _dragModel = dragModel;
@@ -39,13 +42,18 @@ public class MiniGameModelFactory : IMiniGameModelFactory
             case MiniGameType.ThrowObjects:
                 IThrowObjectsMiniGameModel throwObjectsMiniGameModel = new ThrowObjectsMiniGameModel(
                     _miniGameTimerModel,
+                    _cameraProvider,
                     _touchInputModel
                 );
                 return throwObjectsMiniGameModel;
             case MiniGameType.LongPressObjects:
                 return null;
             case MiniGameType.FindObject:
-                return null;
+                IFindObjectMiniGameModel findObjectMiniGameModel = new FindObjectMiniGameModel(
+                    _miniGameTimerModel,
+                    _cameraProvider
+                );
+                return findObjectMiniGameModel;
             case MiniGameType.TurnShooter:
                 return null;
             case MiniGameType.Runner:

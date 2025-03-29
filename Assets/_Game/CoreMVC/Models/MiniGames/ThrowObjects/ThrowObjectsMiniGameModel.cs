@@ -9,13 +9,16 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
     public override TouchInputType InputTypes => TouchInputType.Swipe;
     public override string Instructions => "Score a point to win!";
 
+    readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     
     public ThrowObjectsMiniGameModel (
         IMiniGameTimerModel miniGameTimerModel,
+        ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel
     ) : base(miniGameTimerModel)
     {
+        _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;
     }
 
@@ -39,7 +42,8 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
         float duration
     )
     {
-        Vector3 swipeDirection = ((Vector3)rawDirection * 5f / Screen.dpi) + _touchInputModel.MainCamera.transform.forward * 25f;
+        //TODO move magic numbers to options
+        Vector3 swipeDirection = ((Vector3)rawDirection * 10f / Screen.dpi) + _cameraProvider.MainCamera.transform.forward * 23f;
         OnSwipePerformed?.Invoke(swipeDirection);
     }
 }

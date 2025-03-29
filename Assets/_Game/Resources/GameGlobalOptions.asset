@@ -37,4 +37,4 @@ MonoBehaviour:
     <TwoPointZoomInputOptions>k__BackingField:
       <MinZoomDistance>k__BackingField: 10
   <MiniGameOptions>k__BackingField:
-    <BaseMiniGameDuration>k__BackingField: 10
+    <BaseMiniGameDuration>k__BackingField: 8

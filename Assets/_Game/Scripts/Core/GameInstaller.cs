@@ -12,6 +12,7 @@ public class GameInstaller : IInstaller
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
+    readonly ICameraProvider _cameraProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     public GameInstaller (
@@ -24,6 +25,7 @@ public class GameInstaller : IInstaller
         SettingsManager settings,
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
+        ICameraProvider cameraProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -36,6 +38,7 @@ public class GameInstaller : IInstaller
         _settingsManager = settings;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
+        _cameraProvider = cameraProvider;
         _coroutineRunner = coroutineRunner;
     }
     
@@ -48,6 +51,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_gameSessionInfoProvider);
         builder.RegisterInstance(_randomProvider);
         builder.RegisterInstance(_physicsProvider);
+        builder.RegisterInstance(_cameraProvider);
         builder.RegisterInstance(_coroutineRunner);
         
         builder.RegisterInstance(_gameUIView);
@@ -75,6 +79,8 @@ public class GameInstaller : IInstaller
         builder.Register<ITouchInputModel, TouchInputModel>(Lifetime.Scoped);
         builder.Register<IDragModel, DragModel>(Lifetime.Scoped);
         builder.Register<IPressModel, PressModel>(Lifetime.Scoped);
+
+        builder.Register<ICameraMoveModel, CameraMoveModel>(Lifetime.Scoped);
         
         builder.Register<ISceneChangerModel, SceneChangerModel>(Lifetime.Scoped);
 
@@ -92,6 +98,7 @@ public class GameInstaller : IInstaller
         builder.Register<TapObjectsMiniGameController>(Lifetime.Scoped);
         builder.Register<ThrowObjectsMiniGameController>(Lifetime.Scoped);
         builder.Register<DragObjectsMiniGameController>(Lifetime.Scoped);
+        builder.Register<FindObjectMiniGameController>(Lifetime.Scoped);
         
         builder.Register<GameController>(Lifetime.Scoped);
     }
