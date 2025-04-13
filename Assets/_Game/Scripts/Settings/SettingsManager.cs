@@ -1,10 +1,10 @@
 public class SettingsManager
 {
-    // public SettingsProvider<ICardListSettings, CardListSettings> CardListSettings
-    // {
-    //     get;
-    //     private set;
-    // }
+    public SettingsProvider<IMiniGameSettings, MiniGameSettings> MiniGameSettings
+    {
+        get;
+        private set;
+    }
 
     public SettingsManager ()
     {
@@ -13,6 +13,6 @@ public class SettingsManager
 
     void InitializeSettings ()
     {
-        // CardListSettings = new SettingsProvider<ICardListSettings, CardListSettings>("card-list-settings");
+        MiniGameSettings = new SettingsProvider<IMiniGameSettings, MiniGameSettings>("mini-game-settings");
     }
 }

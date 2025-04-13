@@ -1747,7 +1747,6 @@ MonoBehaviour:
   <FindableObjectPrefab>k__BackingField: {fileID: 7517316277500314627, guid: b3fce4d2719084ba8ba78930851a2e61,
     type: 3}
   <PossiblePoints>k__BackingField:
-  - {fileID: 4344291382553464237}
   - {fileID: 1377119767522814538}
   - {fileID: 1644463935877589078}
   - {fileID: 5863479528083685365}

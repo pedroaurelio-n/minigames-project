@@ -43,7 +43,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(_cameraProvider);
         builder.RegisterInstance(_coroutineRunner);
         
-        // builder.RegisterInstance(_settingsManager.CardListSettings.Instance);
+        builder.RegisterInstance(_settingsManager.MiniGameSettings.Instance);
 
         builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.FadeTransitionOptions);
