@@ -46,18 +46,18 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _touchInputModel
                 );
                 return throwObjectsMiniGameModel;
-            case MiniGameType.LongPressObjects:
-                return null;
             case MiniGameType.FindObject:
                 IFindObjectMiniGameModel findObjectMiniGameModel = new FindObjectMiniGameModel(
                     _miniGameTimerModel,
                     _cameraProvider
                 );
                 return findObjectMiniGameModel;
-            case MiniGameType.TurnShooter:
-                return null;
-            case MiniGameType.Runner:
-                return null;
+            // case MiniGameType.LongPressObjects:
+            //     return null;
+            // case MiniGameType.TurnShooter:
+            //     return null;
+            // case MiniGameType.Runner:
+            //     return null;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

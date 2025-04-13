@@ -7,10 +7,11 @@ public interface IGameModel : IDisposable
     IDragModel DragModel { get; }
     IPressModel PressModel { get; }
     ICameraMoveModel CameraMoveModel { get; }
-    ISceneChangerModel SceneChangerModel { get; }
+    IMiniGameSceneChangerModel MiniGameSceneChangerModel { get; }
     IMiniGameTimerModel MiniGameTimerModel { get; }
     IMiniGameModelFactory MiniGameModelFactory { get; }
     IMiniGameManagerModel MiniGameManagerModel { get; }
+    IMiniGameSelectorModel MiniGameSelectorModel { get; }
 
     void Initialize ();
     void LateInitialize ();

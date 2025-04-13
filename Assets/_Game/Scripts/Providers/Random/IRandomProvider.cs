@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,4 +15,5 @@ public interface IRandomProvider
     Vector3 Range (Vector3 min, Vector3 max);
 
     T WeightedRandom<T> (List<WeightedObject<T>> weightedList);
+    T RandomEnumValue<T> () where T : Enum;
 }

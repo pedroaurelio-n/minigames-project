@@ -5,16 +5,19 @@
 
     IMiniGameModel _activeMiniGame;
 
+    readonly IMiniGameSelectorModel _miniGameSelectorModel;
     readonly IMiniGameModelFactory _miniGameModelFactory;
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
 
     public MiniGameManagerModel (
+        IMiniGameSelectorModel miniGameSelectorModel,
         IMiniGameModelFactory miniGameModelFactory,
         IPlayerInfoModel playerInfoModel,
         IGameSessionInfoProvider gameSessionInfoProvider
     )
     {
+        _miniGameSelectorModel = miniGameSelectorModel;
         _miniGameModelFactory = miniGameModelFactory;
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
@@ -22,16 +25,21 @@
 
     public void Initialize ()
     {
-        MiniGameType chosenType = (MiniGameType)(_gameSessionInfoProvider.CurrentSceneIndex - 1);
+        //TODO pedro: handle this when other non-minigame scenes exists
+        // if (_gameSessionInfoProvider.CurrentSceneIndex > _miniGameSelectorModel.AllTypes.Count)
+        //     return;
+        
+        MiniGameType chosenType = (MiniGameType)_gameSessionInfoProvider.CurrentSceneIndex;
         _activeMiniGame = _miniGameModelFactory.CreateMiniGameBasedOnType(chosenType);
-        //TODO pedro: remove null conditional
-        _activeMiniGame?.Initialize();
+        _activeMiniGame.Initialize();
         AddMiniGameListeners(_activeMiniGame);
+        
+        _gameSessionInfoProvider.CurrentMiniGameType = ActiveMiniGameType;
     }
 
     public void LateInitialize ()
     {
-        _activeMiniGame?.LateInitialize();
+        _activeMiniGame.LateInitialize();
     }
 
     void AddMiniGameListeners(IMiniGameModel activeMiniGame)
