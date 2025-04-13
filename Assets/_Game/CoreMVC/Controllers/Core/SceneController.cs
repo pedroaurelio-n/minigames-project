@@ -1,6 +1,6 @@
 using System;
 
-public class GameController : IDisposable
+public class SceneController : IDisposable
 {
     // public MouseInputController MouseInputController { get; }
     public TouchInputController TouchInputController { get; }
@@ -11,7 +11,7 @@ public class GameController : IDisposable
     public DragObjectsMiniGameController DragObjectsMiniGameController { get; }
     public FindObjectMiniGameController FindObjectMiniGameController { get; }
 
-    public GameController (
+    public SceneController (
         // MouseInputController mouseInputController,
         TouchInputController touchInputController,
         MiniGameSceneChangerController miniGameSceneChangerController,
@@ -45,14 +45,5 @@ public class GameController : IDisposable
     {
     }
 
-    public void Dispose()
-    {
-        //TODO pedro: leave empty after separating scopes
-        TouchInputController.Dispose();
-        SceneChangerUIController.Dispose();
-        TapObjectsMiniGameController.Dispose();
-        ThrowObjectsMiniGameController.Dispose();
-        DragObjectsMiniGameController.Dispose();
-        FindObjectMiniGameController.Dispose();
-    }
+    public void Dispose() { }
 }

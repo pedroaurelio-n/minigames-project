@@ -4,7 +4,7 @@ using UnityEngine;
 public class BaseSceneChangerController : IDisposable
 {
     protected readonly ISceneChangerModel Model;
-    protected readonly GameUIView GameUIView;
+    protected readonly SceneUIView SceneUIView;
     
     protected bool IsChangingScene;
 
@@ -12,11 +12,11 @@ public class BaseSceneChangerController : IDisposable
     
     public BaseSceneChangerController (
         ISceneChangerModel model,
-        GameUIView gameUIView
+        SceneUIView sceneUIView
     )
     {
         Model = model;
-        GameUIView = gameUIView;
+        SceneUIView = sceneUIView;
         InstantiateSceneChangeButton();
     }
 
@@ -35,7 +35,7 @@ public class BaseSceneChangerController : IDisposable
     void InstantiateSceneChangeButton () 
         => _view = GameObject.Instantiate(
             Resources.Load<SceneChangerUIView>("SceneChangerUIView"),
-            GameUIView.ChangeSceneContainer
+            SceneUIView.ChangeSceneContainer
         );
 
     void AddViewListeners ()

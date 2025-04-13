@@ -9,8 +9,8 @@
         IMiniGameSceneChangerModel model,
         IMiniGameTimerModel miniGameTimerModel,
         IMiniGameSelectorModel miniGameSelectorModel,
-        GameUIView gameUIView
-    ) : base(model as ISceneChangerModel, gameUIView)
+        SceneUIView sceneUIView
+    ) : base(model as ISceneChangerModel, sceneUIView)
     {
         _miniGameTimerModel = miniGameTimerModel;
         _miniGameSelectorModel = miniGameSelectorModel;
@@ -36,7 +36,7 @@
             return;
         
         IsChangingScene = true;
-        GameUIView.FadeToBlackManager.FadeIn(() =>
+        SceneUIView.FadeToBlackManager.FadeIn(() =>
             MiniGameSceneChangerModel.ChangeToNewMiniGame(_miniGameSelectorModel.NextType));
     }
 
@@ -46,6 +46,6 @@
             return;
         
         IsChangingScene = true;
-        GameUIView.FadeToBlackManager.FadeIn(MiniGameSceneChangerModel.ChangeToNextMiniGame);
+        SceneUIView.FadeToBlackManager.FadeIn(MiniGameSceneChangerModel.ChangeToNextMiniGame);
     }
 }

@@ -1,4 +1,4 @@
-public class GameModel : IGameModel
+public class SceneModel : ISceneModel
 {
     // public IMouseInputModel MouseInputModel { get; }
     public ITouchInputModel TouchInputModel { get; }
@@ -12,7 +12,7 @@ public class GameModel : IGameModel
     public IMiniGameManagerModel MiniGameManagerModel { get; }
     public IMiniGameSelectorModel MiniGameSelectorModel { get; }
 
-    public GameModel (
+    public SceneModel (
         // IMouseInputModel mouseInputModel,
         ITouchInputModel touchInputModel,
         IDragModel dragModel,
@@ -54,13 +54,5 @@ public class GameModel : IGameModel
         MiniGameManagerModel.LateInitialize();
     }
 
-    public void Dispose()
-    {
-        //TODO pedro: leave empty after separating scopes
-        DragModel.Dispose();
-        PressModel.Dispose();
-        CameraMoveModel.Dispose();
-        MiniGameTimerModel.Dispose();
-        MiniGameManagerModel.Dispose();
-    }
+    public void Dispose() { }
 }

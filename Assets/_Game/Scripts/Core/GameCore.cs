@@ -1,18 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using VContainer;
 using VContainer.Unity;
-using Object = UnityEngine.Object;
 
 public class GameCore : IDisposable
 {
     public event Action OnInitializationComplete;
 
-    public IGameModel GameModel { get; private set; }
-    public GameController GameController { get; private set; }
-    public GameUIView GameUIView { get; private set; }
-    
-    public SceneView SceneView { get; private set; }
+    public ISceneModel SceneModel { get; private set; }
+    public SceneController SceneController { get; private set; }
+    public SceneUIController SceneUIController { get; private set; }
 
     readonly LifetimeScope _gameScope;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
@@ -24,8 +20,15 @@ public class GameCore : IDisposable
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
     readonly ICoroutineRunner _coroutineRunner;
-
-    LifetimeScope _coreScope;
+    
+    SceneView _sceneView;
+    SceneUIView _sceneUIView;
+    
+    LifetimeScope _viewScope;
+    LifetimeScope _uiViewScope;
+    LifetimeScope _modelScope;
+    LifetimeScope _controllerScope;
+    LifetimeScope _uiControllerScope;
 
     public GameCore (
         LifetimeScope gameScope,
@@ -54,56 +57,52 @@ public class GameCore : IDisposable
 
     public void Initialize ()
     {
-        _coreScope = CreateGameScope();
-        
+        SceneViewsFactory.CreateScopes(
+            out _sceneView,
+            out _sceneUIView,
+            out _viewScope,
+            out _uiViewScope,
+            _gameScope,
+            _poolableViewFactory,
+            _gameSessionInfoProvider
+        );
+
         _cameraProvider.SetMainCamera(Camera.main);
 
-        GameModel = _coreScope.Container.Resolve<IGameModel>();
-        GameModel.Initialize();
-    
-        //TODO pedro: separate GameUIController from GameController
-        //TODO pedro: maybe rename it to SceneModel/SceneController/SceneUIView/etc (?)
-        GameController = _coreScope.Container.Resolve<GameController>();
-        GameController.Initialize();
-
-        GameModel.LateInitialize();
-        GameController.LateInitialize();
-
-        GameUIView.FadeToBlackManager.FadeOut(null);
-        OnInitializationComplete?.Invoke();
-    }
-
-    LifetimeScope CreateGameScope ()
-    {
-        //TODO pedro: don't recreate persistent ui view
-        GameUIView = Object.Instantiate(Resources.Load<GameUIView>("GameUIView"));
-
-        SceneView = Object.Instantiate(Resources.Load<SceneView>($"{_gameSessionInfoProvider.CurrentScene}View"));
-        SceneView.Initialize();
-        
-        GameInstaller installer = new(
+        SceneModel = SceneModelFactory.CreateScope(
+            out _modelScope,
+            _uiViewScope,
             _loadingManager,
             _playerInfoModel,
             _gameSessionInfoProvider,
-            GameUIView,
-            SceneView,
-            _poolableViewFactory,
             _settingsManager,
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
             _coroutineRunner
         );
+        SceneModel.Initialize();
         
-        return _gameScope.CreateChild(installer, $"CoreScope");
+        SceneController = SceneControllerFactory.CreateScope(out _controllerScope, _modelScope);
+        SceneController.Initialize();
+        
+        SceneUIController = SceneUIControllerFactory.CreateScope(out _uiControllerScope, _controllerScope);
+        SceneUIController.Initialize();
+
+        SceneModel.LateInitialize();
+        SceneController.LateInitialize();
+        SceneUIController.LateInitialize();
+
+        _sceneUIView.FadeToBlackManager.FadeOut(null);
+        OnInitializationComplete?.Invoke();
     }
 
     public void Dispose ()
     {
-        //TODO pedro: separate scopes for proper disposing
-        GameController.Dispose();
-        GameModel.Dispose();
-        
-        _coreScope.Dispose();
+        _uiControllerScope.Dispose();
+        _controllerScope.Dispose();
+        _modelScope.Dispose();
+        _uiViewScope.Dispose();
+        _viewScope.Dispose();
     }
 }

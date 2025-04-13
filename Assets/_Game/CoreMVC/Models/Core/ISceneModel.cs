@@ -1,6 +1,6 @@
 using System;
 
-public interface IGameModel : IDisposable
+public interface ISceneModel : IDisposable
 {
     // IMouseInputModel MouseInputModel { get; }
     ITouchInputModel TouchInputModel { get; }

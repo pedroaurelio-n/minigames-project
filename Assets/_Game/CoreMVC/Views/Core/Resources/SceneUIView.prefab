@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 3645905213954584621}
   - component: {fileID: 3645905213954584620}
   m_Layer: 5
-  m_Name: GameUIView
+  m_Name: SceneUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
