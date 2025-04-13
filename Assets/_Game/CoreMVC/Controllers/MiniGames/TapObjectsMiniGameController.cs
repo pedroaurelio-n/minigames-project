@@ -12,18 +12,21 @@ public class TapObjectsMiniGameController : BaseMiniGameController
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IRandomProvider _randomProvider;
     readonly TapObjectsSceneView _sceneView;
+    readonly PoolableViewFactory _viewFactory;
 
     HashSet<IPressable> _spawnedObjects = new();
 
     public TapObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
-        IRandomProvider randomProvider
+        IRandomProvider randomProvider,
+        PoolableViewFactory viewFactory
     ) : base(miniGameManagerModel, sceneView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as TapObjectsSceneView;
         _randomProvider = randomProvider;
+        _viewFactory = viewFactory;
     }
 
     public override void Initialize ()
@@ -40,9 +43,10 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
     protected override void SetupMiniGame ()
     {
+        _viewFactory.SetupPool(_sceneView.TappableObjectPrefab);
         for (int i = 0; i < MiniGameModel.BaseObjectsToSpawn; i++)
         {
-            TappableObjectView obj = Object.Instantiate(_sceneView.TappableObjectPrefab, _sceneView.transform);
+            TappableObjectView obj = _viewFactory.GetView<TappableObjectView>(_sceneView.transform);
             obj.transform.position = _randomProvider.Range(
                 new Vector2(-MiniGameModel.MaxSpawnDistance, -MiniGameModel.MaxSpawnDistance),
                 new Vector2(MiniGameModel.MaxSpawnDistance, MiniGameModel.MaxSpawnDistance)
@@ -84,7 +88,7 @@ public class TapObjectsMiniGameController : BaseMiniGameController
         
         _spawnedObjects.Remove(pressable);
         TappableObjectView obj = pressable as TappableObjectView;
-        Object.Destroy(obj.gameObject);
+        _viewFactory.ReleaseView<TappableObjectView>(obj);
 
         if (CheckWinCondition(false))
             MiniGameModel.Complete();
@@ -92,7 +96,13 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
     public override void Dispose ()
     {
-        base.Dispose();
+        foreach (IPressable obj in _spawnedObjects)
+        {
+            TappableObjectView tappableObject = obj as TappableObjectView;
+            tappableObject.Despawn();
+        }
+        
         _spawnedObjects.Clear();
+        base.Dispose();
     }
 }

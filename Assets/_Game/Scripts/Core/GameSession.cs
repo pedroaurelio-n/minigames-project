@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
+using Object = UnityEngine.Object;
 
 public class GameSession : IGameSessionInfoProvider, IDisposable
 {
@@ -19,6 +20,8 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     LifetimeScope _gameScope;
     
     GameCore _gameCore;
+    
+    PoolableViewFactory _poolableViewFactory;
     
     SettingsManager _settingsManager;
     IRandomProvider _randomProvider;
@@ -43,6 +46,10 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
 
         PlayerInfoModel = new PlayerInfoModel();
         PlayerInfoModel.Initialize();
+        
+        GameObject poolParent = new GameObject("ViewFactory");
+        poolParent.transform.SetParent(_gameScope.transform);
+        _poolableViewFactory = new PoolableViewFactory(poolParent.transform);
         
         CreateGameCore();
     }
@@ -71,6 +78,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             this,
             _loadingManager,
             PlayerInfoModel,
+            _poolableViewFactory,
             _settingsManager,
             _randomProvider,
             _physicsProvider,

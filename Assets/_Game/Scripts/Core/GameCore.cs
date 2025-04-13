@@ -18,6 +18,7 @@ public class GameCore : IDisposable
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
     readonly IPlayerInfoModel _playerInfoModel;
+    readonly PoolableViewFactory _poolableViewFactory;
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
@@ -31,6 +32,7 @@ public class GameCore : IDisposable
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
+        PoolableViewFactory poolableViewFactory,
         SettingsManager settingsManager,
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
@@ -42,6 +44,7 @@ public class GameCore : IDisposable
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
         _playerInfoModel = playerInfoModel;
+        _poolableViewFactory = poolableViewFactory;
         _settingsManager = settingsManager;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
@@ -58,6 +61,8 @@ public class GameCore : IDisposable
         GameModel = _coreScope.Container.Resolve<IGameModel>();
         GameModel.Initialize();
     
+        //TODO pedro: separate GameUIController from GameController
+        //TODO pedro: maybe rename it to SceneModel/SceneController/SceneUIView/etc (?)
         GameController = _coreScope.Container.Resolve<GameController>();
         GameController.Initialize();
 
@@ -75,9 +80,6 @@ public class GameCore : IDisposable
 
         SceneView = Object.Instantiate(Resources.Load<SceneView>($"{_gameSessionInfoProvider.CurrentScene}View"));
         SceneView.Initialize();
-    
-        //TODO pedro: don't recreate disabled pool transform parent
-        UIViewFactory uiViewFactory = new();
         
         GameInstaller installer = new(
             _loadingManager,
@@ -85,7 +87,7 @@ public class GameCore : IDisposable
             _gameSessionInfoProvider,
             GameUIView,
             SceneView,
-            uiViewFactory,
+            _poolableViewFactory,
             _settingsManager,
             _randomProvider,
             _physicsProvider,
@@ -98,6 +100,10 @@ public class GameCore : IDisposable
 
     public void Dispose ()
     {
+        //TODO pedro: separate scopes for proper disposing
+        GameController.Dispose();
+        GameModel.Dispose();
+        
         _coreScope.Dispose();
     }
 }

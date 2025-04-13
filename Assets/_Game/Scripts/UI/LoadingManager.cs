@@ -48,6 +48,8 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 
     public void LoadNewScene (string newScene)
     {
+        //TODO pedro: review loading flow/order
+        ApplicationSession.DisposeCurrentScope();
         _currentSceneUnload = SceneManager.UnloadSceneAsync(ApplicationSession.GameSession.CurrentScene);
         _currentSceneUnload.allowSceneActivation = false;
         

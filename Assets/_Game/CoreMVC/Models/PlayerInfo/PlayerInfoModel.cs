@@ -1,5 +1,6 @@
 public class PlayerInfoModel : IPlayerInfoModel
 {
+    //TODO pedro: move to options/settings
     const int START_LIVES = 5;
 
     public int CurrentLives { get; private set; }

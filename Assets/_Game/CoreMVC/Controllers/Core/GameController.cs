@@ -45,5 +45,14 @@ public class GameController : IDisposable
     {
     }
 
-    public void Dispose () { }
+    public void Dispose()
+    {
+        //TODO pedro: leave empty after separating scopes
+        TouchInputController.Dispose();
+        SceneChangerUIController.Dispose();
+        TapObjectsMiniGameController.Dispose();
+        ThrowObjectsMiniGameController.Dispose();
+        DragObjectsMiniGameController.Dispose();
+        FindObjectMiniGameController.Dispose();
+    }
 }

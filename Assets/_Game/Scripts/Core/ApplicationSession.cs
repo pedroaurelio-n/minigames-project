@@ -22,9 +22,13 @@ public class ApplicationSession
     
     public void ChangeScene (string newScene)
     {
-        GameSession.Dispose();
         GameSession.OnInitializationComplete += HandleInitializationComplete;
         GameSession.ChangeScene(newScene);
+    }
+
+    public void DisposeCurrentScope()
+    {
+        GameSession.Dispose();
     }
 
     void HandleInitializationComplete ()

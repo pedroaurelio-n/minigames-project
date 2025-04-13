@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TappableObjectView : MonoBehaviour, IPressable
+public class TappableObjectView : PoolableView, IPressable
 {
     public string Name => gameObject.name;
     

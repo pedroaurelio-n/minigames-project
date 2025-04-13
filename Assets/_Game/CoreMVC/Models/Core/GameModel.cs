@@ -51,5 +51,13 @@ public class GameModel : IGameModel
         MiniGameManagerModel.LateInitialize();
     }
 
-    public void Dispose () { }
+    public void Dispose()
+    {
+        //TODO pedro: leave empty after separating scopes
+        DragModel.Dispose();
+        PressModel.Dispose();
+        CameraMoveModel.Dispose();
+        MiniGameTimerModel.Dispose();
+        MiniGameManagerModel.Dispose();
+    }
 }

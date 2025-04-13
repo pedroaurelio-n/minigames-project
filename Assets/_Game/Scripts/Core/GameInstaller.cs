@@ -8,7 +8,7 @@ public class GameInstaller : IInstaller
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly GameUIView _gameUIView;
     readonly SceneView _sceneView;
-    readonly UIViewFactory _uiViewFactory;
+    readonly PoolableViewFactory _poolableViewFactory;
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
@@ -21,7 +21,7 @@ public class GameInstaller : IInstaller
         IGameSessionInfoProvider gameSessionInfoProvider,
         GameUIView gameUIView,
         SceneView sceneView,
-        UIViewFactory uiViewFactory,
+        PoolableViewFactory poolableViewFactory,
         SettingsManager settings,
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
@@ -34,7 +34,7 @@ public class GameInstaller : IInstaller
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _gameUIView = gameUIView;
         _sceneView = sceneView;
-        _uiViewFactory = uiViewFactory;
+        _poolableViewFactory = poolableViewFactory;
         _settingsManager = settings;
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
@@ -63,7 +63,7 @@ public class GameInstaller : IInstaller
         builder.RegisterInstance(_sceneView.TwoPointMoveInputView);
         builder.RegisterInstance(_sceneView.TwoPointZoomInputView);
         builder.RegisterInstance(_sceneView.TouchDragInputView);
-        builder.RegisterInstance(_uiViewFactory);
+        builder.RegisterInstance(_poolableViewFactory);
 
         builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.FadeTransitionOptions);
