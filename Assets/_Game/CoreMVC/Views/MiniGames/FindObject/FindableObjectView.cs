@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class FindableObjectView : MonoBehaviour
+public class FindableObjectView : PoolableView
 {
     [field: SerializeField] public Renderer Renderer { get; private set; }
 
     [SerializeField] Material findableMaterial;
     [SerializeField] Material normalMaterial;
 
-    public void SetMaterial (bool isFindable) => Renderer.material = isFindable ? findableMaterial : normalMaterial;
+    public void Setup (bool isFindable) => Renderer.material = isFindable ? findableMaterial : normalMaterial;
 }

@@ -10,17 +10,21 @@ public class DragObjectsMiniGameController : BaseMiniGameController
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly DragObjectsSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
-    readonly Dictionary<DraggableObjectColor, int> _coloredObjects = new();
+    readonly PoolableViewFactory _viewFactory;
+    readonly List<DraggableObjectView> _objectViews = new();
+    readonly Dictionary<DraggableObjectColor, int> _colorCounts = new();
 
     public DragObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
-        IRandomProvider randomProvider
+        IRandomProvider randomProvider,
+        PoolableViewFactory viewFactory
     ) : base(miniGameManagerModel, sceneView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as DragObjectsSceneView;
         _randomProvider = randomProvider;
+        _viewFactory = viewFactory;
     }
     
     public override void Initialize ()
@@ -36,18 +40,21 @@ public class DragObjectsMiniGameController : BaseMiniGameController
     {
         base.SetupMiniGame();
         
+        _viewFactory.SetupPool(_sceneView.DraggablePrefab);
         for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
         {
-            DraggableObjectView coloredObj =
-                _sceneView.DraggablePrefabs[_randomProvider.Range(0, _sceneView.DraggablePrefabs.Length)];
-            DraggableObjectView obj = Object.Instantiate(coloredObj, _sceneView.transform);
+            // DraggableObjectView coloredObj =
+            //     _sceneView.DraggablePrefabs[_randomProvider.Range(0, _sceneView.DraggablePrefabs.Length)];
+            DraggableObjectView obj = _viewFactory.GetView<DraggableObjectView>(_sceneView.transform);
+            obj.Setup(_randomProvider.RandomEnumValue<DraggableObjectColor>());
             obj.transform.position = _sceneView.SpawnPoint.transform.position + _randomProvider.Range(
                 new Vector3(-15, 0),
                 new Vector3(15, 0)
             );
             
-            _coloredObjects.TryAdd(obj.Color, 0);
-            _coloredObjects[obj.Color]++;
+            _objectViews.Add(obj);
+            _colorCounts.TryAdd(obj.Color, 0);
+            _colorCounts[obj.Color]++;
         }
     }
 
@@ -55,7 +62,7 @@ public class DragObjectsMiniGameController : BaseMiniGameController
     {
         foreach (DraggableContainerView container in _sceneView.Containers)
         {
-            if (_coloredObjects.TryGetValue(container.Color, out int expectedCount))
+            if (_colorCounts.TryGetValue(container.Color, out int expectedCount))
             {
                 if (container.ValidObjectsCount != expectedCount)
                 {
@@ -123,6 +130,7 @@ public class DragObjectsMiniGameController : BaseMiniGameController
     public override void Dispose ()
     {
         RemoveViewListeners();
+        _objectViews.DisposeAndClear();
         base.Dispose();
     }
 }

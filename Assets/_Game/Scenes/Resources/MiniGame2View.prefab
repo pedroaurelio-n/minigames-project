@@ -1120,10 +1120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4d8d02c720644d1aa31f7eca6aef855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DraggablePrefabs>k__BackingField:
-  - {fileID: 1090960554809913776, guid: 72acb2925efe5c44d91af3e4de3204ce, type: 3}
-  - {fileID: 1090960554809913776, guid: f7dea70d2e080254ab99d44a6dbf39b2, type: 3}
-  - {fileID: 1090960554809913776, guid: 48aaf3bb65d35974e90b515c0d91aafa, type: 3}
+  <DraggablePrefab>k__BackingField: {fileID: 1090960554809913776, guid: 48aaf3bb65d35974e90b515c0d91aafa,
+    type: 3}
   <Containers>k__BackingField:
   - {fileID: 2030895373978378177}
   - {fileID: 5524660737771373394}

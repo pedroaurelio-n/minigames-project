@@ -1,25 +1,31 @@
 using UnityEngine;
 
-public class DraggableObjectView : MonoBehaviour, IDraggable
+public class DraggableObjectView : PoolableView, IDraggable
 {
     [field: SerializeField] public DraggableObjectColor Color { get; private set; }
     
-    [SerializeField] Material dragMaterial;
+    [SerializeField] Material[] defaultMaterials;
+    [SerializeField] Material[] dragMaterials;
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] Rigidbody rigidbody;
 
     public string Name => gameObject.name;
-
+    
     Material _defaultMaterial;
+    Material _dragMaterial;
 
-    void Awake ()
+    public void Setup (DraggableObjectColor randomColor)
     {
-        _defaultMaterial = meshRenderer.material;
+        Color = randomColor;
+        _defaultMaterial = defaultMaterials[(int)randomColor];
+        _dragMaterial = dragMaterials[(int)randomColor];
+
+        meshRenderer.material = _defaultMaterial;
     }
 
     public void OnDragBegan ()
     {
-        meshRenderer.material = dragMaterial;
+        meshRenderer.material = _dragMaterial;
         rigidbody.isKinematic = true;
     }
 

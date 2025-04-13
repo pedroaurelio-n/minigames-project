@@ -44,7 +44,7 @@ public class ObjectPool<T> where T : PoolableView
     T Create ()
     {
         T obj = GameObject.Instantiate(_prefab);
-        obj.Setup(() => _viewFactory.ReleaseView<T>(obj));
+        obj.Setup(() => _viewFactory.ReleaseView(obj));
         obj.gameObject.SetActive(true);
         _activeObjects.Add(obj);
         return obj;

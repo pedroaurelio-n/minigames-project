@@ -14,7 +14,7 @@ public class PoolableViewFactory
     
     public void SetupPool<T> (T prefab) where T : PoolableView
     {
-        SetupPool<T>(nameof(T), prefab);
+        SetupPool<T>(typeof(T).Name, prefab);
     }
 
     public void SetupPool<T> (string poolName, T prefab) where T : PoolableView
@@ -24,7 +24,7 @@ public class PoolableViewFactory
     
     public T GetView<T> (Transform container) where T : PoolableView
     {
-        return GetView<T>(nameof(T), container);
+        return GetView<T>(typeof(T).Name, container);
     }
 
     public T GetView<T> (string poolName, Transform container) where T : PoolableView
@@ -37,9 +37,9 @@ public class PoolableViewFactory
         return poolableObj;
     }
     
-    public void ReleaseView<T> (PoolableView view)
+    public void ReleaseView (PoolableView view)
     {
-        ReleaseView(nameof(T), view);
+        ReleaseView(view.GetType().Name, view);
     }
     
     public void ReleaseView (string poolName, PoolableView view)

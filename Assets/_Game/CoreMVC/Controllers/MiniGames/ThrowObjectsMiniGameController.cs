@@ -10,18 +10,22 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IRandomProvider _randomProvider;
     readonly ThrowObjectsSceneView _sceneView;
+    readonly PoolableViewFactory _viewFactory;
+    readonly List<ThrowableObjectView> _objectViews = new();
 
     bool _hasCompleted;
 
     public ThrowObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
-        IRandomProvider randomProvider
+        IRandomProvider randomProvider,
+        PoolableViewFactory viewFactory
     ) : base(miniGameManagerModel, sceneView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as ThrowObjectsSceneView;
         _randomProvider = randomProvider;
+        _viewFactory = viewFactory;
     }
 
     public override void Initialize ()
@@ -37,6 +41,7 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     {
         base.SetupMiniGame();
         
+        _viewFactory.SetupPool(_sceneView.ThrowableObjectPrefab);
         _sceneView.Container.transform.position =
             _sceneView.ContainerSpawnPoints[_randomProvider.Range(0, _sceneView.ContainerSpawnPoints.Length)].position;
     }
@@ -82,14 +87,9 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
 
     void HandleSwipePerformed (Vector3 swipeDirection)
     {
-        //TODO pedro: use object pooling to reuse all these dynamically created objects
-        ThrowableObjectView obj = Object.Instantiate(
-            _sceneView.ThrowableObjectPrefab,
-            _sceneView.ThrowableSpawnPoint.transform.position,
-            Quaternion.identity,
-            _sceneView.transform
-        );
-        obj.Throw(swipeDirection);
+        ThrowableObjectView obj = _viewFactory.GetView<ThrowableObjectView>(_sceneView.transform);
+        obj.Setup(_sceneView.ThrowableSpawnPoint.position, Quaternion.identity, swipeDirection);
+        _objectViews.Add(obj);
     }
 
     void HandleThrowableEnter ()
@@ -103,6 +103,7 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     public override void Dispose ()
     {
         RemoveViewListeners();
+        _objectViews.DisposeAndClear();
         base.Dispose();
     }
 }

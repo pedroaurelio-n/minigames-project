@@ -12,8 +12,7 @@ public class TapObjectsMiniGameController : BaseMiniGameController
     readonly IRandomProvider _randomProvider;
     readonly TapObjectsSceneView _sceneView;
     readonly PoolableViewFactory _viewFactory;
-
-    HashSet<IPressable> _spawnedObjects = new();
+    readonly HashSet<TappableObjectView> _objectViews = new();
 
     public TapObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
@@ -48,7 +47,7 @@ public class TapObjectsMiniGameController : BaseMiniGameController
                 new Vector2(-MiniGameModel.MaxSpawnDistance, -MiniGameModel.MaxSpawnDistance),
                 new Vector2(MiniGameModel.MaxSpawnDistance, MiniGameModel.MaxSpawnDistance)
             );
-            _spawnedObjects.Add(obj);
+            _objectViews.Add(obj);
         }
     }
 
@@ -57,10 +56,10 @@ public class TapObjectsMiniGameController : BaseMiniGameController
         if (timerEnded)
         {
             //TODO pedro: implement ui
-            string message = _spawnedObjects.Count == 0 ? "YOU WIN THE GAME" : "YOU LOSE THE GAME";
+            string message = _objectViews.Count == 0 ? "YOU WIN THE GAME" : "YOU LOSE THE GAME";
             DebugUtils.Log(message);
         }
-        return _spawnedObjects.Count == 0;
+        return _objectViews.Count == 0;
     }
 
     protected override void AddListeners ()
@@ -80,12 +79,12 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
     void HandleTapPerformed (IPressable pressable, Vector2 tapPosition)
     {
-        if (!_spawnedObjects.Contains(pressable))
+        if (!_objectViews.Contains(pressable as TappableObjectView))
             throw new InvalidOperationException($"Tap performed on invalid scene object.");
         
-        _spawnedObjects.Remove(pressable);
+        _objectViews.Remove(pressable as TappableObjectView);
         TappableObjectView obj = pressable as TappableObjectView;
-        _viewFactory.ReleaseView<TappableObjectView>(obj);
+        _viewFactory.ReleaseView(obj);
 
         if (CheckWinCondition(false))
             MiniGameModel.Complete();
@@ -93,13 +92,7 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
     public override void Dispose ()
     {
-        foreach (IPressable obj in _spawnedObjects)
-        {
-            TappableObjectView tappableObject = obj as TappableObjectView;
-            tappableObject.Despawn();
-        }
-        
-        _spawnedObjects.Clear();
+        _objectViews.DisposeAndClear();
         base.Dispose();
     }
 }

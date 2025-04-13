@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FindObjectMiniGameController : BaseMiniGameController
@@ -10,21 +11,25 @@ public class FindObjectMiniGameController : BaseMiniGameController
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly FindObjectSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
+    readonly PoolableViewFactory _viewFactory;
     readonly UniqueCoroutine checkForObjectRoutine;
+    readonly List<FindableObjectView> _objectViews = new();
 
-    FindableObjectView _objectView;
+    FindableObjectView _targetObject;
     bool _isObjectVisible;
     
     public FindObjectMiniGameController(
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         IRandomProvider randomProvider,
+        PoolableViewFactory viewFactory,
         ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _randomProvider = randomProvider;
         _sceneView = sceneView as FindObjectSceneView;
+        _viewFactory = viewFactory;
 
         checkForObjectRoutine = new UniqueCoroutine(coroutineRunner);
     }
@@ -40,22 +45,26 @@ public class FindObjectMiniGameController : BaseMiniGameController
     protected override void SetupMiniGame()
     {
         base.SetupMiniGame();
+        
+        _viewFactory.SetupPool(_sceneView.FindableObjectPrefab);
         Vector3 randomDirection = _randomProvider.InsideSphere;
         float distance = _randomProvider.Range(0f, 15f);
         
-        _objectView = Object.Instantiate(_sceneView.FindableObjectPrefab);
-        _objectView.SetMaterial(true);
-        _objectView.transform.position =
+        _targetObject = _viewFactory.GetView<FindableObjectView>(_sceneView.transform);
+        _targetObject.Setup(true);
+        _targetObject.transform.position =
             _sceneView.PossiblePoints[_randomProvider.Range(0, _sceneView.PossiblePoints.Length)].position
             + randomDirection * distance;
+        _objectViews.Add(_targetObject);
 
         for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
         {
-            FindableObjectView obj = Object.Instantiate(_sceneView.FindableObjectPrefab);
-            obj.SetMaterial(false);
+            FindableObjectView obj = _viewFactory.GetView<FindableObjectView>(_sceneView.transform);
+            obj.Setup(false);
             obj.transform.position =
                 _sceneView.AllPoints[_randomProvider.Range(0, _sceneView.AllPoints.Length)].position
                 + randomDirection * distance;
+            _objectViews.Add(obj);
         }
         
         checkForObjectRoutine.Start(CheckForObjectRoutine());
@@ -79,7 +88,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
     {
         while (true)
         {
-            _isObjectVisible = _objectView.Renderer.isVisible;
+            _isObjectVisible = _targetObject.Renderer.isVisible;
 
             if (CheckWinCondition(false))
             {
@@ -95,6 +104,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
     public override void Dispose()
     {
         checkForObjectRoutine?.Dispose();
+        _objectViews.DisposeAndClear();
         base.Dispose();
     }
 }
