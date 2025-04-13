@@ -6,11 +6,11 @@ public class GameModel : IGameModel
     public IPressModel PressModel { get; }
     public ICameraMoveModel CameraMoveModel { get; }
     
-    public ISceneChangerModel SceneChangerModel { get; }
-    
+    public IMiniGameSceneChangerModel MiniGameSceneChangerModel { get; }
     public IMiniGameTimerModel MiniGameTimerModel { get; }
     public IMiniGameModelFactory MiniGameModelFactory { get; }
     public IMiniGameManagerModel MiniGameManagerModel { get; }
+    public IMiniGameSelectorModel MiniGameSelectorModel { get; }
 
     public GameModel (
         // IMouseInputModel mouseInputModel,
@@ -18,10 +18,11 @@ public class GameModel : IGameModel
         IDragModel dragModel,
         IPressModel pressModel,
         ICameraMoveModel cameraMoveModel,
-        ISceneChangerModel sceneChangerModel,
+        IMiniGameSceneChangerModel miniGameSceneChangerModel,
         IMiniGameTimerModel miniGameTimerModel,
         IMiniGameModelFactory miniGameModelFactory,
-        IMiniGameManagerModel miniGameManagerModel
+        IMiniGameManagerModel miniGameManagerModel,
+        IMiniGameSelectorModel miniGameSelectorModel
     )
     {
         // MouseInputModel = mouseInputModel;
@@ -29,10 +30,11 @@ public class GameModel : IGameModel
         DragModel = dragModel;
         PressModel = pressModel;
         CameraMoveModel = cameraMoveModel;
-        SceneChangerModel = sceneChangerModel;
+        MiniGameSceneChangerModel = miniGameSceneChangerModel;
         MiniGameTimerModel = miniGameTimerModel;
         MiniGameModelFactory = miniGameModelFactory;
         MiniGameManagerModel = miniGameManagerModel;
+        MiniGameSelectorModel = miniGameSelectorModel;
     }
 
     public void Initialize ()
@@ -44,6 +46,7 @@ public class GameModel : IGameModel
         
         MiniGameTimerModel.Initialize();
         MiniGameManagerModel.Initialize();
+        MiniGameSelectorModel.Initialize();
     }
 
     public void LateInitialize ()

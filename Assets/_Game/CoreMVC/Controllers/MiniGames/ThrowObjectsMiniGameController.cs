@@ -26,10 +26,6 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
 
     public override void Initialize ()
     {
-        //TODO pedro: remove null condition
-        if (_miniGameManagerModel.ActiveMiniGame == null)
-            return;
-        
         if (_miniGameManagerModel.ActiveMiniGameType != MiniGameType)
             return;
 

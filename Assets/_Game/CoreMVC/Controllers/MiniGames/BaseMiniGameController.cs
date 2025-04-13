@@ -37,10 +37,6 @@ public abstract class BaseMiniGameController : IDisposable
 
     protected virtual void RemoveListeners ()
     {
-        //TODO pedro: remove condition
-        if (ActiveMiniGame == null)
-            return;
-        
         ActiveMiniGame.OnMiniGameStarted -= HandleMiniGameStarted;
         ActiveMiniGame.OnMiniGameEnded -= HandleMiniGameEnded;
     }

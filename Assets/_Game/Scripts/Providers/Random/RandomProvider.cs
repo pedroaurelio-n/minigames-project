@@ -69,6 +69,12 @@ public class RandomProvider : IRandomProvider
         
         throw new InvalidOperationException("Weighted random selection failed.");
     }
+
+    public T RandomEnumValue<T> () where T : Enum
+    {
+        Array values = Enum.GetValues(typeof(T));
+        return (T)values.GetValue(Range(0, values.Length));
+    }
 }
 
 public class WeightedObject<T>
