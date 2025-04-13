@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -169,5 +170,11 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     {
         loadingNumber.text = string.Format(PERCENTAGE_FORMAT, Mathf.RoundToInt(_loadingProgress));
         loadingFillBar.fillAmount = _loadingProgress / 100;
+    }
+
+    //TODO pedro: maybe create an ApplicationStatusModel/View to manage quit and pause states
+    void OnApplicationQuit ()
+    {
+        ApplicationSession.DisposeCurrentScope();
     }
 }

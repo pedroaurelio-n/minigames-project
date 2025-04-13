@@ -39,6 +39,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
     
     protected override void SetupMiniGame()
     {
+        base.SetupMiniGame();
         Vector3 randomDirection = _randomProvider.InsideSphere;
         float distance = _randomProvider.Range(0f, 15f);
         

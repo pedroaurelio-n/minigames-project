@@ -38,6 +38,8 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
     protected override void SetupMiniGame ()
     {
+        base.SetupMiniGame();
+        
         _viewFactory.SetupPool(_sceneView.TappableObjectPrefab);
         for (int i = 0; i < MiniGameModel.BaseObjectsToSpawn; i++)
         {

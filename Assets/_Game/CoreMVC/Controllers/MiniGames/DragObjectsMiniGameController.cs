@@ -34,6 +34,8 @@ public class DragObjectsMiniGameController : BaseMiniGameController
 
     protected override void SetupMiniGame ()
     {
+        base.SetupMiniGame();
+        
         for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
         {
             DraggableObjectView coloredObj =

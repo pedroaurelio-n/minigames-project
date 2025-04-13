@@ -3,6 +3,8 @@
 public abstract class BaseMiniGameController : IDisposable
 {
     protected abstract MiniGameType MiniGameType { get; }
+    
+    protected bool Initialized { get; private set; }
 
     IMiniGameModel ActiveMiniGame => _miniGameManagerModel.ActiveMiniGame;
 
@@ -21,22 +23,29 @@ public abstract class BaseMiniGameController : IDisposable
     public virtual void Initialize ()
     {
         _sceneView.SetActiveInputs(ActiveMiniGame.InputTypes);
-        AddListeners();
         SetupMiniGame();
+        AddListeners();
     }
-
-    protected abstract void SetupMiniGame ();
 
     protected abstract bool CheckWinCondition (bool timerEnded);
 
+    protected virtual void SetupMiniGame ()
+    {
+        Initialized = true;
+    }
+
     protected virtual void AddListeners ()
     {
+        if (!Initialized)
+            return;
         ActiveMiniGame.OnMiniGameStarted += HandleMiniGameStarted;
         ActiveMiniGame.OnMiniGameEnded += HandleMiniGameEnded;
     }
 
     protected virtual void RemoveListeners ()
     {
+        if (!Initialized)
+            return;
         ActiveMiniGame.OnMiniGameStarted -= HandleMiniGameStarted;
         ActiveMiniGame.OnMiniGameEnded -= HandleMiniGameEnded;
     }

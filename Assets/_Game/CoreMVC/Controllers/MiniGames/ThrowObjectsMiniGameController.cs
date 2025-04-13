@@ -35,6 +35,8 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
 
     protected override void SetupMiniGame()
     {
+        base.SetupMiniGame();
+        
         _sceneView.Container.transform.position =
             _sceneView.ContainerSpawnPoints[_randomProvider.Range(0, _sceneView.ContainerSpawnPoints.Length)].position;
     }
