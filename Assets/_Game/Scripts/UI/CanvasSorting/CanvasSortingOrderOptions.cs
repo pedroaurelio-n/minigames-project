@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class CanvasSortingOrderOptions : ScriptableObject
 {
@@ -21,6 +24,7 @@ public class CanvasSortingOrderOptions : ScriptableObject
 
     public int GetSortingOrder (CanvasId id) => canvasIds.IndexOf(id);
 
+#if UNITY_EDITOR
     [MenuItem("Assets/Create/Canvas Sorting Order Options")]
     public static void Create ()
     {
@@ -33,4 +37,5 @@ public class CanvasSortingOrderOptions : ScriptableObject
         EditorUtility.FocusProjectWindow();
         Selection.activeObject = asset;
     }
+#endif
 }

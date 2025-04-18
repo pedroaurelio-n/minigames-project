@@ -175,6 +175,6 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     //TODO pedro: maybe create an ApplicationStatusModel/View to manage quit and pause states
     void OnApplicationQuit ()
     {
-        ApplicationSession.DisposeCurrentScope();
+        ApplicationSession?.DisposeCurrentScope();
     }
 }

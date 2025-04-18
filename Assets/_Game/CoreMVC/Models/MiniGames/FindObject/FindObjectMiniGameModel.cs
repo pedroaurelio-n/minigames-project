@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class FindObjectMiniGameModel : BaseMiniGameModel, IFindObjectMiniGameModel
 {
     //TODO pedro: move to options/settings
