@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TwoPointZoomInputView : MonoBehaviour
@@ -7,11 +8,12 @@ public class TwoPointZoomInputView : MonoBehaviour
     
     void Update ()
     {
-        if (TouchUtils.GetTouchCount() != 2)
+        List<Touch> touches = TouchUtils.GetTouches();
+        if (touches.Count != 2)
             return;
 
-        Touch touch1 = TouchUtils.GetFirstTouch();
-        Touch touch2 = TouchUtils.GetSecondTouch();
+        Touch touch1 = touches[0];
+        Touch touch2 = touches[1];
 
         OnTwoPointZoomUpdated(touch1, touch2);
     }

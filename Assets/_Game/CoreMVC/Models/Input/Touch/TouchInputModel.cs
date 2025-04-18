@@ -186,8 +186,11 @@ public class TouchInputModel : ITouchInputModel
             .sqrMagnitude;
         float currentDistance = (touch1Position - touch2Position).sqrMagnitude;
         float difference = previousDistance - currentDistance;
+        
+        if (difference != 0f)
+            DebugUtils.Log($"Two point zoomed by: {difference}");
 
-        if (difference < _twoPointZoomInputOptions.MinZoomDistance)
+        if (Mathf.Abs(difference) < _twoPointZoomInputOptions.MinZoomDistance)
             return;
         OnTwoPointZoomPerformed?.Invoke(difference);
     }

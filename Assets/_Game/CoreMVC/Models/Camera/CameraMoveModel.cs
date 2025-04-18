@@ -3,9 +3,9 @@ using UnityEngine;
 public class CameraMoveModel : ICameraMoveModel
 {
     //TODO pedro: possibly move logic to FindObjectMiniGameModel
-    const float ZOOM_SPEED = 0.001f;
-    const float MIN_CAMERA_ZOOM = 50f;
-    const float MAX_CAMERA_ZOOM = 180f;
+    const float ZOOM_SPEED = 0.01f;
+    const float MIN_CAMERA_ZOOM = 75f;
+    const float MAX_CAMERA_ZOOM = 140f;
     
     const float ROTATION_SPEED = 100f;
     

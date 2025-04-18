@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TouchDragInputView : MonoBehaviour
@@ -7,10 +8,11 @@ public class TouchDragInputView : MonoBehaviour
 
     void Update ()
     {
-        if (TouchUtils.GetTouchCount() != 1)
+        List<Touch> touches = TouchUtils.GetTouches();
+        if (touches.Count != 1)
             return;
 
-        Touch touch = TouchUtils.GetFirstTouch();
+        Touch touch = touches[0];
         OnTouchDragUpdated(touch);
     }
 }

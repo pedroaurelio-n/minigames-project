@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LongPressInputView : MonoBehaviour
@@ -9,10 +10,11 @@ public class LongPressInputView : MonoBehaviour
     
     void Update ()
     {
-        if (TouchUtils.GetTouchCount() == 0)
+        List<Touch> touches = TouchUtils.GetTouches();
+        if (touches.Count == 0)
             return;
 
-        Touch touch = TouchUtils.GetFirstTouch();
+        Touch touch = touches[0];
 
         switch (touch.phase)
         {
