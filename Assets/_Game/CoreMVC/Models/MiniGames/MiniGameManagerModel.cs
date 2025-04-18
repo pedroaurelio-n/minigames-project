@@ -1,5 +1,13 @@
-﻿public class MiniGameManagerModel : IMiniGameManagerModel
+﻿using System;
+using System.Collections;
+using UnityEngine;
+
+public class MiniGameManagerModel : IMiniGameManagerModel
 {
+    const float CHANGE_DELAY = 1.5f;
+    
+    public event Action OnMiniGameChange;
+    
     public IMiniGameModel ActiveMiniGame => _activeMiniGame;
     public MiniGameType ActiveMiniGameType => _activeMiniGame.Type;
 
@@ -9,18 +17,23 @@
     readonly IMiniGameModelFactory _miniGameModelFactory;
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
+    readonly UniqueCoroutine _changeCoroutine;
+    readonly WaitForSeconds _waitForChange;
 
     public MiniGameManagerModel (
         IMiniGameSelectorModel miniGameSelectorModel,
         IMiniGameModelFactory miniGameModelFactory,
         IPlayerInfoModel playerInfoModel,
-        IGameSessionInfoProvider gameSessionInfoProvider
+        IGameSessionInfoProvider gameSessionInfoProvider,
+        ICoroutineRunner coroutineRunner
     )
     {
         _miniGameSelectorModel = miniGameSelectorModel;
         _miniGameModelFactory = miniGameModelFactory;
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
+        _changeCoroutine = new UniqueCoroutine(coroutineRunner);
+        _waitForChange = new WaitForSeconds(CHANGE_DELAY);
     }
 
     public void Initialize ()
@@ -56,14 +69,23 @@
     
     void HandleMiniGameEnded (bool hasCompleted)
     {
+        _changeCoroutine.Start(ChangeCoroutine());
+        
         if (hasCompleted)
             _playerInfoModel.ModifyScore(1);
         else
             _playerInfoModel.ModifyLives(-1);
     }
 
+    IEnumerator ChangeCoroutine ()
+    {
+        yield return _waitForChange;
+        OnMiniGameChange?.Invoke();
+    }
+
     public void Dispose()
     {
+        _changeCoroutine.Dispose();
         RemoveListeners(_activeMiniGame);
         _activeMiniGame?.Dispose();
         _activeMiniGame = null;

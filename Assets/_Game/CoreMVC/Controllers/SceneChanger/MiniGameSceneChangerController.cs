@@ -2,17 +2,17 @@
 {
     IMiniGameSceneChangerModel MiniGameSceneChangerModel => Model as IMiniGameSceneChangerModel;
     
-    readonly IMiniGameTimerModel _miniGameTimerModel;
+    readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IMiniGameSelectorModel _miniGameSelectorModel;
     
     public MiniGameSceneChangerController (
         IMiniGameSceneChangerModel model,
-        IMiniGameTimerModel miniGameTimerModel,
+        IMiniGameManagerModel miniGameManagerModel,
         IMiniGameSelectorModel miniGameSelectorModel,
         SceneUIView sceneUIView
     ) : base(model as ISceneChangerModel, sceneUIView)
     {
-        _miniGameTimerModel = miniGameTimerModel;
+        _miniGameManagerModel = miniGameManagerModel;
         _miniGameSelectorModel = miniGameSelectorModel;
     }
     
@@ -20,15 +20,15 @@
     
     protected override void AddListeners ()
     {
-        _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
+        _miniGameManagerModel.OnMiniGameChange += HandleMiniGameChange;
     }
     
     protected override void RemoveListeners ()
     {
-        _miniGameTimerModel.OnTimerEnded -= HandleTimerEnded;
+        _miniGameManagerModel.OnMiniGameChange -= HandleMiniGameChange;
     }
     
-    void HandleTimerEnded (bool _) => ChangeToRandomMiniGame();
+    void HandleMiniGameChange () => ChangeToRandomMiniGame();
     
     void ChangeToRandomMiniGame ()
     {
