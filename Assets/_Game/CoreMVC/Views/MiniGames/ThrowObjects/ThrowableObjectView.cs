@@ -2,7 +2,7 @@
 
 public class ThrowableObjectView : PoolableView
 {
-    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] Rigidbody rb;
 
     public void Setup (
         Vector3 initialPosition,
@@ -12,6 +12,6 @@ public class ThrowableObjectView : PoolableView
     {
         transform.position = initialPosition;
         transform.rotation = initialRotation;
-        rigidbody.AddForce(force, ForceMode.VelocityChange);
+        rb.AddForce(force, ForceMode.VelocityChange);
     }
 }

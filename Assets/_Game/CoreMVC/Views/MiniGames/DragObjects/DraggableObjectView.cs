@@ -7,7 +7,7 @@ public class DraggableObjectView : PoolableView, IDraggable
     [SerializeField] Material[] defaultMaterials;
     [SerializeField] Material[] dragMaterials;
     [SerializeField] MeshRenderer meshRenderer;
-    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] Rigidbody rb;
 
     public string Name => gameObject.name;
     
@@ -26,23 +26,23 @@ public class DraggableObjectView : PoolableView, IDraggable
     public void OnDragBegan ()
     {
         meshRenderer.material = _dragMaterial;
-        rigidbody.isKinematic = true;
+        rb.isKinematic = true;
     }
 
     public void OnDragMoved (Vector3 worldPosition)
     {
-        Vector3 direction = (worldPosition - rigidbody.position).normalized;
-        float distance = Vector3.Distance(rigidbody.position, worldPosition);
+        Vector3 direction = (worldPosition - rb.position).normalized;
+        float distance = Vector3.Distance(rb.position, worldPosition);
         
-        if (!rigidbody.SweepTest(direction, out RaycastHit hit, distance))
-            rigidbody.MovePosition(worldPosition);
+        if (!rb.SweepTest(direction, out RaycastHit hit, distance))
+            rb.MovePosition(worldPosition);
     }
 
     public void OnDragEnded ()
     {
-        Vector3 previousVelocity = rigidbody.velocity;
+        Vector3 previousVelocity = rb.velocity;
         meshRenderer.material = _defaultMaterial;
-        rigidbody.isKinematic = false;
-        rigidbody.velocity = previousVelocity * 0.3f;
+        rb.isKinematic = false;
+        rb.velocity = previousVelocity * 0.3f;
     }
 }
