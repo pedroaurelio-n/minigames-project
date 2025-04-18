@@ -7,5 +7,9 @@ public class FindableObjectView : PoolableView
     [SerializeField] Material findableMaterial;
     [SerializeField] Material normalMaterial;
 
-    public void Setup (bool isFindable) => Renderer.material = isFindable ? findableMaterial : normalMaterial;
+    public void Setup (bool isFindable)
+    {
+        Renderer.receiveShadows = !isFindable;
+        Renderer.material = isFindable ? findableMaterial : normalMaterial;
+    }
 }

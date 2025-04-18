@@ -16,6 +16,8 @@
         _miniGameSelectorModel = miniGameSelectorModel;
     }
     
+    public override void ChangeSceneClick () => ChangeToNextMiniGame();
+    
     protected override void AddListeners ()
     {
         _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
@@ -25,9 +27,7 @@
     {
         _miniGameTimerModel.OnTimerEnded -= HandleTimerEnded;
     }
-
-    protected override void ChangeSceneClick () => ChangeToNextMiniGame();
-
+    
     void HandleTimerEnded (bool _) => ChangeToRandomMiniGame();
     
     void ChangeToRandomMiniGame ()

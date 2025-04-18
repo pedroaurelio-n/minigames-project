@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8564acf426f81348815a0ac82669a86, type: 2}
+  - {fileID: 2100000, guid: cfa5f3e364ebd9c45bf834ce0b50aa2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Renderer>k__BackingField: {fileID: 5401882139106673218}
-  findableMaterial: {fileID: 2100000, guid: b8564acf426f81348815a0ac82669a86, type: 2}
+  findableMaterial: {fileID: 2100000, guid: cfa5f3e364ebd9c45bf834ce0b50aa2a, type: 2}
   normalMaterial: {fileID: 2100000, guid: 57982e6eb18377c49b4208d81892466c, type: 2}
