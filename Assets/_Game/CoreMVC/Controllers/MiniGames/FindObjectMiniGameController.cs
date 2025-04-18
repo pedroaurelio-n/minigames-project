@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FindObjectMiniGameController : BaseMiniGameController
 {
+    const float CHECK_DELAY = 0.2f;
+    
     protected override MiniGameType MiniGameType => MiniGameType.FindObject;
     
     IFindObjectMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IFindObjectMiniGameModel;
@@ -12,8 +14,10 @@ public class FindObjectMiniGameController : BaseMiniGameController
     readonly FindObjectSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
     readonly PoolableViewFactory _viewFactory;
+    readonly ICameraProvider _cameraProvider;
     readonly UniqueCoroutine _checkForObjectRoutine;
     readonly List<FindableObjectView> _objectViews = new();
+    readonly WaitForSeconds _waitForCheck;
 
     FindableObjectView _targetObject;
     bool _isObjectVisible;
@@ -23,6 +27,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
         SceneView sceneView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
+        ICameraProvider cameraProvider,
         ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView)
     {
@@ -30,8 +35,10 @@ public class FindObjectMiniGameController : BaseMiniGameController
         _randomProvider = randomProvider;
         _sceneView = sceneView as FindObjectSceneView;
         _viewFactory = viewFactory;
+        _cameraProvider = cameraProvider;
 
         _checkForObjectRoutine = new UniqueCoroutine(coroutineRunner);
+        _waitForCheck = new WaitForSeconds(CHECK_DELAY);
     }
     
     public override void Initialize ()
@@ -48,13 +55,13 @@ public class FindObjectMiniGameController : BaseMiniGameController
         
         _viewFactory.SetupPool(_sceneView.FindableObjectPrefab);
         Vector3 randomDirection = _randomProvider.InsideSphere;
-        float distance = _randomProvider.Range(0f, 15f);
+        float distance = _randomProvider.Range(3f, 15f);
         
         _targetObject = _viewFactory.GetView<FindableObjectView>(_sceneView.transform);
         _targetObject.Setup(true);
         _targetObject.transform.position =
             _sceneView.PossiblePoints[_randomProvider.Range(0, _sceneView.PossiblePoints.Length)].position
-            + randomDirection * distance;
+            + randomDirection.normalized * distance;
         _objectViews.Add(_targetObject);
 
         for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
@@ -75,12 +82,6 @@ public class FindObjectMiniGameController : BaseMiniGameController
         //TODO pedro: implement zooming to fill screen with object
         if (timerEnded)
             _checkForObjectRoutine.Stop();
-        if (timerEnded || _isObjectVisible)
-        {
-            //TODO pedro: implement game ended UI
-            string message = _isObjectVisible ? "YOU WIN THE GAME" : "YOU LOSE THE GAME";
-            DebugUtils.Log(message);
-        }
         return _isObjectVisible;
     }
 
@@ -88,16 +89,14 @@ public class FindObjectMiniGameController : BaseMiniGameController
     {
         while (true)
         {
-            _isObjectVisible = _targetObject.Renderer.isVisible;
+            _isObjectVisible = _cameraProvider.IsContainedInCameraBounds(_targetObject.Renderer);
 
             if (CheckWinCondition(false))
             {
-                //TODO pedro: block timer model from ending during this wait
-                yield return new WaitForSeconds(1f);
                 MiniGameModel.Complete();
                 yield break;
             }
-            yield return null;
+            yield return _waitForCheck;
         }
     }
 

@@ -15,6 +15,6 @@ public class TwoPointZoomInputView : MonoBehaviour
         Touch touch1 = touches[0];
         Touch touch2 = touches[1];
 
-        OnTwoPointZoomUpdated(touch1, touch2);
+        OnTwoPointZoomUpdated?.Invoke(touch1, touch2);
     }
 }

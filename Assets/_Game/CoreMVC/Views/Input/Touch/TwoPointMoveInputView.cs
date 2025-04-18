@@ -15,6 +15,6 @@ public class TwoPointMoveInputView : MonoBehaviour
         Touch touch1 = touches[0];
         Touch touch2 = touches[1];
 
-        OnTwoPointMoveUpdated(touch1, touch2);
+        OnTwoPointMoveUpdated?.Invoke(touch1, touch2);
     }
 }

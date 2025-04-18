@@ -18,11 +18,11 @@ public class SwipeInputView : MonoBehaviour
         switch (touch.phase)
         {
             case TouchPhase.Began:
-                OnSwipeBegan(touch);
+                OnSwipeBegan?.Invoke(touch);
                 break;
             
             case TouchPhase.Ended:
-                OnSwipeEnded(touch);
+                OnSwipeEnded?.Invoke(touch);
                 break;
         }
     }

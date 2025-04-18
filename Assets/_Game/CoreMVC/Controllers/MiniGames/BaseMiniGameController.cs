@@ -52,7 +52,6 @@ public abstract class BaseMiniGameController : IDisposable
 
     void HandleMiniGameStarted ()
     {
-        DebugUtils.Log(ActiveMiniGame.Instructions);
     }
 
     void HandleMiniGameEnded (bool hasCompleted)

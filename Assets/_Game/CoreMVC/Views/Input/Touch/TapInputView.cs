@@ -18,11 +18,11 @@ public class TapInputView : MonoBehaviour
         switch (touch.phase)
         {
             case TouchPhase.Began:
-                OnTapBegan(touch);
+                OnTapBegan?.Invoke(touch);
                 break;
             
             case TouchPhase.Ended:
-                OnTapEnded(touch);
+                OnTapEnded?.Invoke(touch);
                 break;
         }
     }

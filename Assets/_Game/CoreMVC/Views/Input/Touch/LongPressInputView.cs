@@ -19,15 +19,15 @@ public class LongPressInputView : MonoBehaviour
         switch (touch.phase)
         {
             case TouchPhase.Began:
-                OnLongPressBegan(touch);
+                OnLongPressBegan?.Invoke(touch);
                 break;
             
             case TouchPhase.Moved or TouchPhase.Stationary:
-                OnLongPressUpdated(touch);
+                OnLongPressUpdated?.Invoke(touch);
                 break;
             
             case TouchPhase.Ended:
-                OnLongPressEnded(touch);
+                OnLongPressEnded?.Invoke(touch);
                 break;
         }
     }

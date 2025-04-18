@@ -53,12 +53,6 @@ public class TapObjectsMiniGameController : BaseMiniGameController
 
     protected override bool CheckWinCondition (bool timerEnded)
     {
-        if (timerEnded)
-        {
-            //TODO pedro: implement ui
-            string message = _objectViews.Count == 0 ? "YOU WIN THE GAME" : "YOU LOSE THE GAME";
-            DebugUtils.Log(message);
-        }
         return _objectViews.Count == 0;
     }
 

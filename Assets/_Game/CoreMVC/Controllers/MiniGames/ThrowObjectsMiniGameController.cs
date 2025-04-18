@@ -49,12 +49,6 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     protected override bool CheckWinCondition (bool timerEnded)
     {
         //TODO pedro: avoid double method call when the game completes
-        if (timerEnded)
-        {
-            //TODO pedro: implement ui
-            string message = _hasCompleted ? "YOU WIN THE GAME" : "YOU LOSE THE GAME";
-            DebugUtils.Log(message);
-        }
         return _hasCompleted;
     }
 

@@ -13,6 +13,6 @@ public class TouchDragInputView : MonoBehaviour
             return;
 
         Touch touch = touches[0];
-        OnTouchDragUpdated(touch);
+        OnTouchDragUpdated?.Invoke(touch);
     }
 }

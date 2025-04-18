@@ -62,28 +62,13 @@ public class DragObjectsMiniGameController : BaseMiniGameController
     {
         foreach (DraggableContainerView container in _sceneView.Containers)
         {
-            if (_colorCounts.TryGetValue(container.Color, out int expectedCount))
-            {
-                if (container.ValidObjectsCount != expectedCount)
-                {
-                    if (timerEnded)
-                    {
-                        //TODO pedro: implement ui
-                        string message = "YOU LOSE THE GAME";
-                        DebugUtils.Log(message);
-                    }
-                    return false;
-                }
-            }
+            if (!_colorCounts.TryGetValue(container.Color, out int expectedCount))
+                continue;
+            if (container.ValidObjectsCount == expectedCount)
+                continue;
+            return false;
         }
         
-        if (timerEnded)
-        {
-            //TODO pedro: implement ui
-            string message =  "YOU WIN THE GAME";
-            DebugUtils.Log(message);
-        }
-
         return true;
     }
 
