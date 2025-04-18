@@ -15,5 +15,8 @@ public class SceneUIViewInstaller : IInstaller
     public void Install (IContainerBuilder builder)
     {
         builder.RegisterInstance(_sceneUIView);
+        
+        builder.RegisterInstance(_sceneUIView.MiniGameLabelUIView);
+        builder.RegisterInstance(_sceneUIView.MiniGameTimerUIView);
     }
 }

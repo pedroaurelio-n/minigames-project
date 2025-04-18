@@ -12,7 +12,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
     readonly FindObjectSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
     readonly PoolableViewFactory _viewFactory;
-    readonly UniqueCoroutine checkForObjectRoutine;
+    readonly UniqueCoroutine _checkForObjectRoutine;
     readonly List<FindableObjectView> _objectViews = new();
 
     FindableObjectView _targetObject;
@@ -31,7 +31,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
         _sceneView = sceneView as FindObjectSceneView;
         _viewFactory = viewFactory;
 
-        checkForObjectRoutine = new UniqueCoroutine(coroutineRunner);
+        _checkForObjectRoutine = new UniqueCoroutine(coroutineRunner);
     }
     
     public override void Initialize ()
@@ -67,14 +67,14 @@ public class FindObjectMiniGameController : BaseMiniGameController
             _objectViews.Add(obj);
         }
         
-        checkForObjectRoutine.Start(CheckForObjectRoutine());
+        _checkForObjectRoutine.Start(CheckForObjectRoutine());
     }
 
     protected override bool CheckWinCondition(bool timerEnded)
     {
         //TODO pedro: implement zooming to fill screen with object
         if (timerEnded)
-            checkForObjectRoutine.Stop();
+            _checkForObjectRoutine.Stop();
         if (timerEnded || _isObjectVisible)
         {
             //TODO pedro: implement game ended UI
@@ -103,7 +103,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
 
     public override void Dispose()
     {
-        checkForObjectRoutine?.Dispose();
+        _checkForObjectRoutine?.Dispose();
         _objectViews.DisposeAndClear();
         base.Dispose();
     }

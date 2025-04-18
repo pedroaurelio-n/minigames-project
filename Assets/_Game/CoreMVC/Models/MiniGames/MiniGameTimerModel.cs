@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MiniGameTimerModel : IMiniGameTimerModel
 {
+    public event Action OnTimerStarted;
     public event Action<bool> OnTimerEnded;
+    public event Action<float, float> OnTimerChanged;
 
     readonly MiniGameOptions _miniGameOptions;
     readonly UniqueCoroutine _timerCoroutine;
@@ -24,6 +26,7 @@ public class MiniGameTimerModel : IMiniGameTimerModel
     public void Initialize ()
     {
         _timerCoroutine.Start(TimerCoroutine());
+        OnTimerStarted?.Invoke();
     }
 
     public void ForceComplete ()
@@ -39,6 +42,7 @@ public class MiniGameTimerModel : IMiniGameTimerModel
         while (_timer > 0f)
         {
             _timer -= Time.deltaTime;
+            OnTimerChanged?.Invoke(_timer, _miniGameOptions.BaseMiniGameDuration);
             yield return null;
         }
         

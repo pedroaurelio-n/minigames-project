@@ -45,6 +45,7 @@ public class SceneModelInstaller : IInstaller
         
         builder.RegisterInstance(_settingsManager.MiniGameSettings.Instance);
 
+        builder.RegisterInstance(GameGlobalOptions.Instance.DebugOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.FadeTransitionOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TapInputOptions);

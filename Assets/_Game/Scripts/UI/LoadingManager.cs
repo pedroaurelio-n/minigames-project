@@ -18,9 +18,8 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     [SerializeField] GameObject[] loadingSceneObjects;
     [SerializeField] GameObject[] loadingUIObjects;
     [SerializeField] Button startButton;
-    [SerializeField] TextMeshProUGUI loadingNumber;
-    [SerializeField] Image loadingFillBar;
     [SerializeField] FadeToBlackManager fadeToBlackManager;
+    [SerializeField] FillBarUIComponent loadingFillBar;
     
     public ApplicationSession ApplicationSession { get; private set; }
     
@@ -168,8 +167,8 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 
     void UpdateLoadingUI ()
     {
-        loadingNumber.text = string.Format(PERCENTAGE_FORMAT, Mathf.RoundToInt(_loadingProgress));
-        loadingFillBar.fillAmount = _loadingProgress / 100;
+        loadingFillBar.SetFillText(string.Format(PERCENTAGE_FORMAT, Mathf.RoundToInt(_loadingProgress)));
+        loadingFillBar.SetFillAmount(_loadingProgress, 100);
     }
 
     //TODO pedro: maybe create an ApplicationStatusModel/View to manage quit and pause states
