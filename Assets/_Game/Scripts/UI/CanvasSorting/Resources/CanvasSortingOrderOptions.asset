@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fb0df8c1184de2a8ce129de9bb1aa1, type: 3}
   m_Name: CanvasSortingOrderOptions
   m_EditorClassIdentifier: 
-  canvasIds: 02000000030000000400000001000000
+  canvasIds: 0200000005000000030000000400000001000000

@@ -38,7 +38,7 @@ public class MiniGameSelectorModel : IMiniGameSelectorModel
 
         if (_settings.RandomOrder)
         {
-            NextType = _availableTypes[_randomProvider.Range(0, _availableTypes.Count)];
+            NextType = _randomProvider.PickRandom(_availableTypes);
             return;
         }
 

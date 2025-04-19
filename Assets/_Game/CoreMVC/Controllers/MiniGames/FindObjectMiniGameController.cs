@@ -60,7 +60,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
         _targetObject = _viewFactory.GetView<FindableObjectView>(_sceneView.transform);
         _targetObject.Setup(true);
         _targetObject.transform.position =
-            _sceneView.PossiblePoints[_randomProvider.Range(0, _sceneView.PossiblePoints.Length)].position
+            _randomProvider.PickRandom(_sceneView.PossiblePoints).position
             + randomDirection.normalized * distance;
         _objectViews.Add(_targetObject);
 
@@ -69,7 +69,7 @@ public class FindObjectMiniGameController : BaseMiniGameController
             FindableObjectView obj = _viewFactory.GetView<FindableObjectView>(_sceneView.transform);
             obj.Setup(false);
             obj.transform.position =
-                _sceneView.AllPoints[_randomProvider.Range(0, _sceneView.AllPoints.Length)].position
+                _randomProvider.PickRandom(_sceneView.AllPoints).position
                 + randomDirection * distance;
             _objectViews.Add(obj);
         }

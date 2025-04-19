@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ThrowObjectsMiniGameController : BaseMiniGameController
@@ -43,7 +44,7 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         
         _viewFactory.SetupPool(_sceneView.ThrowableObjectPrefab);
         _sceneView.Container.transform.position =
-            _sceneView.ContainerSpawnPoints[_randomProvider.Range(0, _sceneView.ContainerSpawnPoints.Length)].position;
+            _randomProvider.PickRandom(_sceneView.ContainerSpawnPoints).position;
     }
 
     protected override bool CheckWinCondition (bool timerEnded)
