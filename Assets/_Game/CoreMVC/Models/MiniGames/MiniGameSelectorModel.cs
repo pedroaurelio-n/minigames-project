@@ -31,7 +31,9 @@ public class MiniGameSelectorModel : IMiniGameSelectorModel
             if (type == _gameSessionInfoProvider.CurrentMiniGameType)
             {
                 _currentMiniGameIndex = i;
-                continue;
+                
+                if (!_settings.CanRepeatPrevious)
+                    continue;
             }
             _availableTypes.Add(type);
         }
