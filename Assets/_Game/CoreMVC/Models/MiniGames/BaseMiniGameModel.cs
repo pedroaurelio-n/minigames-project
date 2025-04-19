@@ -4,12 +4,17 @@ public abstract class BaseMiniGameModel : IMiniGameModel
 {
     public event Action OnMiniGameStarted;
     public event Action<bool> OnMiniGameEnded;
+    public event Action OnMiniGameTimerEnded;
     
     public abstract MiniGameType Type { get; }
     public abstract TouchInputType InputTypes { get; }
     public abstract string Instructions { get; }
+    
+    public bool HasCompleted { get; private set; }
 
     readonly IMiniGameTimerModel _miniGameTimerModel;
+
+    bool _forceFailed;
 
     public BaseMiniGameModel (
         IMiniGameTimerModel miniGameTimerModel
@@ -30,7 +35,14 @@ public abstract class BaseMiniGameModel : IMiniGameModel
 
     public void Complete ()
     {
-        _miniGameTimerModel.ForceComplete();
+        HasCompleted = true;
+        _miniGameTimerModel.ForceExpire(HasCompleted);
+    }
+
+    public void ForceFailure ()
+    {
+        _forceFailed = true;
+        _miniGameTimerModel.ForceExpire(_forceFailed);
     }
 
     protected virtual void AddListeners ()
@@ -43,9 +55,10 @@ public abstract class BaseMiniGameModel : IMiniGameModel
         _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
     }
 
-    void HandleTimerEnded (bool hasCompleted)
+    void HandleTimerEnded ()
     {
-        OnMiniGameEnded?.Invoke(hasCompleted);
+        OnMiniGameTimerEnded?.Invoke();
+        OnMiniGameEnded?.Invoke(HasCompleted);
     }
 
     public void Dispose ()

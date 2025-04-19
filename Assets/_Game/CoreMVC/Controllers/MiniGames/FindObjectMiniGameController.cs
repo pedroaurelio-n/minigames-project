@@ -25,11 +25,12 @@ public class FindObjectMiniGameController : BaseMiniGameController
     public FindObjectMiniGameController(
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
+        SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
         ICameraProvider cameraProvider,
         ICoroutineRunner coroutineRunner
-    ) : base(miniGameManagerModel, sceneView)
+    ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _randomProvider = randomProvider;

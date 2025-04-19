@@ -52,11 +52,14 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _cameraProvider
                 );
                 return findObjectMiniGameModel;
+            case MiniGameType.ClickMilestone:
+                IClickMilestoneMiniGameModel clickMilestoneMiniGameModel = new ClickMilestoneMiniGameModel(
+                    _miniGameTimerModel
+                );
+                return clickMilestoneMiniGameModel;
             // case MiniGameType.LongPressObjects:
             //     return null;
             // case MiniGameType.TurnShooter:
-            //     return null;
-            // case MiniGameType.Runner:
             //     return null;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);

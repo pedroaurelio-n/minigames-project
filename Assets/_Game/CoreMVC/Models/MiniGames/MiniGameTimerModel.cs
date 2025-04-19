@@ -7,7 +7,7 @@ public class MiniGameTimerModel : IMiniGameTimerModel
     const float END_DELAY = 0.5f;
     
     public event Action OnTimerStarted;
-    public event Action<bool> OnTimerEnded;
+    public event Action OnTimerEnded;
     public event Action<float, float> OnTimerChanged;
 
     readonly MiniGameOptions _miniGameOptions;
@@ -15,7 +15,7 @@ public class MiniGameTimerModel : IMiniGameTimerModel
     readonly WaitForSeconds _waitForEnd;
 
     float _timer;
-    bool _hasCompleted;
+    bool _skipEndDelay;
 
     public MiniGameTimerModel (
         MiniGameOptions miniGameOptions,
@@ -33,9 +33,9 @@ public class MiniGameTimerModel : IMiniGameTimerModel
         OnTimerStarted?.Invoke();
     }
 
-    public void ForceComplete ()
+    public void ForceExpire (bool skipEndDelay)
     {
-        _hasCompleted = true;
+        _skipEndDelay = skipEndDelay;
         _timer = 0;
     }
 
@@ -50,10 +50,10 @@ public class MiniGameTimerModel : IMiniGameTimerModel
             yield return null;
         }
         
-        if (!_hasCompleted)
+        if (!_skipEndDelay)
             yield return _waitForEnd;
         
-        OnTimerEnded?.Invoke(_hasCompleted);
+        OnTimerEnded?.Invoke();
     }
 
     public void Dispose ()

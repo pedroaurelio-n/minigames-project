@@ -45,7 +45,6 @@ public class MiniGameManagerModel : IMiniGameManagerModel
         MiniGameType chosenType = (MiniGameType)_gameSessionInfoProvider.CurrentSceneIndex;
         _activeMiniGame = _miniGameModelFactory.CreateMiniGameBasedOnType(chosenType);
         _activeMiniGame.Initialize();
-        AddMiniGameListeners(_activeMiniGame);
         
         _gameSessionInfoProvider.CurrentMiniGameType = ActiveMiniGameType;
     }
@@ -53,6 +52,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
     public void LateInitialize ()
     {
         _activeMiniGame.LateInitialize();
+        AddMiniGameListeners(_activeMiniGame);
     }
 
     void AddMiniGameListeners(IMiniGameModel activeMiniGame)

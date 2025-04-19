@@ -19,9 +19,10 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     public ThrowObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
+        SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory
-    ) : base(miniGameManagerModel, sceneView)
+    ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as ThrowObjectsSceneView;
