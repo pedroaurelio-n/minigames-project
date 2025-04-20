@@ -1,4 +1,4 @@
-public class BaseSceneChangerModel : ISceneChangerModel
+public abstract class BaseSceneChangerModel : ISceneChangerModel
 {
     readonly ILoadingManager _loadingManager;
 

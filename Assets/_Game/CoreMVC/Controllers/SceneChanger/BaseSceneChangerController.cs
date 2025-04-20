@@ -4,17 +4,14 @@ using UnityEngine;
 public class BaseSceneChangerController : IDisposable
 {
     protected readonly ISceneChangerModel Model;
-    protected readonly SceneUIView SceneUIView;
     
     protected bool IsChangingScene;
     
     public BaseSceneChangerController (
-        ISceneChangerModel model,
-        SceneUIView sceneUIView
+        ISceneChangerModel model
     )
     {
         Model = model;
-        SceneUIView = sceneUIView;
     }
 
     public void Initialize ()

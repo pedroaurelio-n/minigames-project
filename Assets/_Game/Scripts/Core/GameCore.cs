@@ -2,7 +2,7 @@
 using UnityEngine;
 using VContainer.Unity;
 
-public class GameCore : IDisposable
+public class GameCore : ICoreModule
 {
     public event Action OnInitializationComplete;
 
@@ -14,6 +14,7 @@ public class GameCore : IDisposable
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
     readonly IPlayerInfoModel _playerInfoModel;
+    readonly FadeToBlackManager _fadeToBlackManager;
     readonly PoolableViewFactory _poolableViewFactory;
     readonly SettingsManager _settingsManager;
     readonly IRandomProvider _randomProvider;
@@ -35,6 +36,7 @@ public class GameCore : IDisposable
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
+        FadeToBlackManager fadeToBlackManager,
         PoolableViewFactory poolableViewFactory,
         SettingsManager settingsManager,
         IRandomProvider randomProvider,
@@ -47,6 +49,7 @@ public class GameCore : IDisposable
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
         _playerInfoModel = playerInfoModel;
+        _fadeToBlackManager = fadeToBlackManager;
         _poolableViewFactory = poolableViewFactory;
         _settingsManager = settingsManager;
         _randomProvider = randomProvider;
@@ -63,6 +66,7 @@ public class GameCore : IDisposable
             out _viewScope,
             out _uiViewScope,
             _gameScope,
+            _fadeToBlackManager,
             _poolableViewFactory,
             _gameSessionInfoProvider
         );
@@ -93,7 +97,7 @@ public class GameCore : IDisposable
         SceneController.LateInitialize();
         SceneUIController.LateInitialize();
 
-        _sceneUIView.FadeToBlackManager.FadeOut(null);
+        _fadeToBlackManager.FadeOut(null);
         OnInitializationComplete?.Invoke();
     }
 

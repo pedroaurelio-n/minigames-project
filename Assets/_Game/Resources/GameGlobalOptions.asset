@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DebugOptions>k__BackingField:
     <EnableLogging>k__BackingField: 1
+    <DebugMode>k__BackingField: 0
   <LayerMaskOptions>k__BackingField:
     <InteractableLayers>k__BackingField:
       serializedVersion: 2

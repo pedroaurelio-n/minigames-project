@@ -12,7 +12,8 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     public int CurrentSceneIndex => SceneManager.GetSceneByName(CurrentScene).buildIndex;
     //TODO pedro: maybe not expose set property
     public MiniGameType CurrentMiniGameType { get; set; }
-    
+    public bool HasStartedGameRun { get; set; }
+
     public IPlayerInfoModel PlayerInfoModel { get; private set; }
 
     GameLifetimeScope MainScope => GameLifetimeScope.Instance;
@@ -20,9 +21,10 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     readonly ILoadingManager _loadingManager;
     
     LifetimeScope _gameScope;
+
+    ICoreModule _currentCore;
     
-    GameCore _gameCore;
-    
+    FadeToBlackManager _fadeToBlackManager;
     PoolableViewFactory _poolableViewFactory;
     
     SettingsManager _settingsManager;
@@ -46,20 +48,25 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         
         CreateProviders();
 
-        PlayerInfoModel = new PlayerInfoModel();
+        PlayerInfoModel = new PlayerInfoModel(this);
         PlayerInfoModel.Initialize();
+
+        _fadeToBlackManager = Object.Instantiate(
+            Resources.Load<FadeToBlackManager>("FadeToBlackManager"),
+            _gameScope.transform
+        );
         
-        GameObject poolParent = new GameObject("ViewFactory");
+        GameObject poolParent = new("ViewFactory");
         poolParent.transform.SetParent(_gameScope.transform);
         _poolableViewFactory = new PoolableViewFactory(poolParent.transform);
         
-        CreateGameCore();
+        CreateCore();
     }
 
     public void ChangeScene (string newScene)
     {
         CurrentScene = newScene;
-        CreateGameCore();
+        CreateCore();
     }
     
     void CreateProviders ()
@@ -73,13 +80,22 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _coroutineRunner.transform.SetParent(_gameScope.transform);
     }
 
+    void CreateCore ()
+    {
+        if (CurrentScene.StartsWith("MiniGame"))
+            CreateGameCore();
+        else
+            CreateMenuCore();
+    }
+
     void CreateGameCore ()
     {
-        _gameCore = new GameCore(
+        _currentCore = new GameCore(
             _gameScope,
             this,
             _loadingManager,
             PlayerInfoModel,
+            _fadeToBlackManager,
             _poolableViewFactory,
             _settingsManager,
             _randomProvider,
@@ -87,18 +103,40 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _cameraProvider,
             _coroutineRunner
         );
-        _gameCore.OnInitializationComplete += HandleCoreInitializationComplete;
-        _gameCore.Initialize();
+        _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;
+        _currentCore.Initialize();
+    }
+
+    void CreateMenuCore ()
+    {
+        CurrentMiniGameType = MiniGameType.None;
+        
+        _currentCore = new MenuCore(
+            _gameScope,
+            this,
+            _loadingManager,
+            PlayerInfoModel,
+            _fadeToBlackManager,
+            _poolableViewFactory,
+            _settingsManager,
+            _randomProvider,
+            _physicsProvider,
+            _cameraProvider,
+            _coroutineRunner
+        );
+        _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;
+        _currentCore.Initialize();
     }
 
     void HandleCoreInitializationComplete ()
     {
-        _gameCore.OnInitializationComplete -= HandleCoreInitializationComplete;
+        _currentCore.OnInitializationComplete -= HandleCoreInitializationComplete;
         OnInitializationComplete?.Invoke();
     }
 
     public void Dispose ()
     {
-        _gameCore.Dispose();
+        _currentCore?.Dispose();
+        _currentCore = null;
     }
 }

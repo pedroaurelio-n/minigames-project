@@ -1,5 +1,6 @@
 ﻿public enum MiniGameType
 {
+    None = 0,
     TapObjects = 1,
     DragObjects = 2,
     ThrowObjects = 3,

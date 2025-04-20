@@ -3,6 +3,7 @@ public interface IPlayerInfoModel
     int CurrentLives { get; }
     bool HasLivesRemaining { get; }
     int CurrentScore { get; }
+    int HighScore { get; }
 
     void Initialize ();
     void Reset ();

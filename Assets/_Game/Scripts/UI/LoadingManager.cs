@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,11 +8,10 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     //TODO pedro: maybe create new ui canvas that instantiates during loading screen
     const string PERCENTAGE_FORMAT = "{0}%";
     const float LOADING_SPEED = 2f;
-    const string START_SCENE = "MiniGame1";
+    const string START_SCENE = "MainMenu";
     
     [field: SerializeField] public LoadingInfoUIView LoadingInfoUIView { get; private set; }
     
-    [SerializeField] TextMeshProUGUI loadingText;
     [SerializeField] GameObject[] loadingSceneObjects;
     [SerializeField] GameObject[] loadingUIObjects;
     [SerializeField] Button startButton;
@@ -34,7 +31,6 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 
     void Awake ()
     {
-        loadingText.text = "Play Minigames";
         if (startButton == null || !startButton.gameObject.activeInHierarchy)
         {
             StartLoading(false);
@@ -60,27 +56,21 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
         foreach (GameObject obj in loadingSceneObjects)
             obj.SetActive(true);
         
-        if (ApplicationSession?.GameSession?.PlayerInfoModel != null && _loadingInfoUIController == null)
+        if (ApplicationSession?.GameSession is { HasStartedGameRun: true } && _loadingInfoUIController == null)
             _loadingInfoUIController = new LoadingInfoUIController(
                 LoadingInfoUIView,
                 ApplicationSession.GameSession.PlayerInfoModel
             );
-        _loadingInfoUIController?.Enable();
         
-        loadingText.text = "Loading...";
+        if (ApplicationSession?.GameSession is { HasStartedGameRun: false })
+            _loadingInfoUIController?.Disable();
+        else
+            _loadingInfoUIController?.Enable();
+        
         fadeToBlackManager.FadeOut(CompleteFadeOut);
 
         void CompleteFadeOut ()
         {
-            if (ApplicationSession?.GameSession?.PlayerInfoModel is { HasLivesRemaining: false })
-            {
-                foreach (GameObject obj in loadingUIObjects)
-                    obj.SetActive(false);
-                
-                loadingText.text = "Game Over";
-                return;
-            }
-            
             _newScene = newScene;
             StartLoading(true);
         }
@@ -88,8 +78,6 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 
     void StartLoading (bool unloadCurrentScene)
     {
-        loadingText.text = "Loading...";
-        
         _loadingProgress = 0;
         if (string.IsNullOrEmpty(_newScene))
             _newScene = START_SCENE;

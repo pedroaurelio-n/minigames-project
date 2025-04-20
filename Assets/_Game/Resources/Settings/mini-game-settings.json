@@ -1,6 +1,6 @@
 ﻿{
   "randomOrder": true,
-  "canRepeatPrevious": true,
+  "canRepeatPrevious": false,
   "activeMiniGames": [
     1,
     2,

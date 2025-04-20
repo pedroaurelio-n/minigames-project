@@ -4,16 +4,18 @@
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IMiniGameSelectorModel _miniGameSelectorModel;
+    readonly FadeToBlackManager _fadeToBlackManager;
     
     public MiniGameSceneChangerController (
         IMiniGameSceneChangerModel model,
         IMiniGameManagerModel miniGameManagerModel,
         IMiniGameSelectorModel miniGameSelectorModel,
-        SceneUIView sceneUIView
-    ) : base(model as ISceneChangerModel, sceneUIView)
+        FadeToBlackManager fadeToBlackManager
+    ) : base(model)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _miniGameSelectorModel = miniGameSelectorModel;
+        _fadeToBlackManager = fadeToBlackManager;
     }
     
     public override void ChangeSceneClick () => ChangeToNextMiniGame();
@@ -36,8 +38,10 @@
             return;
         
         IsChangingScene = true;
-        SceneUIView.FadeToBlackManager.FadeIn(() =>
-            MiniGameSceneChangerModel.ChangeToNewMiniGame(_miniGameSelectorModel.NextType));
+        _fadeToBlackManager.FadeIn(
+            () => MiniGameSceneChangerModel.ChangeToNewMiniGame(_miniGameSelectorModel.NextType),
+            true
+        );
     }
 
     void ChangeToNextMiniGame ()
@@ -46,6 +50,6 @@
             return;
         
         IsChangingScene = true;
-        SceneUIView.FadeToBlackManager.FadeIn(MiniGameSceneChangerModel.ChangeToNextMiniGame);
+        _fadeToBlackManager.FadeIn(MiniGameSceneChangerModel.ChangeToNextMiniGame, true);
     }
 }
