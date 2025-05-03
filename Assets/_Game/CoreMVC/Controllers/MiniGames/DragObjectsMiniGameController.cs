@@ -44,8 +44,6 @@ public class DragObjectsMiniGameController : BaseMiniGameController
         _viewFactory.SetupPool(_sceneView.DraggablePrefab);
         for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
         {
-            // DraggableObjectView coloredObj =
-            //     _sceneView.DraggablePrefabs[_randomProvider.Range(0, _sceneView.DraggablePrefabs.Length)];
             DraggableObjectView obj = _viewFactory.GetView<DraggableObjectView>(_sceneView.transform);
             obj.Setup(_randomProvider.RandomEnumValue<DraggableObjectColor>());
             obj.transform.position = _sceneView.SpawnPoint.transform.position + _randomProvider.Range(

@@ -13,7 +13,6 @@ public class TapObjectsMiniGameModel : BaseMiniGameModel, ITapObjectsMiniGameMod
     
     public override MiniGameType Type => MiniGameType.TapObjects;
     public override TouchInputType InputTypes => TouchInputType.Tap;
-    public override string Instructions => "Tap all objects to win!";
 
     readonly IPressModel _pressModel;
 

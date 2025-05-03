@@ -80,7 +80,6 @@ public class FindObjectMiniGameController : BaseMiniGameController
 
     protected override bool CheckWinCondition(bool timerEnded)
     {
-        //TODO pedro: implement zooming to fill screen with object
         if (timerEnded)
             _checkForObjectRoutine.Stop();
         return _isObjectVisible;

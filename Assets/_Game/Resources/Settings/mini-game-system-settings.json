@@ -1,4 +1,6 @@
 ﻿{
+  "baseDuration": 10,
+  "endGraceDuration": 0.5,
   "randomOrder": true,
   "canRepeatPrevious": false,
   "activeMiniGames": [

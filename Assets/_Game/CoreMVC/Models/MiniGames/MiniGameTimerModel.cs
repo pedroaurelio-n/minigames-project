@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class MiniGameTimerModel : IMiniGameTimerModel
 {
-    const float END_DELAY = 0.5f;
-    
     public event Action OnTimerStarted;
     public event Action OnTimerEnded;
     public event Action<float, float> OnTimerChanged;
 
-    readonly MiniGameOptions _miniGameOptions;
+    readonly IMiniGameSystemSettings _settings;
     readonly UniqueCoroutine _timerCoroutine;
     readonly WaitForSeconds _waitForEnd;
 
@@ -18,13 +16,13 @@ public class MiniGameTimerModel : IMiniGameTimerModel
     bool _skipEndDelay;
 
     public MiniGameTimerModel (
-        MiniGameOptions miniGameOptions,
+        IMiniGameSystemSettings settings,
         ICoroutineRunner coroutineRunner
     )
     {
-        _miniGameOptions = miniGameOptions;
+        _settings = settings;
         _timerCoroutine = new UniqueCoroutine(coroutineRunner);
-        _waitForEnd = new WaitForSeconds(END_DELAY);
+        _waitForEnd = new WaitForSeconds(_settings.EndGraceDuration);
     }
     
     public void Initialize ()
@@ -41,12 +39,12 @@ public class MiniGameTimerModel : IMiniGameTimerModel
 
     IEnumerator TimerCoroutine ()
     {
-        _timer = _miniGameOptions.BaseMiniGameDuration;
+        _timer = _settings.BaseDuration;
 
         while (_timer > 0f)
         {
             _timer -= Time.deltaTime;
-            OnTimerChanged?.Invoke(_timer, _miniGameOptions.BaseMiniGameDuration);
+            OnTimerChanged?.Invoke(_timer, _settings.BaseDuration);
             yield return null;
         }
         

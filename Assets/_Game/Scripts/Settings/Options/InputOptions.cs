@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 [Serializable]
@@ -44,4 +46,22 @@ public class TwoPointMoveInputOptions : BaseInputOptions
 public class TwoPointZoomInputOptions : BaseInputOptions
 {
     [field: SerializeField] public float MinZoomDistance { get; private set; } = 10f;
+}
+
+public abstract class BaseInputOptions
+{
+    public void SetValues(Dictionary<string, object> values)
+    {
+        PropertyInfo[] fields = GetType().GetProperties(
+            BindingFlags.Public
+            | BindingFlags.NonPublic
+            | BindingFlags.Instance
+        );
+
+        foreach (var field in fields)
+        {
+            if (values.TryGetValue(field.Name, out object value))
+                field.SetValue(this, value);
+        }
+    }
 }

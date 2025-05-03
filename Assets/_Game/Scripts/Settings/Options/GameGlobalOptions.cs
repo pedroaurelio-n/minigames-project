@@ -10,7 +10,6 @@ public class GameGlobalOptions : ScriptableObject
     [field: SerializeField] public LayerMaskOptions LayerMaskOptions { get; private set; }
     [field: SerializeField] public FadeTransitionOptions FadeTransitionOptions { get; private set; }
     [field: SerializeField] public InputOptions InputOptions { get; private set; }
-    [field: SerializeField] public MiniGameOptions MiniGameOptions { get; private set; }
     
     public static GameGlobalOptions Instance
     {
@@ -40,22 +39,4 @@ public class LayerMaskOptions
 public class FadeTransitionOptions
 {
     [field: SerializeField] public float Duration { get; private set; } = 0.8f;
-}
-
-public abstract class BaseInputOptions
-{
-    public void SetValues(Dictionary<string, object> values)
-    {
-        PropertyInfo[] fields = GetType().GetProperties(
-            BindingFlags.Public
-            | BindingFlags.NonPublic
-            | BindingFlags.Instance
-        );
-
-        foreach (var field in fields)
-        {
-            if (values.TryGetValue(field.Name, out object value))
-                field.SetValue(this, value);
-        }
-    }
 }

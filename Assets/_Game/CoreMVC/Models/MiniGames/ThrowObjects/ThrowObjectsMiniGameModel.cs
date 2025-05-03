@@ -7,7 +7,6 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
     
     public override MiniGameType Type => MiniGameType.ThrowObjects;
     public override TouchInputType InputTypes => TouchInputType.Swipe;
-    public override string Instructions => "Score a point to win!";
 
     readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;

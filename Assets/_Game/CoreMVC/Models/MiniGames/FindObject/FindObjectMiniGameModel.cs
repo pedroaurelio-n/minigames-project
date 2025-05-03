@@ -4,7 +4,6 @@ public class FindObjectMiniGameModel : BaseMiniGameModel, IFindObjectMiniGameMod
 
     public override MiniGameType Type => MiniGameType.FindObject;
     public override TouchInputType InputTypes => TouchInputType.TwoPointMove | TouchInputType.TwoPointZoom;
-    public override string Instructions => "Find the colored object to win!";
     
     //TODO pedro: maybe do some camera logic here? (and other input logic on mini game models)
     readonly ICameraProvider _cameraProvider;

@@ -5,6 +5,12 @@ using Newtonsoft.Json;
 public class MiniGameSystemSettings : IMiniGameSystemSettings
 {
     [JsonProperty]
+    public float BaseDuration { get; }
+
+    [JsonProperty]
+    public float EndGraceDuration { get; }
+
+    [JsonProperty]
     public bool RandomOrder { get; }
     
     [JsonProperty]
@@ -15,11 +21,15 @@ public class MiniGameSystemSettings : IMiniGameSystemSettings
 
     [JsonConstructor]
     public MiniGameSystemSettings (
+        float baseDuration,
+        float endGraceDuration,
         bool randomOrder,
         bool canRepeatPrevious,
         MiniGameType[] activeMiniGames
     )
     {
+        BaseDuration = baseDuration;
+        EndGraceDuration = endGraceDuration;
         RandomOrder = randomOrder;
         CanRepeatPrevious = canRepeatPrevious;
         ActiveMiniGames = activeMiniGames;

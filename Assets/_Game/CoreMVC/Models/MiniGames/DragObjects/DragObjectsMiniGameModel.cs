@@ -4,7 +4,6 @@
     
     public override MiniGameType Type => MiniGameType.DragObjects;
     public override TouchInputType InputTypes => TouchInputType.Drag;
-    public override string Instructions => "Move the objects to their colored boxes!";
 
     readonly IDragModel _dragModel;
     

@@ -8,8 +8,8 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     
     public abstract MiniGameType Type { get; }
     public abstract TouchInputType InputTypes { get; }
-    public abstract string Instructions { get; }
     
+    public string Instructions => _settings.Instructions;
     public bool HasCompleted { get; private set; }
 
     protected readonly IMiniGameSettings _settings;

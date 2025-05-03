@@ -8,14 +8,19 @@ public class MiniGameSettings : IMiniGameSettings
     
     [JsonProperty]
     public int? BaseObjectiveMilestone { get; }
+    
+    [JsonProperty]
+    public string Instructions { get; }
 
     [JsonConstructor]
     public MiniGameSettings (
         int? baseObjectCount,
-        int? baseObjectiveMilestone
+        int? baseObjectiveMilestone,
+        string instructions
     )
     {
         BaseObjectCount = baseObjectCount;
         BaseObjectiveMilestone = baseObjectiveMilestone;
+        Instructions = instructions;
     }
 }

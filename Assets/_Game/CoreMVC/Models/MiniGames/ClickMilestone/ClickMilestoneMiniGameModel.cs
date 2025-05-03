@@ -4,7 +4,6 @@
     
     public override MiniGameType Type => MiniGameType.ClickMilestone;
     public override TouchInputType InputTypes => TouchInputType.None;
-    public override string Instructions => "Click until you reach the milestone!";
     
     public ClickMilestoneMiniGameModel (
         IMiniGameSettings settings,

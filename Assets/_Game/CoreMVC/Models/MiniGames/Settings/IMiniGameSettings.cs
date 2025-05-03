@@ -2,4 +2,5 @@
 {
     int? BaseObjectCount { get; }
     int? BaseObjectiveMilestone { get; }
+    string Instructions { get; }
 }
