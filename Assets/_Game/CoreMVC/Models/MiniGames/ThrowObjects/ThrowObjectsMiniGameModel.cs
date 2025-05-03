@@ -13,10 +13,11 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
     readonly ITouchInputModel _touchInputModel;
     
     public ThrowObjectsMiniGameModel (
+        IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel
-    ) : base(miniGameTimerModel)
+    ) : base(settings, miniGameTimerModel)
     {
         _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;

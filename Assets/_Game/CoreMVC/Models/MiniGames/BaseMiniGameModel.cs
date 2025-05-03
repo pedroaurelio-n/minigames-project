@@ -12,14 +12,18 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     
     public bool HasCompleted { get; private set; }
 
+    protected readonly IMiniGameSettings _settings;
+
     readonly IMiniGameTimerModel _miniGameTimerModel;
 
     bool _forceFailed;
 
     public BaseMiniGameModel (
+        IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel
     )
     {
+        _settings = settings;
         _miniGameTimerModel = miniGameTimerModel;
     }
 

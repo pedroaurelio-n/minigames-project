@@ -1,28 +1,28 @@
 public class PlayerInfoModel : IPlayerInfoModel
 {
-    //TODO pedro: move to options/settings
-    const int START_LIVES = 5;
-
     public int CurrentLives { get; private set; }
     public bool HasLivesRemaining => CurrentLives > 0;
     public int CurrentScore { get; private set; }
     public int HighScore { get; private set; }
-    
+
+    readonly IPlayerSettings _settings;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
 
     int _previousLives;
     int _previousScore;
 
     public PlayerInfoModel (
+        IPlayerSettings settings,
         IGameSessionInfoProvider gameSessionInfoProvider
     )
     {
+        _settings = settings;
         _gameSessionInfoProvider = gameSessionInfoProvider;
     }
     
     public void Initialize ()
     {
-        CurrentLives = START_LIVES;
+        CurrentLives = _settings.StartingLives;
         CurrentScore = 0;
     }
 
@@ -53,7 +53,7 @@ public class PlayerInfoModel : IPlayerInfoModel
 
     public int GetLivesChangeType ()
     {
-        int changeType = _previousLives == CurrentLives || CurrentLives == START_LIVES
+        int changeType = _previousLives == CurrentLives || CurrentLives == _settings.StartingLives
             ? 0
             : _previousLives < CurrentLives
                 ? 1

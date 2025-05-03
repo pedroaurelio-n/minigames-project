@@ -6,36 +6,39 @@ public static class DebugUtils
 {
     public static void Log (
         string message,
+        bool forceLog = false,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string sourceFilePath = "",
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging)
+        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging && !forceLog)
             return;
         Debug.Log(Format(message, memberName, sourceFilePath, sourceLineNumber));
     }
 
     public static void LogWarning (
         string message,
+        bool forceLog = false,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string sourceFilePath = "",
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging)
+        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging && !forceLog)
             return;
         Debug.LogWarning(Format(message, memberName, sourceFilePath, sourceLineNumber));
     }
 
     public static void LogError (
         string message,
+        bool forceLog = false,
         [CallerMemberName] string memberName = "",
         [CallerFilePath] string sourceFilePath = "",
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging)
+        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging && !forceLog)
             return;
         Debug.LogError(Format(message, memberName, sourceFilePath, sourceLineNumber));
     }
@@ -48,8 +51,6 @@ public static class DebugUtils
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging)
-            return;
         string formattedMessage = Format(message, memberName, sourceFilePath, sourceLineNumber);
         Exception exception = exceptionFactory == null
             ? new Exception(formattedMessage)

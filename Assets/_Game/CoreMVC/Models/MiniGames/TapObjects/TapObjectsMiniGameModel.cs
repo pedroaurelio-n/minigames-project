@@ -4,12 +4,11 @@ using UnityEngine;
 public class TapObjectsMiniGameModel : BaseMiniGameModel, ITapObjectsMiniGameModel
 {
     //TODO pedro: move to settings or options
-    const int OBJECTS_TO_SPAWN = 5;
     const int MAX_DISTANCE = 20;
 
     public event Action<IPressable, Vector2> OnTapPerformed;
 
-    public int BaseObjectsToSpawn => OBJECTS_TO_SPAWN;
+    public int BaseObjectsToSpawn => _settings.BaseObjectCount.Value;
     public int MaxSpawnDistance => MAX_DISTANCE;
     
     public override MiniGameType Type => MiniGameType.TapObjects;
@@ -19,9 +18,10 @@ public class TapObjectsMiniGameModel : BaseMiniGameModel, ITapObjectsMiniGameMod
     readonly IPressModel _pressModel;
 
     public TapObjectsMiniGameModel (
+        IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel,
         IPressModel pressModel
-    ) : base(miniGameTimerModel)
+    ) : base(settings, miniGameTimerModel)
     {
         _pressModel = pressModel;
     }

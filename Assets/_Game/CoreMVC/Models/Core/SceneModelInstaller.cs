@@ -43,7 +43,8 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(_cameraProvider);
         builder.RegisterInstance(_coroutineRunner);
         
-        builder.RegisterInstance(_settingsManager.MiniGameSettings.Instance);
+        builder.RegisterInstance(_settingsManager.MiniGameSystemSettings.Instance);
+        builder.RegisterInstance(_settingsManager.MiniGameSettingsProvider.Instance);
 
         builder.RegisterInstance(GameGlobalOptions.Instance.DebugOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);

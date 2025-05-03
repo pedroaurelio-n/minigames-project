@@ -1,18 +1,19 @@
 public class FindObjectMiniGameModel : BaseMiniGameModel, IFindObjectMiniGameModel
 {
-    //TODO pedro: move to options/settings
-    public int BaseStartObjects => 10;
+    public int BaseStartObjects => _settings.BaseObjectCount.Value;
 
     public override MiniGameType Type => MiniGameType.FindObject;
     public override TouchInputType InputTypes => TouchInputType.TwoPointMove | TouchInputType.TwoPointZoom;
     public override string Instructions => "Find the colored object to win!";
     
+    //TODO pedro: maybe do some camera logic here? (and other input logic on mini game models)
     readonly ICameraProvider _cameraProvider;
     
     public FindObjectMiniGameModel(
+        IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider
-    ) : base(miniGameTimerModel)
+    ) : base(settings, miniGameTimerModel)
     {
         _cameraProvider = cameraProvider;
     }

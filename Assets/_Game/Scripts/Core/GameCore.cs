@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -73,6 +74,8 @@ public class GameCore : ICoreModule
 
         _cameraProvider.SetMainCamera(Camera.main);
 
+        SelectSettings();
+
         SceneModel = SceneModelFactory.CreateScope(
             out _modelScope,
             _uiViewScope,
@@ -99,6 +102,11 @@ public class GameCore : ICoreModule
 
         _fadeToBlackManager.FadeOut(null);
         OnInitializationComplete?.Invoke();
+    }
+
+    void SelectSettings ()
+    {
+        _settingsManager.MiniGameSettingsProvider.SelectSettings((int)_gameSessionInfoProvider.CurrentMiniGameType);
     }
 
     public void Dispose ()

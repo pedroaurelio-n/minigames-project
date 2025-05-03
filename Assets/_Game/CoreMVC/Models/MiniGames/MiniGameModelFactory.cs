@@ -2,6 +2,7 @@
 
 public class MiniGameModelFactory : IMiniGameModelFactory
 {
+    readonly IMiniGameSettings _miniGameSettings;
     readonly IMiniGameTimerModel _miniGameTimerModel;
     readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
@@ -9,6 +10,7 @@ public class MiniGameModelFactory : IMiniGameModelFactory
     readonly IDragModel _dragModel;
 
     public MiniGameModelFactory (
+        IMiniGameSettings miniGameSettings,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel,
@@ -16,6 +18,7 @@ public class MiniGameModelFactory : IMiniGameModelFactory
         IDragModel dragModel
     )
     {
+        _miniGameSettings = miniGameSettings;
         _miniGameTimerModel = miniGameTimerModel;
         _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;
@@ -29,18 +32,21 @@ public class MiniGameModelFactory : IMiniGameModelFactory
         {
             case MiniGameType.TapObjects:
                 ITapObjectsMiniGameModel tapObjectsMiniGameModel = new TapObjectsMiniGameModel(
+                    _miniGameSettings,
                     _miniGameTimerModel,
                     _pressModel
                 );
                 return tapObjectsMiniGameModel;
             case MiniGameType.DragObjects:
                 IDragObjectsMiniGameModel dragObjectsMiniGameModel = new DragObjectsMiniGameModel(
+                    _miniGameSettings,
                     _miniGameTimerModel,
                     _dragModel
                 );
                 return dragObjectsMiniGameModel;
             case MiniGameType.ThrowObjects:
                 IThrowObjectsMiniGameModel throwObjectsMiniGameModel = new ThrowObjectsMiniGameModel(
+                    _miniGameSettings,
                     _miniGameTimerModel,
                     _cameraProvider,
                     _touchInputModel
@@ -48,12 +54,14 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                 return throwObjectsMiniGameModel;
             case MiniGameType.FindObject:
                 IFindObjectMiniGameModel findObjectMiniGameModel = new FindObjectMiniGameModel(
+                    _miniGameSettings,
                     _miniGameTimerModel,
                     _cameraProvider
                 );
                 return findObjectMiniGameModel;
             case MiniGameType.ClickMilestone:
                 IClickMilestoneMiniGameModel clickMilestoneMiniGameModel = new ClickMilestoneMiniGameModel(
+                    _miniGameSettings,
                     _miniGameTimerModel
                 );
                 return clickMilestoneMiniGameModel;

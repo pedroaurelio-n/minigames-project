@@ -48,7 +48,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         
         CreateProviders();
 
-        PlayerInfoModel = new PlayerInfoModel(this);
+        PlayerInfoModel = new PlayerInfoModel(_settingsManager.PlayerSettings.Instance, this);
         PlayerInfoModel.Initialize();
 
         _fadeToBlackManager = Object.Instantiate(
