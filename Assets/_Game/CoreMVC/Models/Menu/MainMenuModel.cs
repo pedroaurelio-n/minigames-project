@@ -1,28 +1,32 @@
 ﻿public class MainMenuModel : IMainMenuModel
 {
-    const string FIRST_MINIGAME = "MiniGame1";
-
     public int HighScore => _playerInfoModel.HighScore;
 
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IMenuSceneChangerModel _menuSceneChangerModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
+    readonly IRandomProvider _randomProvider;
     
     public MainMenuModel (
         IPlayerInfoModel playerInfoModel,
         IMenuSceneChangerModel menuSceneChangerModel,
-        IGameSessionInfoProvider gameSessionInfoProvider
+        IGameSessionInfoProvider gameSessionInfoProvider,
+        IRandomProvider randomProvider
     )
     {
         _playerInfoModel = playerInfoModel;
         _menuSceneChangerModel = menuSceneChangerModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
+        _randomProvider = randomProvider;
     }
 
     public void PlayGame ()
     {
         _playerInfoModel.Reset();
         _gameSessionInfoProvider.HasStartedGameRun = true;
-        _menuSceneChangerModel.ChangeScene(FIRST_MINIGAME);
+
+        MiniGameType randomType = _randomProvider.RandomEnumValue<MiniGameType>();
+        _gameSessionInfoProvider.CurrentMiniGameType = randomType;
+        _menuSceneChangerModel.ChangeScene($"MiniGame{(int)randomType}");
     }
 }

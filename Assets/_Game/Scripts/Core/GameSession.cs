@@ -9,9 +9,9 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     public event Action OnInitializationComplete;
     
     public string CurrentScene { get; private set; }
-    public int CurrentSceneIndex => SceneManager.GetSceneByName(CurrentScene).buildIndex;
     //TODO pedro: maybe not expose set property
     public MiniGameType CurrentMiniGameType { get; set; }
+    public MiniGameType NextMiniGameType { get; set; }
     public bool HasStartedGameRun { get; set; }
 
     public IPlayerInfoModel PlayerInfoModel { get; private set; }

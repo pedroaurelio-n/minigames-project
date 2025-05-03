@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
-public class MiniGameSettings : IMiniGameSettings
+public class MiniGameSystemSettings : IMiniGameSystemSettings
 {
     [JsonProperty]
     public bool RandomOrder { get; }
@@ -14,7 +14,7 @@ public class MiniGameSettings : IMiniGameSettings
     public IReadOnlyList<MiniGameType> ActiveMiniGames { get; }
 
     [JsonConstructor]
-    public MiniGameSettings (
+    public MiniGameSystemSettings (
         bool randomOrder,
         bool canRepeatPrevious,
         MiniGameType[] activeMiniGames

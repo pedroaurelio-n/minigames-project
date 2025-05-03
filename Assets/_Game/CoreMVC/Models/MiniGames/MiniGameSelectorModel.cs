@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 public class MiniGameSelectorModel : IMiniGameSelectorModel
 {
-    public MiniGameType NextType { get; private set; }
-
-    readonly IMiniGameSettings _settings;
+    readonly IMiniGameSystemSettings _settings;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly IRandomProvider _randomProvider;
     readonly List<MiniGameType> _availableTypes = new();
@@ -13,7 +11,7 @@ public class MiniGameSelectorModel : IMiniGameSelectorModel
     int _currentMiniGameIndex;
 
     public MiniGameSelectorModel (
-        IMiniGameSettings settings,
+        IMiniGameSystemSettings settings,
         IGameSessionInfoProvider gameSessionInfoProvider,
         IRandomProvider randomProvider
     )
@@ -40,13 +38,13 @@ public class MiniGameSelectorModel : IMiniGameSelectorModel
 
         if (_settings.RandomOrder)
         {
-            NextType = _randomProvider.PickRandom(_availableTypes);
+            _gameSessionInfoProvider.NextMiniGameType = _randomProvider.PickRandom(_availableTypes);
             return;
         }
 
         _currentMiniGameIndex++;
         if (_currentMiniGameIndex >= _settings.ActiveMiniGames.Count)
             _currentMiniGameIndex = 0;
-        NextType = _settings.ActiveMiniGames[_currentMiniGameIndex];
+        _gameSessionInfoProvider.NextMiniGameType = _settings.ActiveMiniGames[_currentMiniGameIndex];
     }
 }

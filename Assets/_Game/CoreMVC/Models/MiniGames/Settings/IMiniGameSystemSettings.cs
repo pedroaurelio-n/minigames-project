@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public interface IMiniGameSettings
+public interface IMiniGameSystemSettings
 {
     bool RandomOrder { get; }
     bool CanRepeatPrevious { get; }

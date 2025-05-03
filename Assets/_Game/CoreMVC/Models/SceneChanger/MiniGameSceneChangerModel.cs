@@ -33,7 +33,7 @@ public class MiniGameSceneChangerModel : BaseSceneChangerModel, IMiniGameSceneCh
 
     public void ChangeToNextMiniGame ()
     {
-        int newSceneIndex = _gameSessionInfoProvider.CurrentSceneIndex + 1;
+        int newSceneIndex = (int)_gameSessionInfoProvider.CurrentMiniGameType + 1 + 1;
         if (newSceneIndex > SceneManager.sceneCountInBuildSettings)
             newSceneIndex = 1;
         

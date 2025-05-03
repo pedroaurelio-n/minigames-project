@@ -38,11 +38,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
 
     public void Initialize ()
     {
-        //TODO pedro: handle this when other non-minigame scenes exists
-        // if (_gameSessionInfoProvider.CurrentSceneIndex > _miniGameSelectorModel.AllTypes.Count)
-        //     return;
-        
-        MiniGameType chosenType = (MiniGameType)_gameSessionInfoProvider.CurrentSceneIndex;
+        MiniGameType chosenType = _gameSessionInfoProvider.CurrentMiniGameType;
         _activeMiniGame = _miniGameModelFactory.CreateMiniGameBasedOnType(chosenType);
         _activeMiniGame.Initialize();
         

@@ -1,6 +1,6 @@
 public class SettingsManager
 {
-    public SettingsProvider<IMiniGameSettings, MiniGameSettings> MiniGameSettings
+    public SettingsProvider<IMiniGameSystemSettings, MiniGameSystemSettings> MiniGameSettings
     {
         get;
         private set;
@@ -13,6 +13,6 @@ public class SettingsManager
 
     void InitializeSettings ()
     {
-        MiniGameSettings = new SettingsProvider<IMiniGameSettings, MiniGameSettings>("mini-game-settings");
+        MiniGameSettings = new SettingsProvider<IMiniGameSystemSettings, MiniGameSystemSettings>("mini-game-system-settings");
     }
 }

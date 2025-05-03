@@ -3,18 +3,18 @@
     IMiniGameSceneChangerModel MiniGameSceneChangerModel => Model as IMiniGameSceneChangerModel;
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
-    readonly IMiniGameSelectorModel _miniGameSelectorModel;
+    readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly FadeToBlackManager _fadeToBlackManager;
     
     public MiniGameSceneChangerController (
         IMiniGameSceneChangerModel model,
         IMiniGameManagerModel miniGameManagerModel,
-        IMiniGameSelectorModel miniGameSelectorModel,
+        IGameSessionInfoProvider gameSessionInfoProvider,
         FadeToBlackManager fadeToBlackManager
     ) : base(model)
     {
         _miniGameManagerModel = miniGameManagerModel;
-        _miniGameSelectorModel = miniGameSelectorModel;
+        _gameSessionInfoProvider = gameSessionInfoProvider;
         _fadeToBlackManager = fadeToBlackManager;
     }
     
@@ -38,8 +38,9 @@
             return;
         
         IsChangingScene = true;
+        _gameSessionInfoProvider.CurrentMiniGameType = _gameSessionInfoProvider.NextMiniGameType;
         _fadeToBlackManager.FadeIn(
-            () => MiniGameSceneChangerModel.ChangeToNewMiniGame(_miniGameSelectorModel.NextType),
+            () => MiniGameSceneChangerModel.ChangeToNewMiniGame(_gameSessionInfoProvider.CurrentMiniGameType),
             true
         );
     }
