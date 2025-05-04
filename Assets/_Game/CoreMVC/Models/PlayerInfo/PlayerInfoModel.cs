@@ -35,6 +35,9 @@ public class PlayerInfoModel : IPlayerInfoModel
 
     public void ModifyLives (int amount)
     {
+        if (!_gameSessionInfoProvider.HasStartedGameRun)
+            return;
+        
         _previousLives = CurrentLives;
         CurrentLives += amount;
         
@@ -44,6 +47,9 @@ public class PlayerInfoModel : IPlayerInfoModel
 
     public void ModifyScore (int amount)
     {
+        if (!_gameSessionInfoProvider.HasStartedGameRun)
+            return;
+        
         _previousScore = CurrentScore;
         CurrentScore += amount;
         

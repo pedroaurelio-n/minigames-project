@@ -18,19 +18,21 @@
         _fadeToBlackManager = fadeToBlackManager;
     }
     
-    public override void ChangeSceneClick () => ChangeToNextMiniGame();
-    
     protected override void AddListeners ()
     {
-        _miniGameManagerModel.OnMiniGameChange += HandleMiniGameChange;
+        _miniGameManagerModel.OnMiniGameChanged += HandleMiniGameChanged;
+        _miniGameManagerModel.OnSingleMiniGameEnded += HandleSingleMiniGameEnded;
     }
     
     protected override void RemoveListeners ()
     {
-        _miniGameManagerModel.OnMiniGameChange -= HandleMiniGameChange;
+        _miniGameManagerModel.OnMiniGameChanged -= HandleMiniGameChanged;
+        _miniGameManagerModel.OnSingleMiniGameEnded -= HandleSingleMiniGameEnded;
     }
     
-    void HandleMiniGameChange () => ChangeToRandomMiniGame();
+    void HandleMiniGameChanged () => ChangeToRandomMiniGame();
+    
+    void HandleSingleMiniGameEnded () => GoToMainMenu();
     
     void ChangeToRandomMiniGame ()
     {
@@ -45,12 +47,12 @@
         );
     }
 
-    void ChangeToNextMiniGame ()
+    void GoToMainMenu ()
     {
         if (IsChangingScene)
             return;
         
         IsChangingScene = true;
-        _fadeToBlackManager.FadeIn(MiniGameSceneChangerModel.ChangeToNextMiniGame, true);
+        _fadeToBlackManager.FadeIn(() => MiniGameSceneChangerModel.ChangeToMainMenu(), true);
     }
 }

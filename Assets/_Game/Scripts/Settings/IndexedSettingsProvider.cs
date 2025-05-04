@@ -37,6 +37,11 @@ public class IndexedSettingsProvider<TInterface, TClass> where TClass : TInterfa
         _currentObject = value;
     }
 
+    public SettingsObject<TInterface, TClass> GetSettingsByIndex (int index)
+    {
+        return _settingsDict.GetValueOrDefault(index);
+    }
+
     void LoadAllPrefixedJsons (string jsonPrefix)
     {
         TextAsset[] jsons = Resources.LoadAll<TextAsset>($"Settings/{_firebaseTag}");

@@ -1,4 +1,5 @@
 ﻿{
-  "baseObjectiveMilestone": 30,
-  "instructions": "Click until you reach the milestone!"
+  "name": "Click Milestone",
+  "instructions": "Click until you reach the milestone!",
+  "baseObjectiveMilestone": 30
 }

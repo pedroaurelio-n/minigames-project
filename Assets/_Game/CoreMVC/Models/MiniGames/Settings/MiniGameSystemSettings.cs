@@ -9,6 +9,9 @@ public class MiniGameSystemSettings : IMiniGameSystemSettings
 
     [JsonProperty]
     public float EndGraceDuration { get; }
+    
+    [JsonProperty]
+    public float NextMiniGameDelay { get; }
 
     [JsonProperty]
     public bool RandomOrder { get; }
@@ -23,6 +26,7 @@ public class MiniGameSystemSettings : IMiniGameSystemSettings
     public MiniGameSystemSettings (
         float baseDuration,
         float endGraceDuration,
+        float nextMiniGameDelay,
         bool randomOrder,
         bool canRepeatPrevious,
         MiniGameType[] activeMiniGames
@@ -30,6 +34,7 @@ public class MiniGameSystemSettings : IMiniGameSystemSettings
     {
         BaseDuration = baseDuration;
         EndGraceDuration = endGraceDuration;
+        NextMiniGameDelay = nextMiniGameDelay;
         RandomOrder = randomOrder;
         CanRepeatPrevious = canRepeatPrevious;
         ActiveMiniGames = activeMiniGames;

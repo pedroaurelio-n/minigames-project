@@ -1,4 +1,5 @@
 ﻿{
-  "baseObjectCount": 3,
-  "instructions": "Move the objects to their colored boxes!"
+  "name": "Drag Objects",
+  "instructions": "Move the objects to their colored boxes!",
+  "baseObjectCount": 3
 }

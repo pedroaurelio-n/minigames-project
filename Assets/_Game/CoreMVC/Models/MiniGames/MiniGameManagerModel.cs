@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class MiniGameManagerModel : IMiniGameManagerModel
 {
-    const float CHANGE_DELAY = 1.5f;
-    
-    public event Action OnMiniGameChange;
+    public event Action OnMiniGameChanged;
+    public event Action OnSingleMiniGameEnded;
     
     public IMiniGameModel ActiveMiniGame => _activeMiniGame;
     public MiniGameType ActiveMiniGameType => _activeMiniGame.Type;
 
     IMiniGameModel _activeMiniGame;
 
-    readonly IMiniGameSelectorModel _miniGameSelectorModel;
     readonly IMiniGameModelFactory _miniGameModelFactory;
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
@@ -21,19 +19,18 @@ public class MiniGameManagerModel : IMiniGameManagerModel
     readonly WaitForSeconds _waitForChange;
 
     public MiniGameManagerModel (
-        IMiniGameSelectorModel miniGameSelectorModel,
+        IMiniGameSystemSettings miniGameSystemSettings,
         IMiniGameModelFactory miniGameModelFactory,
         IPlayerInfoModel playerInfoModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         ICoroutineRunner coroutineRunner
     )
     {
-        _miniGameSelectorModel = miniGameSelectorModel;
         _miniGameModelFactory = miniGameModelFactory;
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _changeCoroutine = new UniqueCoroutine(coroutineRunner);
-        _waitForChange = new WaitForSeconds(CHANGE_DELAY);
+        _waitForChange = new WaitForSeconds(miniGameSystemSettings.NextMiniGameDelay);
     }
 
     public void Initialize ()
@@ -76,7 +73,11 @@ public class MiniGameManagerModel : IMiniGameManagerModel
     IEnumerator ChangeCoroutine ()
     {
         yield return _waitForChange;
-        OnMiniGameChange?.Invoke();
+        
+        if (_gameSessionInfoProvider.HasStartedGameRun)
+            OnMiniGameChanged?.Invoke();
+        else
+            OnSingleMiniGameEnded?.Invoke();
     }
 
     public void Dispose()

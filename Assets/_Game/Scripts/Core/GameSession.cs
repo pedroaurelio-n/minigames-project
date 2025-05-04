@@ -49,7 +49,6 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         CreateProviders();
 
         PlayerInfoModel = new PlayerInfoModel(_settingsManager.PlayerSettings.Instance, this);
-        PlayerInfoModel.Initialize();
 
         _fadeToBlackManager = Object.Instantiate(
             Resources.Load<FadeToBlackManager>("FadeToBlackManager"),
@@ -82,7 +81,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
 
     void CreateCore ()
     {
-        if (CurrentScene.StartsWith("MiniGame"))
+        if (CurrentScene.StartsWith(SceneManagerUtils.MiniGameScenePrefix))
             CreateGameCore();
         else
             CreateMenuCore();

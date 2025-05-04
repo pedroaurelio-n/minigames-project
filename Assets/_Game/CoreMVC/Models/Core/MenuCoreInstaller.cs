@@ -60,6 +60,8 @@ public class MenuCoreInstaller : IInstaller
         builder.RegisterInstance(_cameraProvider);
         builder.RegisterInstance(_coroutineRunner);
         
+        builder.RegisterInstance(_settingsManager.MiniGameSettingsProvider);
+        
         builder.RegisterInstance(_settingsManager.MiniGameSystemSettings.Instance);
 
         builder.Register<IMenuSceneChangerModel, MenuSceneChangerModel>(Lifetime.Singleton);

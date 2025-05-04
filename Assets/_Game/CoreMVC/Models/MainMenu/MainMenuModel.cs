@@ -1,13 +1,15 @@
-﻿public class GameOverModel : IGameOverModel
+﻿using System;
+
+public class MainMenuModel : IMainMenuModel
 {
-    public int Lives => _playerInfoModel.CurrentLives;
-    public int Score => _playerInfoModel.CurrentScore;
+    public event Action<MainMenuState> OnMainMenuStateChanged;
+    
     public int HighScore => _playerInfoModel.HighScore;
 
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IMenuSceneChangerModel _menuSceneChangerModel;
     
-    public GameOverModel (
+    public MainMenuModel (
         IPlayerInfoModel playerInfoModel,
         IMenuSceneChangerModel menuSceneChangerModel
     )
@@ -16,13 +18,18 @@
         _menuSceneChangerModel = menuSceneChangerModel;
     }
 
-    public void RestartGame ()
+    public void ChangeMainMenuState (MainMenuState state)
+    {
+        OnMainMenuStateChanged?.Invoke(state);
+    }
+
+    public void PlayGame ()
     {
         _menuSceneChangerModel.ChangeToNewMiniGame();
     }
 
-    public void ReturnToMenu ()
+    public void SelectLevel (int index)
     {
-        _menuSceneChangerModel.ChangeScene(SceneManagerUtils.MainMenuSceneName);
+        _menuSceneChangerModel.ChangeToDesiredMiniGame(index);
     }
 }

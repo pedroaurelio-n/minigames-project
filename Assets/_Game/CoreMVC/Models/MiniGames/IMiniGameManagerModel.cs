@@ -2,7 +2,8 @@
 
 public interface IMiniGameManagerModel : IDisposable
 {
-    event Action OnMiniGameChange;
+    event Action OnMiniGameChanged;
+    event Action OnSingleMiniGameEnded;
     
     IMiniGameModel ActiveMiniGame { get; }
     MiniGameType ActiveMiniGameType { get; }

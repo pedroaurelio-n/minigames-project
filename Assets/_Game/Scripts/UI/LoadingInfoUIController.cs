@@ -14,8 +14,11 @@ public class LoadingInfoUIController
         _playerInfoModel = playerInfoModel;
     }
 
-    public void Enable ()
+    public void Enable (bool? hasStartedRun)
     {
+        if (!hasStartedRun.HasValue || !hasStartedRun.Value)
+            return;
+        
         _view.gameObject.SetActive(true);
         SyncView();
     }

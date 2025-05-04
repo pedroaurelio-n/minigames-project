@@ -8,7 +8,6 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     //TODO pedro: maybe create new ui canvas that instantiates during loading screen
     const string PERCENTAGE_FORMAT = "{0}%";
     const float LOADING_SPEED = 2f;
-    const string START_SCENE = "MainMenu";
     
     [field: SerializeField] public LoadingInfoUIView LoadingInfoUIView { get; private set; }
     
@@ -65,7 +64,7 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
         if (ApplicationSession?.GameSession is { HasStartedGameRun: false })
             _loadingInfoUIController?.Disable();
         else
-            _loadingInfoUIController?.Enable();
+            _loadingInfoUIController?.Enable(ApplicationSession?.GameSession?.HasStartedGameRun);
         
         fadeToBlackManager.FadeOut(CompleteFadeOut);
 
@@ -80,7 +79,7 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     {
         _loadingProgress = 0;
         if (string.IsNullOrEmpty(_newScene))
-            _newScene = START_SCENE;
+            _newScene = SceneManagerUtils.MainMenuSceneName;
         
         if (startButton != null)
             startButton.gameObject.SetActive(false);
@@ -144,7 +143,7 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
         {
             ApplicationSession = new ApplicationSession(this);
             ApplicationSession.OnInitializationComplete += CompleteLoad;
-            ApplicationSession.Initialize(START_SCENE);
+            ApplicationSession.Initialize(SceneManagerUtils.MainMenuSceneName);
         }
         else
         {

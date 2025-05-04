@@ -1,4 +1,5 @@
 ﻿{
-  "baseObjectCount": 10,
-  "instructions": "Find the colored object to win!"
+  "name": "Find Object",
+  "instructions": "Find the colored object to win!",
+  "baseObjectCount": 10
 }

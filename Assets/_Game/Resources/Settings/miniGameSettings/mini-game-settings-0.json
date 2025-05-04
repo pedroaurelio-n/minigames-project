@@ -1,4 +1,5 @@
 ﻿{
-  "baseObjectCount": 5,
-  "instructions": "Tap all objects to win!"
+  "name": "Tap Objects",
+  "instructions": "Tap all objects to win!",
+  "baseObjectCount": 5
 }
