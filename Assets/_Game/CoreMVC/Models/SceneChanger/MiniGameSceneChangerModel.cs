@@ -1,6 +1,4 @@
-﻿using UnityEngine.SceneManagement;
-
-public class MiniGameSceneChangerModel : BaseSceneChangerModel, IMiniGameSceneChangerModel
+﻿public class MiniGameSceneChangerModel : BaseSceneChangerModel, IMiniGameSceneChangerModel
 {
     readonly IPlayerInfoModel _playerInfoModel;
 

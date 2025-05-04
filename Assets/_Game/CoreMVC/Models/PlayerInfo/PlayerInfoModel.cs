@@ -40,9 +40,6 @@ public class PlayerInfoModel : IPlayerInfoModel
         
         _previousLives = CurrentLives;
         CurrentLives += amount;
-        
-        if (!HasLivesRemaining)
-            _gameSessionInfoProvider.HasStartedGameRun = false;
     }
 
     public void ModifyScore (int amount)

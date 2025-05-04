@@ -1,4 +1,1 @@
-public interface ISceneChangerModel
-{
-    void ChangeScene (string newScene);
-}
+public interface ISceneChangerModel { }

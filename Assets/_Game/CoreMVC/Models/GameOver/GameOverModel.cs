@@ -23,6 +23,6 @@
 
     public void ReturnToMenu ()
     {
-        _menuSceneChangerModel.ChangeScene(SceneManagerUtils.MainMenuSceneName);
+        _menuSceneChangerModel.ChangeToMainMenu();
     }
 }

@@ -37,4 +37,12 @@
         _gameSessionInfoProvider.CurrentMiniGameType = (MiniGameType)index;
         ChangeScene($"{SceneManagerUtils.MiniGameScenePrefix}{index}");
     }
+    
+    public void ChangeToMainMenu ()
+    {
+        _playerInfoModel.Reset();
+        _gameSessionInfoProvider.HasStartedGameRun = false;
+        
+        ChangeScene(SceneManagerUtils.MainMenuSceneName);
+    }
 }

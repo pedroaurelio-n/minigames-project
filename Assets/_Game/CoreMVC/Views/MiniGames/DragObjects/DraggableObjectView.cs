@@ -26,23 +26,37 @@ public class DraggableObjectView : PoolableView, IDraggable
     public void OnDragBegan ()
     {
         meshRenderer.material = _dragMaterial;
-        rb.isKinematic = true;
     }
 
     public void OnDragMoved (Vector3 worldPosition)
     {
-        Vector3 direction = (worldPosition - rb.position).normalized;
-        float distance = Vector3.Distance(rb.position, worldPosition);
+        Vector3 desiredVelocity = worldPosition - rb.position;
         
-        if (!rb.SweepTest(direction, out RaycastHit hit, distance))
-            rb.MovePosition(worldPosition);
+        float distance = desiredVelocity.magnitude;
+        
+        float forceMultiplier = 15f;
+        float damping = 1.5f;
+        
+        Vector3 force = desiredVelocity.normalized * distance * forceMultiplier;
+        
+        force -= rb.velocity * damping;
+        
+        float maxForce = 20f;
+        if (force.magnitude > maxForce)
+        {
+            force = force.normalized * maxForce;
+        }
+        
+        rb.AddForce(force, ForceMode.Acceleration);
+        
+        if (distance < 0.05f)
+        {
+            rb.position = worldPosition;
+        }
     }
 
     public void OnDragEnded ()
     {
-        Vector3 previousVelocity = rb.velocity;
         meshRenderer.material = _defaultMaterial;
-        rb.isKinematic = false;
-        rb.velocity = previousVelocity * 0.3f;
     }
 }

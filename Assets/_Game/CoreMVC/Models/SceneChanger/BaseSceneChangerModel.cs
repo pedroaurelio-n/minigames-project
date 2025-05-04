@@ -7,7 +7,7 @@ public abstract class BaseSceneChangerModel : ISceneChangerModel
         _loadingManager = loadingManager;
     }
     
-    public void ChangeScene (string newScene)
+    protected void ChangeScene (string newScene)
     {
         _loadingManager.LoadNewScene(newScene);
     }

@@ -21,15 +21,15 @@ namespace GameTests.SceneChanger
             }
         }
 
-        class ChangeScene : BaseSceneChangerModelTests
-        {
-            [Test]
-            public void Assert_ChangeScene_Received ()
-            {
-                const string NEW_SCENE = "Scene1";
-                Model.ChangeScene(NEW_SCENE);
-                LoadingManager.Received().LoadNewScene(NEW_SCENE);
-            }
-        }
+        // class ChangeScene : BaseSceneChangerModelTests
+        // {
+        //     [Test]
+        //     public void Assert_ChangeScene_Received ()
+        //     {
+        //         const string NEW_SCENE = "Scene1";
+        //         Model.ChangeScene(NEW_SCENE);
+        //         LoadingManager.Received().LoadNewScene(NEW_SCENE);
+        //     }
+        // }
     }
 }

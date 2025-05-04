@@ -2,4 +2,5 @@
 {
     void ChangeToNewMiniGame ();
     void ChangeToDesiredMiniGame (int index);
+    void ChangeToMainMenu ();
 }
