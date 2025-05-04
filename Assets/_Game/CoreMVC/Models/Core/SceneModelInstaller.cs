@@ -49,11 +49,13 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.DebugOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.LayerMaskOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.FadeTransitionOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TapInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.SwipeInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.LongPressInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointMoveInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointZoomInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapObjectsMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragObjectsMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.ThrowObjectsMiniGameOptions);

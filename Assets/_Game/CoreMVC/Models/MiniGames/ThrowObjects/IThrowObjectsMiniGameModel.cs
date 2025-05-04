@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IThrowObjectsMiniGameModel : IMiniGameModel
 {
-    event Action<Vector3> OnSwipePerformed;
+    event Action<Vector3, Vector3> OnSwipePerformed;
 }

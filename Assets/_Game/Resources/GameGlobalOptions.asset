@@ -50,3 +50,7 @@ MonoBehaviour:
     <FindObjectMiniGameOptions>k__BackingField:
       <CheckDelay>k__BackingField: 0.3
       <DistanceRange>k__BackingField: {x: 3, y: 20}
+      <RotationSpeed>k__BackingField: 100
+      <ZoomSpeed>k__BackingField: 0.01
+      <MinCameraZoom>k__BackingField: 75
+      <MaxCameraZoom>k__BackingField: 140

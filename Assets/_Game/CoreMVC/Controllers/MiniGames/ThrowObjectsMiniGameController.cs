@@ -13,7 +13,6 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     readonly IRandomProvider _randomProvider;
     readonly ThrowObjectsSceneView _sceneView;
     readonly PoolableViewFactory _viewFactory;
-    readonly ICameraProvider _cameraProvider;
     readonly ThrowObjectsMiniGameOptions _options;
     readonly UniqueCoroutine _throwDelayCoroutine;
     readonly List<ThrowableObjectView> _objectViews = new();
@@ -27,7 +26,6 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
-        ICameraProvider cameraProvider,
         ThrowObjectsMiniGameOptions options,
         ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
@@ -36,7 +34,6 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         _sceneView = sceneView as ThrowObjectsSceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
-        _cameraProvider = cameraProvider;
         _options = options;
 
         _throwDelayCoroutine = new UniqueCoroutine(coroutineRunner);
@@ -95,20 +92,20 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         _sceneView.Container.OnThrowableEnter -= HandleThrowableEnter;
     }
 
-    void HandleSwipePerformed (Vector3 rawDirection)
+    void HandleSwipePerformed (Vector3 rawDirection, Vector3 forwardDirection)
     {
         if (_throwTimer > 0f)
             return;
         
-        CreateAndThrowObject(rawDirection);
+        CreateAndThrowObject(rawDirection, forwardDirection);
         _throwTimer = _options.ThrowDelay;
     }
 
-    void CreateAndThrowObject (Vector3 rawDirection)
+    void CreateAndThrowObject (Vector3 rawDirection, Vector3 forwardDirection)
     {
-        Vector3 adjustedDirection = (rawDirection * _options.DirectionWeight) / Screen.dpi;
-        Vector3 forwardDirection = _cameraProvider.MainCamera.transform.forward * _options.ForwardWeight;
-        Vector3 finalDirection = adjustedDirection + forwardDirection;
+        Vector3 adjustedRawDirection = (rawDirection * _options.DirectionWeight) / Screen.dpi;
+        Vector3 adjustedForwardDirection = forwardDirection * _options.ForwardWeight;
+        Vector3 finalDirection = adjustedForwardDirection + adjustedRawDirection;
         
         ThrowableObjectView obj = _viewFactory.GetView<ThrowableObjectView>(_sceneView.transform);
         obj.Setup(_sceneView.ThrowableSpawnPoint.position, Quaternion.identity, finalDirection);

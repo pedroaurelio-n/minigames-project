@@ -42,7 +42,6 @@ public class SceneModel : ISceneModel
         // MouseInputModel.SetMainCamera(MainCamera);
         DragModel.Initialize();
         PressModel.Initialize();
-        CameraMoveModel.Initialize();
         
         MiniGameTimerModel.Initialize();
         MiniGameManagerModel.Initialize();

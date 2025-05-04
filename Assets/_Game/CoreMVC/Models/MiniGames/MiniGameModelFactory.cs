@@ -5,25 +5,31 @@ public class MiniGameModelFactory : IMiniGameModelFactory
     readonly IMiniGameSettings _miniGameSettings;
     readonly IMiniGameTimerModel _miniGameTimerModel;
     readonly ICameraProvider _cameraProvider;
+    readonly ICameraMoveModel _cameraMoveModel;
     readonly ITouchInputModel _touchInputModel;
     readonly IPressModel _pressModel;
     readonly IDragModel _dragModel;
+    readonly MiniGameOptions _options;
 
     public MiniGameModelFactory (
         IMiniGameSettings miniGameSettings,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider,
+        ICameraMoveModel cameraMoveModel,
         ITouchInputModel touchInputModel,
         IPressModel pressModel,
-        IDragModel dragModel
+        IDragModel dragModel,
+        MiniGameOptions options
     )
     {
         _miniGameSettings = miniGameSettings;
         _miniGameTimerModel = miniGameTimerModel;
         _cameraProvider = cameraProvider;
+        _cameraMoveModel = cameraMoveModel;
         _touchInputModel = touchInputModel;
         _pressModel = pressModel;
         _dragModel = dragModel;
+        _options = options;
     }
     
     public IMiniGameModel CreateMiniGameBasedOnType (MiniGameType type)
@@ -56,7 +62,10 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                 IFindObjectMiniGameModel findObjectMiniGameModel = new FindObjectMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
-                    _cameraProvider
+                    _cameraMoveModel,
+                    _touchInputModel,
+                    _options.FindObjectMiniGameOptions
+                    
                 );
                 return findObjectMiniGameModel;
             case MiniGameType.ClickMilestone:

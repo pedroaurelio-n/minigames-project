@@ -36,4 +36,8 @@ public class FindObjectMiniGameOptions
 {
     [field: SerializeField] public float CheckDelay { get; private set; }
     [field: SerializeField] public Vector2 DistanceRange { get; private set; }
+    [field: SerializeField] public float RotationSpeed { get; private set; }
+    [field: SerializeField] public float ZoomSpeed { get; private set; }
+    [field: SerializeField] public float MinCameraZoom { get; private set; }
+    [field: SerializeField] public float MaxCameraZoom { get; private set; }
 }

@@ -2,59 +2,19 @@ using UnityEngine;
 
 public class CameraMoveModel : ICameraMoveModel
 {
-    //TODO pedro: possibly move logic to FindObjectMiniGameModel
-    const float ZOOM_SPEED = 0.01f;
-    const float MIN_CAMERA_ZOOM = 75f;
-    const float MAX_CAMERA_ZOOM = 140f;
-    
-    const float ROTATION_SPEED = 100f;
-    
     readonly ICameraProvider _cameraProvider;
-    readonly ITouchInputModel _touchInputModel;
     
     public CameraMoveModel(
-        ICameraProvider cameraProvider,
-        ITouchInputModel touchInputModel
+        ICameraProvider cameraProvider
     )
     {
         _cameraProvider = cameraProvider;
-        _touchInputModel = touchInputModel;
     }
 
-    public void Initialize()
+    public void MoveCamera (Vector2 moveVector)
     {
-        AddListeners();
-    }
-
-    void AddListeners()
-    {
-        _touchInputModel.OnTwoPointZoomPerformed += HandleTwoPointZoomPerformed;
-        _touchInputModel.OnTwoPointMoveStarted += HandleTwoPointMoveStarted;
-        _touchInputModel.OnTwoPointMovePerformed += HandleTwoPointMovePerformed;
-    }
-    
-    void RemoveListeners()
-    {
-        _touchInputModel.OnTwoPointZoomPerformed -= HandleTwoPointZoomPerformed;
-        _touchInputModel.OnTwoPointMoveStarted -= HandleTwoPointMoveStarted;
-        _touchInputModel.OnTwoPointMovePerformed -= HandleTwoPointMovePerformed;
-    }
-
-    void HandleTwoPointZoomPerformed(float difference)
-    {
-        float newFov = (ZOOM_SPEED * difference) / Screen.dpi;
-        _cameraProvider.MainCamera.fieldOfView += newFov;
-        _cameraProvider.MainCamera.fieldOfView = Mathf.Clamp(_cameraProvider.MainCamera.fieldOfView, MIN_CAMERA_ZOOM, MAX_CAMERA_ZOOM);
-    }
-
-    void HandleTwoPointMoveStarted(Vector2 middlePosition)
-    {
-    }
-
-    void HandleTwoPointMovePerformed(Vector2 deltaPosition)
-    {
-        float yaw = -deltaPosition.x * ROTATION_SPEED;
-        float pitch = deltaPosition.y * ROTATION_SPEED;
+        float yaw = -moveVector.x;
+        float pitch = moveVector.y;
         
         Vector3 currentEuler = _cameraProvider.MainCamera.transform.eulerAngles;
         currentEuler.y += yaw;
@@ -62,8 +22,14 @@ public class CameraMoveModel : ICameraMoveModel
         _cameraProvider.MainCamera.transform.eulerAngles = currentEuler;
     }
     
-    public void Dispose()
+    public void ZoomCamera (
+        float zoomAmount,
+        float minZoom = Mathf.NegativeInfinity,
+        float maxZoom = Mathf.Infinity
+    )
     {
-        RemoveListeners();
+        float newFov = zoomAmount / Screen.dpi;
+        _cameraProvider.MainCamera.fieldOfView += newFov;
+        _cameraProvider.MainCamera.fieldOfView = Mathf.Clamp(_cameraProvider.MainCamera.fieldOfView, minZoom, maxZoom);
     }
 }

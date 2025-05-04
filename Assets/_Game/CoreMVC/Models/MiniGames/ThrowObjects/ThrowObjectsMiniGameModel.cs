@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGameModel
 {
-    public event Action<Vector3> OnSwipePerformed;
+    public event Action<Vector3, Vector3> OnSwipePerformed;
     
     public override MiniGameType Type => MiniGameType.ThrowObjects;
     public override TouchInputType InputTypes => TouchInputType.Swipe;
 
-    //TODO pedro: check if it's possible to do some input logic in this class (and use camera provider)
     readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     
@@ -43,6 +42,6 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
         float duration
     )
     {
-        OnSwipePerformed?.Invoke(rawDirection);
+        OnSwipePerformed?.Invoke(rawDirection, _cameraProvider.MainCamera.transform.forward);
     }
 }
