@@ -12,6 +12,7 @@ public class TapObjectsMiniGameController : BaseMiniGameController
     readonly IRandomProvider _randomProvider;
     readonly TapObjectsSceneView _sceneView;
     readonly PoolableViewFactory _viewFactory;
+    readonly TapObjectsMiniGameOptions _options;
     readonly HashSet<TappableObjectView> _objectViews = new();
 
     public TapObjectsMiniGameController (
@@ -19,13 +20,15 @@ public class TapObjectsMiniGameController : BaseMiniGameController
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
-        PoolableViewFactory viewFactory
+        PoolableViewFactory viewFactory,
+        TapObjectsMiniGameOptions options
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as TapObjectsSceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
+        _options = options;
     }
 
     public override void Initialize ()
@@ -41,15 +44,7 @@ public class TapObjectsMiniGameController : BaseMiniGameController
         base.SetupMiniGame();
         
         _viewFactory.SetupPool(_sceneView.TappableObjectPrefab);
-        for (int i = 0; i < MiniGameModel.BaseObjectsToSpawn; i++)
-        {
-            TappableObjectView obj = _viewFactory.GetView<TappableObjectView>(_sceneView.transform);
-            obj.transform.position = _randomProvider.Range(
-                new Vector2(-MiniGameModel.MaxSpawnDistance, -MiniGameModel.MaxSpawnDistance),
-                new Vector2(MiniGameModel.MaxSpawnDistance, MiniGameModel.MaxSpawnDistance)
-            );
-            _objectViews.Add(obj);
-        }
+        SpawnObjects();
     }
 
     protected override bool CheckWinCondition (bool timerEnded)
@@ -70,6 +65,19 @@ public class TapObjectsMiniGameController : BaseMiniGameController
         
         base.RemoveListeners();
         MiniGameModel.OnTapPerformed -= HandleTapPerformed;
+    }
+    
+    void SpawnObjects ()
+    {
+        for (int i = 0; i < MiniGameModel.BaseObjectsToSpawn; i++)
+        {
+            TappableObjectView obj = _viewFactory.GetView<TappableObjectView>(_sceneView.transform);
+            obj.transform.position = _randomProvider.Range(
+                new Vector2(-_options.SpawnDistance.x, -_options.SpawnDistance.y),
+                new Vector2(_options.SpawnDistance.x, _options.SpawnDistance.y)
+            );
+            _objectViews.Add(obj);
+        }
     }
 
     void HandleTapPerformed (IPressable pressable, Vector2 tapPosition)

@@ -54,6 +54,10 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.LongPressInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointMoveInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointZoomInputOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapObjectsMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragObjectsMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.ThrowObjectsMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.FindObjectMiniGameOptions);
 
         //TODO pedro: delete mouse input classes
         // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Singleton);

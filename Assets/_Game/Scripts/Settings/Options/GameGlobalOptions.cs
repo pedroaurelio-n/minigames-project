@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameGlobalOptions", menuName = "GameGlobalOptions")]
@@ -10,6 +8,7 @@ public class GameGlobalOptions : ScriptableObject
     [field: SerializeField] public LayerMaskOptions LayerMaskOptions { get; private set; }
     [field: SerializeField] public FadeTransitionOptions FadeTransitionOptions { get; private set; }
     [field: SerializeField] public InputOptions InputOptions { get; private set; }
+    [field: SerializeField] public MiniGameOptions MiniGameOptions { get; private set; }
     
     public static GameGlobalOptions Instance
     {

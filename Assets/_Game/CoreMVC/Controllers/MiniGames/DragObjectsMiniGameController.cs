@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DragObjectsMiniGameController : BaseMiniGameController
@@ -11,6 +12,7 @@ public class DragObjectsMiniGameController : BaseMiniGameController
     readonly DragObjectsSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
     readonly PoolableViewFactory _viewFactory;
+    readonly DragObjectsMiniGameOptions _options;
     readonly List<DraggableObjectView> _objectViews = new();
     readonly Dictionary<DraggableObjectColor, int> _colorCounts = new();
 
@@ -19,13 +21,15 @@ public class DragObjectsMiniGameController : BaseMiniGameController
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
-        PoolableViewFactory viewFactory
+        PoolableViewFactory viewFactory,
+        DragObjectsMiniGameOptions options
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as DragObjectsSceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
+        _options = options;
     }
     
     public override void Initialize ()
@@ -42,19 +46,8 @@ public class DragObjectsMiniGameController : BaseMiniGameController
         base.SetupMiniGame();
         
         _viewFactory.SetupPool(_sceneView.DraggablePrefab);
-        for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
-        {
-            DraggableObjectView obj = _viewFactory.GetView<DraggableObjectView>(_sceneView.transform);
-            obj.Setup(_randomProvider.RandomEnumValue<DraggableObjectColor>());
-            obj.transform.position = _sceneView.SpawnPoint.transform.position + _randomProvider.Range(
-                new Vector3(-15, 0),
-                new Vector3(15, 0)
-            );
-            
-            _objectViews.Add(obj);
-            _colorCounts.TryAdd(obj.Color, 0);
-            _colorCounts[obj.Color]++;
-        }
+        SetupContainers();
+        SpawnObjects();
     }
 
     protected override bool CheckWinCondition (bool timerEnded)
@@ -69,6 +62,40 @@ public class DragObjectsMiniGameController : BaseMiniGameController
         }
         
         return true;
+    }
+
+    void SetupContainers ()
+    {
+        HashSet<Transform> points = _sceneView.ContainerSpawnPoints.ToHashSet();
+
+        foreach (DraggableContainerView container in _sceneView.Containers)
+        {
+            Transform randomPoint = _randomProvider.PickRandom(points);
+            points.Remove(randomPoint);
+            float randomX = _randomProvider.Range(
+                -_options.ContainerHorizontalDistance,
+                _options.ContainerHorizontalDistance
+            );
+            Vector3 newPosition = randomPoint.transform.position + new Vector3(randomX, 0f, 0f);
+            container.transform.position = newPosition;
+        }
+    }
+
+    void SpawnObjects ()
+    {
+        for (int i = 0; i < MiniGameModel.BaseStartObjects; i++)
+        {
+            DraggableObjectView obj = _viewFactory.GetView<DraggableObjectView>(_sceneView.transform);
+            obj.Setup(_randomProvider.RandomEnumValue<DraggableObjectColor>());
+            obj.transform.position = _sceneView.BallSpawnPoint.transform.position + _randomProvider.Range(
+                new Vector3(-_options.BallSpawnDistance, 0),
+                new Vector3(_options.BallSpawnDistance, 0)
+            );
+            
+            _objectViews.Add(obj);
+            _colorCounts.TryAdd(obj.Color, 0);
+            _colorCounts[obj.Color]++;
+        }
     }
 
     void AddViewListeners ()

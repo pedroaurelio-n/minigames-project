@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,22 +13,33 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
     readonly IRandomProvider _randomProvider;
     readonly ThrowObjectsSceneView _sceneView;
     readonly PoolableViewFactory _viewFactory;
+    readonly ICameraProvider _cameraProvider;
+    readonly ThrowObjectsMiniGameOptions _options;
+    readonly UniqueCoroutine _throwDelayCoroutine;
     readonly List<ThrowableObjectView> _objectViews = new();
 
     bool _hasCompleted;
+    float _throwTimer;
 
     public ThrowObjectsMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
-        PoolableViewFactory viewFactory
+        PoolableViewFactory viewFactory,
+        ICameraProvider cameraProvider,
+        ThrowObjectsMiniGameOptions options,
+        ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as ThrowObjectsSceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
+        _cameraProvider = cameraProvider;
+        _options = options;
+
+        _throwDelayCoroutine = new UniqueCoroutine(coroutineRunner);
     }
 
     public override void Initialize ()
@@ -46,6 +58,8 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         _viewFactory.SetupPool(_sceneView.ThrowableObjectPrefab);
         _sceneView.Container.transform.position =
             _randomProvider.PickRandom(_sceneView.ContainerSpawnPoints).position;
+        
+        _throwDelayCoroutine.Start(ThrowDelayCoroutine());
     }
 
     protected override bool CheckWinCondition (bool timerEnded)
@@ -81,10 +95,23 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
         _sceneView.Container.OnThrowableEnter -= HandleThrowableEnter;
     }
 
-    void HandleSwipePerformed (Vector3 swipeDirection)
+    void HandleSwipePerformed (Vector3 rawDirection)
     {
+        if (_throwTimer > 0f)
+            return;
+        
+        CreateAndThrowObject(rawDirection);
+        _throwTimer = _options.ThrowDelay;
+    }
+
+    void CreateAndThrowObject (Vector3 rawDirection)
+    {
+        Vector3 adjustedDirection = (rawDirection * _options.DirectionWeight) / Screen.dpi;
+        Vector3 forwardDirection = _cameraProvider.MainCamera.transform.forward * _options.ForwardWeight;
+        Vector3 finalDirection = adjustedDirection + forwardDirection;
+        
         ThrowableObjectView obj = _viewFactory.GetView<ThrowableObjectView>(_sceneView.transform);
-        obj.Setup(_sceneView.ThrowableSpawnPoint.position, Quaternion.identity, swipeDirection);
+        obj.Setup(_sceneView.ThrowableSpawnPoint.position, Quaternion.identity, finalDirection);
         _objectViews.Add(obj);
     }
 
@@ -96,10 +123,26 @@ public class ThrowObjectsMiniGameController : BaseMiniGameController
             MiniGameModel.Complete();
     }
 
+    IEnumerator ThrowDelayCoroutine ()
+    {
+        while (true)
+        {
+            while (_throwTimer > 0f)
+            {
+                _throwTimer -= Time.deltaTime;
+                yield return null;
+            }
+
+            _throwTimer = 0f;
+            yield return null;
+        }
+    }
+
     public override void Dispose ()
     {
         RemoveViewListeners();
         _objectViews.DisposeAndClear();
+        _throwDelayCoroutine.Dispose();
         base.Dispose();
     }
 }

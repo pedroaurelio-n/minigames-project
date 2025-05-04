@@ -21,9 +21,9 @@ public interface IRandomProvider
         ref int failureCount,
         float? maxChance = null
     );
-
-    T PickRandom<T> (T[] array);
-    T PickRandom<T> (List<T> list);
+    
+    T PickRandom<T> (IReadOnlyList<T> list);
+    T PickRandom<T> (HashSet<T> hashset);
     T WeightedRandom<T> (List<WeightedObject<T>> weightedList);
     T RandomEnumValue<T> () where T : Enum;
 }

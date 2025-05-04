@@ -8,6 +8,7 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
     public override MiniGameType Type => MiniGameType.ThrowObjects;
     public override TouchInputType InputTypes => TouchInputType.Swipe;
 
+    //TODO pedro: check if it's possible to do some input logic in this class (and use camera provider)
     readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     
@@ -42,8 +43,6 @@ public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGam
         float duration
     )
     {
-        //TODO move magic numbers to options
-        Vector3 swipeDirection = ((Vector3)rawDirection * 10f / Screen.dpi) + _cameraProvider.MainCamera.transform.forward * 23f;
-        OnSwipePerformed?.Invoke(swipeDirection);
+        OnSwipePerformed?.Invoke(rawDirection);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -103,20 +104,22 @@ public class RandomProvider : IRandomProvider
         return false;
     }
     
-    public T PickRandom<T> (T[] array)
-    {
-        if (array == null || array.Length == 0)
-            throw new ArgumentException("List must not be null or empty.");
-        
-        return array[Range(0, array.Length)];
-    }
-
-    public T PickRandom<T> (List<T> list)
+    public T PickRandom<T> (IReadOnlyList<T> list)
     {
         if (list == null || list.Count == 0)
             throw new ArgumentException("List must not be null or empty.");
         
         return list[Range(0, list.Count)];
+    }
+    
+    //TODO pedro: Check for optimization possibilities
+    public T PickRandom<T> (HashSet<T> hashset)
+    {
+        if (hashset == null || hashset.Count == 0)
+            throw new ArgumentException("Hashset must not be null or empty.");
+        
+        int index = Random.Range(0, hashset.Count);
+        return hashset.ElementAt(index);
     }
 
     public T WeightedRandom<T> (List<WeightedObject<T>> weightedList)

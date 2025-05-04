@@ -38,4 +38,15 @@ MonoBehaviour:
     <TwoPointZoomInputOptions>k__BackingField:
       <MinZoomDistance>k__BackingField: 10
   <MiniGameOptions>k__BackingField:
-    <BaseMiniGameDuration>k__BackingField: 8
+    <TapObjectsMiniGameOptions>k__BackingField:
+      <SpawnDistance>k__BackingField: {x: 20, y: 35}
+    <DragObjectsMiniGameOptions>k__BackingField:
+      <BallSpawnDistance>k__BackingField: 15
+      <ContainerHorizontalDistance>k__BackingField: 13.5
+    <ThrowObjectsMiniGameOptions>k__BackingField:
+      <DirectionWeight>k__BackingField: 10
+      <ForwardWeight>k__BackingField: 23
+      <ThrowDelay>k__BackingField: 0.6
+    <FindObjectMiniGameOptions>k__BackingField:
+      <CheckDelay>k__BackingField: 0.3
+      <DistanceRange>k__BackingField: {x: 3, y: 20}
