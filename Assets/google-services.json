@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "953380861559",
+    "project_id": "minigames-project-1ba9f",
+    "storage_bucket": "minigames-project-1ba9f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953380861559:android:486317fc05e195aa3a7872",
+        "android_client_info": {
+          "package_name": "com.pedroaurelio.minigamesproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPom88JEs6yNc876l_c_-5DdHMwyckvaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
