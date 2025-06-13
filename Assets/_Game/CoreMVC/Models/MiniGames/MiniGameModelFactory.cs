@@ -74,8 +74,12 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameTimerModel
                 );
                 return clickMilestoneMiniGameModel;
-            // case MiniGameType.LongPressObjects:
-            //     return null;
+            case MiniGameType.JoystickRotate:
+                IJoystickRotateMiniGameModel joystickRotateMiniGameModel = new JoystickRotateMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel
+                );
+                return joystickRotateMiniGameModel;
             // case MiniGameType.TurnShooter:
             //     return null;
             default:

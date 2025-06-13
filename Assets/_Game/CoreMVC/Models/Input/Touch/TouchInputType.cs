@@ -1,6 +1,7 @@
 ﻿[System.Flags]
 public enum TouchInputType
 {
+    //TODO pedro: assign joystick and package/asset input types here?
     None = 0,
     Tap = 1 << 0,
     Swipe = 1 << 1,

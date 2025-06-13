@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545444933251891275}
-  - component: {fileID: 7648858706745141004}
   m_Layer: 0
   m_Name: MiniGame4View
   m_TagString: Untagged
@@ -33,20 +32,6 @@ Transform:
   - {fileID: 1733011837669188208}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7648858706745141004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6734758179302113534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea61b704410f4d1a9294fbcb9b59d71a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <TappableObjectPrefab>k__BackingField: {fileID: 6056792429879038516, guid: 4eee07af23049c84e9929413045d01c6,
-    type: 3}
 --- !u!1 &8435005626451664515
 GameObject:
   m_ObjectHideFlags: 0

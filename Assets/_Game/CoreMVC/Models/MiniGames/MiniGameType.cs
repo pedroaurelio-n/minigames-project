@@ -5,7 +5,7 @@
     DragObjects = 1,
     ThrowObjects = 2,
     FindObject = 3,
-    ClickMilestone = 4
-    // LongPressObjects = 5,
+    ClickMilestone = 4,
+    JoystickRotate = 5,
     // TurnShooter = 6,
 }

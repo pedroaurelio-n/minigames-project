@@ -1,0 +1,6 @@
+using UnityEngine;
+
+public class JoystickRotateSceneView : SceneView
+{
+    [field: SerializeField] public Transform RotatingObject { get; private set; }
+}
