@@ -10,6 +10,7 @@ public class MainMenuPanelUIView : MonoBehaviour
     [SerializeField] ButtonUIComponent playButton;
     [SerializeField] ButtonUIComponent levelSelectButton;
     [SerializeField] TextMeshProUGUI highScoreText;
+    [SerializeField] TextMeshProUGUI userText;
 
     void Awake ()
     {
@@ -18,4 +19,10 @@ public class MainMenuPanelUIView : MonoBehaviour
     }
 
     public void SetHighScoreText (string text) => highScoreText.text = text;
+
+    public void SetUserText (bool active, string text = "")
+    {
+        userText.gameObject.SetActive(active);
+        userText.text = text;
+    }
 }

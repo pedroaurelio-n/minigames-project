@@ -22,6 +22,7 @@ public class MenuCore : ICoreModule
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
     readonly ICoroutineRunner _coroutineRunner;
+    readonly FirebaseManager _firebaseManager;
     
     MenuView _menuView;
     MenuUIView _menuUIView;
@@ -39,7 +40,8 @@ public class MenuCore : ICoreModule
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
-        ICoroutineRunner coroutineRunner
+        ICoroutineRunner coroutineRunner,
+        FirebaseManager firebaseManager
     )
     {
         _gameScope = gameScope;
@@ -53,6 +55,7 @@ public class MenuCore : ICoreModule
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
         _coroutineRunner = coroutineRunner;
+        _firebaseManager = firebaseManager;
     }
     
     public void Initialize ()
@@ -71,7 +74,8 @@ public class MenuCore : ICoreModule
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
-            _coroutineRunner
+            _coroutineRunner,
+            _firebaseManager
         );
 
         _cameraProvider.SetMainCamera(Camera.main);

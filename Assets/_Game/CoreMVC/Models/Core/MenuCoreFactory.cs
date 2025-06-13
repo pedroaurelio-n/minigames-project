@@ -17,7 +17,8 @@ public class MenuCoreFactory
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
-        ICoroutineRunner coroutineRunner
+        ICoroutineRunner coroutineRunner,
+        FirebaseManager firebaseManager
     )
     {
         mainMenuView = Object.Instantiate(Resources.Load<MenuView>($"{gameSessionInfoProvider.CurrentScene}View"));
@@ -36,7 +37,8 @@ public class MenuCoreFactory
             randomProvider,
             physicsProvider,
             cameraProvider,
-            coroutineRunner
+            coroutineRunner,
+            firebaseManager
         );
         menuScope = parentScope.CreateChild(installer, "MenuScope");
     }

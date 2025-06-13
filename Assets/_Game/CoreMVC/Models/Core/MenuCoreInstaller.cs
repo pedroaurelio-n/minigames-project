@@ -15,6 +15,7 @@ public class MenuCoreInstaller : IInstaller
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
     readonly ICoroutineRunner _coroutineRunner;
+    readonly FirebaseManager _firebaseManager;
     
     public MenuCoreInstaller (
         MenuView mainMenuView,
@@ -28,7 +29,8 @@ public class MenuCoreInstaller : IInstaller
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
-        ICoroutineRunner coroutineRunner
+        ICoroutineRunner coroutineRunner,
+        FirebaseManager firebaseManager
     )
     {
         _mainMenuView = mainMenuView;
@@ -43,6 +45,7 @@ public class MenuCoreInstaller : IInstaller
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
         _coroutineRunner = coroutineRunner;
+        _firebaseManager = firebaseManager;
     }
     
     public void Install (IContainerBuilder builder)
@@ -59,6 +62,7 @@ public class MenuCoreInstaller : IInstaller
         builder.RegisterInstance(_physicsProvider);
         builder.RegisterInstance(_cameraProvider);
         builder.RegisterInstance(_coroutineRunner);
+        builder.RegisterInstance(_firebaseManager);
         
         builder.RegisterInstance(_settingsManager.MiniGameSettingsProvider);
         

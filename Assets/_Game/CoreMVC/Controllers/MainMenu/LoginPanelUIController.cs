@@ -1,20 +1,17 @@
 ﻿using System;
 
-public class MainMenuPanelUIController : IDisposable
+public class LoginPanelUIController : IDisposable
 {
     readonly IMainMenuModel _model;
-    readonly MainMenuPanelUIView _view;
-    readonly FadeToBlackManager _fadeToBlackManager;
+    readonly LoginPanelUIView _view;
     
-    public MainMenuPanelUIController (
+    public LoginPanelUIController (
         IMainMenuModel model,
-        MainMenuPanelUIView view,
-        FadeToBlackManager fadeToBlackManager
+        LoginPanelUIView view
     )
     {
         _model = model;
         _view = view;
-        _fadeToBlackManager = fadeToBlackManager;
     }
 
     public void Initialize ()
@@ -26,8 +23,6 @@ public class MainMenuPanelUIController : IDisposable
     void Enable ()
     {
         _view.SetActive(true);
-        _view.SetHighScoreText(_model.HighScore.ToString());
-        _view.SetUserText(_model.User != null, _model.User);
     }
 
     void Disable ()
@@ -47,19 +42,19 @@ public class MainMenuPanelUIController : IDisposable
 
     void AddViewListeners ()
     {
-        _view.OnPlayButtonClick += HandlePlayButtonClick;
-        _view.OnLevelSelectButtonClick += HandleLevelSelectButtonClick;
+        _view.OnLoginButtonClick += HandleLoginButtonClick;
+        _view.OnRegisterButtonClick += HandleRegisterButtonClick;
     }
     
     void RemoveViewListeners ()
     {
-        _view.OnPlayButtonClick -= HandlePlayButtonClick;
-        _view.OnLevelSelectButtonClick -= HandleLevelSelectButtonClick;
+        _view.OnLoginButtonClick -= HandleLoginButtonClick;
+        _view.OnRegisterButtonClick -= HandleRegisterButtonClick;
     }
 
     void HandleMainMenuStateChanged (MainMenuState newState)
     {
-        if (newState == MainMenuState.Menu)
+        if (newState == MainMenuState.Login)
         {
             Enable();
             return;
@@ -68,14 +63,14 @@ public class MainMenuPanelUIController : IDisposable
         Disable();
     }
 
-    void HandlePlayButtonClick ()
+    void HandleLoginButtonClick ()
     {
-        _fadeToBlackManager.FadeIn(() => _model.PlayGame(), true);
+        _model.Login(_view.EmailInputField.text, _view.PasswordField.text);
     }
     
-    void HandleLevelSelectButtonClick ()
+    void HandleRegisterButtonClick ()
     {
-        _model.ChangeMainMenuState(MainMenuState.LevelSelect);
+        _model.Register(_view.EmailInputField.text, _view.PasswordField.text);
     }
     
     public void Dispose ()

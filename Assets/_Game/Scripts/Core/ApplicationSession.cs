@@ -1,10 +1,12 @@
 using System;
+using System.Threading.Tasks;
 
 public class ApplicationSession
 {
     public event Action OnInitializationComplete;
     
     public GameSession GameSession { get; private set; }
+    public FirebaseManager FirebaseManager { get; private set; }
 
     readonly ILoadingManager _loadingManager;
 
@@ -15,7 +17,14 @@ public class ApplicationSession
 
     public void Initialize (string currentScene)
     {
-        GameSession = new GameSession(_loadingManager, currentScene);
+        FirebaseManager = new FirebaseManager();
+        FirebaseManager.Initialize();
+
+        GameSession = new GameSession(
+            _loadingManager,
+            FirebaseManager,
+            currentScene
+        );
         GameSession.OnInitializationComplete += HandleInitializationComplete;
         GameSession.Initialize();
     }

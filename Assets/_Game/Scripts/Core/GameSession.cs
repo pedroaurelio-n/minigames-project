@@ -32,13 +32,16 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     IPhysicsProvider _physicsProvider;
     ICameraProvider _cameraProvider;
     CoroutineRunner _coroutineRunner;
+    FirebaseManager _firebaseManager;
     
     public GameSession (
         ILoadingManager loadingManager,
+        FirebaseManager firebaseManager,
         string startScene
     )
     {
         _loadingManager = loadingManager;
+        _firebaseManager = firebaseManager;
         CurrentScene = startScene;
     }
 
@@ -121,7 +124,8 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
-            _coroutineRunner
+            _coroutineRunner,
+            _firebaseManager
         );
         _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;
         _currentCore.Initialize();

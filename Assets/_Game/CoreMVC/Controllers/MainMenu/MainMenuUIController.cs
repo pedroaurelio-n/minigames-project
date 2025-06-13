@@ -7,6 +7,7 @@ public class MainMenuUIController : IDisposable
 
     readonly MainMenuPanelUIController _mainMenuPanelUIController;
     readonly LevelSelectPanelUIController _levelSelectPanelUIController;
+    readonly LoginPanelUIController _loginPanelUIController;
 
     bool _initialized;
     
@@ -40,6 +41,10 @@ public class MainMenuUIController : IDisposable
             miniGameSystemSettings,
             miniGameSettingsProvider       
         );
+        _loginPanelUIController = new LoginPanelUIController(
+            model,
+            _view.LoginPanelUIView
+        );
     }
 
     public void Initialize ()
@@ -49,8 +54,9 @@ public class MainMenuUIController : IDisposable
         
         _mainMenuPanelUIController.Initialize();
         _levelSelectPanelUIController.Initialize();
+        _loginPanelUIController.Initialize();
         
-        _model.ChangeMainMenuState(MainMenuState.Menu);
+        _model.EvaluateInitialState();
     }
     
     public void Dispose ()
@@ -59,5 +65,6 @@ public class MainMenuUIController : IDisposable
             return;
         _mainMenuPanelUIController.Dispose();
         _levelSelectPanelUIController.Dispose();
+        _loginPanelUIController.Dispose();
     }
 }

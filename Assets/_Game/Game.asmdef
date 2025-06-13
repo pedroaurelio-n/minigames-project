@@ -16,7 +16,12 @@
     "precompiledReferences": [
         "DOTween.dll",
         "DOTweenEditor.dll",
-        "Newtonsoft.Json.dll"
+        "Newtonsoft.Json.dll",
+        "Firebase.App.dll",
+        "Firebase.Auth.dll",
+        "Firebase.Editor.dll",
+        "Firebase.TaskExtension.dll",
+        "Firebase.Platform.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
