@@ -15,6 +15,7 @@ public class SceneControllerInstaller : IInstaller
         builder.Register<DragObjectsMiniGameController>(Lifetime.Singleton);
         builder.Register<FindObjectMiniGameController>(Lifetime.Singleton);
         builder.Register<ClickMilestoneMiniGameController>(Lifetime.Singleton);
+        builder.Register<JoystickRotateMiniGameController>(Lifetime.Singleton);
         
         builder.Register<SceneController>(Lifetime.Singleton);
     }

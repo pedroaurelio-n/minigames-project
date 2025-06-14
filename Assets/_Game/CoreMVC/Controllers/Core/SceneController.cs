@@ -11,6 +11,7 @@ public class SceneController : IDisposable
     public DragObjectsMiniGameController DragObjectsMiniGameController { get; }
     public FindObjectMiniGameController FindObjectMiniGameController { get; }
     public ClickMilestoneMiniGameController ClickMilestoneMiniGameController { get; }
+    public JoystickRotateMiniGameController JoystickRotateMiniGameController { get; }
 
     public SceneController (
         // MouseInputController mouseInputController,
@@ -20,7 +21,8 @@ public class SceneController : IDisposable
         ThrowObjectsMiniGameController throwObjectsMiniGameController,
         DragObjectsMiniGameController dragObjectsMiniGameController,
         FindObjectMiniGameController findObjectMiniGameController,
-        ClickMilestoneMiniGameController clickMilestoneMiniGameController
+        ClickMilestoneMiniGameController clickMilestoneMiniGameController,
+        JoystickRotateMiniGameController joystickRotateMiniGameController
     )
     {
         // MouseInputController = mouseInputController;
@@ -31,6 +33,7 @@ public class SceneController : IDisposable
         DragObjectsMiniGameController = dragObjectsMiniGameController;
         FindObjectMiniGameController = findObjectMiniGameController;
         ClickMilestoneMiniGameController = clickMilestoneMiniGameController;
+        JoystickRotateMiniGameController = joystickRotateMiniGameController;
     }
 
     public void Initialize ()
@@ -43,6 +46,7 @@ public class SceneController : IDisposable
         DragObjectsMiniGameController.Initialize();
         FindObjectMiniGameController.Initialize();
         ClickMilestoneMiniGameController.Initialize();
+        JoystickRotateMiniGameController.Initialize();
     }
 
     public void LateInitialize ()
