@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//TODO pedro: maybe put some of this logic on the model?
 public class JoystickRotateMiniGameController : BaseMiniGameController
 {
     const float ROTATION_SPEED = 50f;
@@ -44,7 +45,7 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
         AddUIListeners();
 
         _targetAngleY = _randomProvider.Range(30f, 330f);
-        DebugUtils.Log($"Target angle: {_targetAngleY}");
+        _sceneView.Target.rotation = Quaternion.Euler(0, _targetAngleY, 0);
     }
 
     protected override bool CheckWinCondition (bool timerEnded)
