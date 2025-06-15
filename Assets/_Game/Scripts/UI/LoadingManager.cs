@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
     [SerializeField] Button startButton;
     [SerializeField] FadeToBlackManager fadeToBlackManager;
     [SerializeField] FillBarUIComponent loadingFillBar;
+    [SerializeField] TextMeshProUGUI gameVersionText;
     
     public ApplicationSession ApplicationSession { get; private set; }
     
@@ -77,6 +79,8 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
 
     void StartLoading (bool unloadCurrentScene)
     {
+        gameVersionText.text = $"v{Application.version}";
+        
         _loadingProgress = 0;
         if (string.IsNullOrEmpty(_newScene))
             _newScene = SceneManagerUtils.MainMenuSceneName;
