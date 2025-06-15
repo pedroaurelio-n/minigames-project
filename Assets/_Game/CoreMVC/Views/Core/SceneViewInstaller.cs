@@ -18,7 +18,8 @@ public class SceneViewInstaller : IInstaller
     public void Install (IContainerBuilder builder)
     {
         builder.RegisterInstance(_sceneView);
-        builder.RegisterInstance(_sceneView.MouseInput);
+        //TODO pedro: delete mouse input classes
+        // builder.RegisterInstance(_sceneView.MouseInput);
         builder.RegisterInstance(_sceneView.TapInputView);
         builder.RegisterInstance(_sceneView.SwipeInputView);
         builder.RegisterInstance(_sceneView.LongPressInputView);

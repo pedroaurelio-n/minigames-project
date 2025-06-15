@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
-public class SceneView : MonoBehaviour
+public class SceneView : MonoBehaviour, IDisposable
 {
     public MouseInputView MouseInput { get; private set; }
     public TapInputView TapInputView { get; private set; }
@@ -12,6 +14,7 @@ public class SceneView : MonoBehaviour
 
     public void Initialize ()
     {
+        EnhancedTouchSupport.Enable();
         CreateInputs();
     }
 
@@ -27,9 +30,10 @@ public class SceneView : MonoBehaviour
 
     void CreateInputs ()
     {
-        GameObject mouseInput = new("MouseInput");
-        mouseInput.transform.SetParent(transform);
-        MouseInput = mouseInput.AddComponent<MouseInputView>();
+        //TODO pedro: delete mouse input classes
+        // GameObject mouseInput = new("MouseInput");
+        // mouseInput.transform.SetParent(transform);
+        // MouseInput = mouseInput.AddComponent<MouseInputView>();
 
         GameObject touchInput = new("TouchInputView");
         touchInput.transform.SetParent(transform);
@@ -39,5 +43,10 @@ public class SceneView : MonoBehaviour
         TwoPointMoveInputView = touchInput.AddComponent<TwoPointMoveInputView>();
         TwoPointZoomInputView = touchInput.AddComponent<TwoPointZoomInputView>();
         TouchDragInputView = touchInput.AddComponent<TouchDragInputView>();
+    }
+
+    public void Dispose ()
+    {
+        EnhancedTouchSupport.Disable();
     }
 }

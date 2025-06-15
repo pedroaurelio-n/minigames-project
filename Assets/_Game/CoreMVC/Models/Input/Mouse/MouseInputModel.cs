@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MouseInputModel : IMouseInputModel
 {
-    public Vector3 CurrentPosition { get; private set; }
+    public Vector2 CurrentPosition { get; private set; }
     public bool IsHoveringInteractable => _currentInteractable != null;
 
     readonly IPhysicsProvider _physicsProvider;
@@ -22,7 +22,7 @@ public class MouseInputModel : IMouseInputModel
 
     public void SetMainCamera (Camera mainCamera) => _mainCamera = mainCamera;
     
-    public void UpdatePosition (Vector3 position)
+    public void UpdatePosition (Vector2 position)
     {
         CurrentPosition = position;
         EvaluateRaycast();

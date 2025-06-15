@@ -34,7 +34,7 @@ public class MouseInputController : IDisposable
         _view.OnRightClick -= HandleRightClick;
     }
 
-    void HandlePositionChanged (Vector3 position) => _model.UpdatePosition(position);
+    void HandlePositionChanged (Vector2 position) => _model.UpdatePosition(position);
 
     void HandleLeftClick () => _model.LeftClick();
     

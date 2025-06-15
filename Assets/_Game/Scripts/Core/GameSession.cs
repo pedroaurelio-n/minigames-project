@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
 

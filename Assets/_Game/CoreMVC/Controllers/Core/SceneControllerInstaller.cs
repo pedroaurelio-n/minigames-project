@@ -5,6 +5,7 @@ public class SceneControllerInstaller : IInstaller
 {
     public void Install (IContainerBuilder builder)
     {
+        //TODO pedro: delete mouse input classes
         // builder.Register<MouseInputController>(Lifetime.Singleton);
         builder.Register<TouchInputController>(Lifetime.Singleton);
         

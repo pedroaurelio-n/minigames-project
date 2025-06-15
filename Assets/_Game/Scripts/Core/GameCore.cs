@@ -114,7 +114,10 @@ public class GameCore : ICoreModule
         _uiControllerScope.Dispose();
         _controllerScope.Dispose();
         _modelScope.Dispose();
+        
         _uiViewScope.Dispose();
+        
+        _sceneView.Dispose();
         _viewScope.Dispose();
     }
 }
