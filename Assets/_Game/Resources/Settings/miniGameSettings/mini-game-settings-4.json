@@ -1,5 +1,6 @@
 ﻿{
   "name": "Click Milestone",
+  "stringId": "ButtonMash",
   "instructions": "Click until you reach the milestone!",
   "baseObjectiveMilestone": 30
 }

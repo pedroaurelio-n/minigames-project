@@ -1,5 +1,6 @@
 ﻿{
   "name": "Drag Objects",
+  "stringId": "DragSort",
   "instructions": "Move the objects to their colored boxes!",
   "baseObjectCount": 3
 }

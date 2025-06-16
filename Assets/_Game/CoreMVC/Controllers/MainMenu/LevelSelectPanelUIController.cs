@@ -7,7 +7,7 @@ public class LevelSelectPanelUIController
     readonly FadeToBlackManager _fadeToBlackManager;
     readonly PoolableViewFactory _viewFactory;
     readonly IMiniGameSystemSettings _miniGameSystemSettings;
-    readonly IndexedSettingsProvider<IMiniGameSettings, MiniGameSettings> _miniGameSettingsProvider;
+    readonly IMiniGameSettingsAccessor _miniGameSettingsAccessor;
     readonly List<LevelSelectButtonUIView> _buttonUIViews = new();
     
     public LevelSelectPanelUIController (
@@ -16,7 +16,7 @@ public class LevelSelectPanelUIController
         FadeToBlackManager fadeToBlackManager,
         PoolableViewFactory viewFactory,
         IMiniGameSystemSettings miniGameSystemSettings,
-        IndexedSettingsProvider<IMiniGameSettings, MiniGameSettings> miniGameSettingsProvider
+        IMiniGameSettingsAccessor miniGameSettingsAccessor
     )
     {
         _model = model;
@@ -24,7 +24,7 @@ public class LevelSelectPanelUIController
         _fadeToBlackManager = fadeToBlackManager;
         _viewFactory = viewFactory;
         _miniGameSystemSettings = miniGameSystemSettings;
-        _miniGameSettingsProvider = miniGameSettingsProvider;
+        _miniGameSettingsAccessor = miniGameSettingsAccessor;
     }
     
     public void Initialize ()
@@ -66,7 +66,7 @@ public class LevelSelectPanelUIController
         foreach (LevelSelectButtonUIView buttonUIView in _buttonUIViews)
         {
             buttonUIView.SetNameText(
-                _miniGameSettingsProvider.GetSettingsByIndex(buttonUIView.LevelIndex).Instance.Name
+                _miniGameSettingsAccessor.GetSettingsByIndex(buttonUIView.LevelIndex).Name
             );
         }
     }

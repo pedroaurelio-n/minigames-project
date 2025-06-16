@@ -1,4 +1,5 @@
 ﻿{
   "name": "Joystick Rotate",
+  "stringId": "JoystickRotate",
   "instructions": "Rotate the object until you find the right angle!"
 }

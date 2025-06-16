@@ -1,5 +1,6 @@
 ﻿{
   "name": "Tap Objects",
+  "stringId": "TapDestroy",
   "instructions": "Tap all objects to win!",
   "baseObjectCount": 5
 }

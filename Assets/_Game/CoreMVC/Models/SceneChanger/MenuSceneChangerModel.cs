@@ -4,19 +4,22 @@
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly IRandomProvider _randomProvider;
     readonly IMiniGameSystemSettings _miniGameSystemSettings;
+    readonly IMiniGameSettingsAccessor _miniGameSettingsAccessor;
     
     public MenuSceneChangerModel (
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         IRandomProvider randomProvider,
-        IMiniGameSystemSettings miniGameSystemSettings
+        IMiniGameSystemSettings miniGameSystemSettings,
+        IMiniGameSettingsAccessor miniGameSettingsAccessor
     ) : base(loadingManager)
     {
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _randomProvider = randomProvider;
         _miniGameSystemSettings = miniGameSystemSettings;
+        _miniGameSettingsAccessor = miniGameSettingsAccessor;
     }
 
     public void ChangeToNewMiniGame ()
@@ -26,7 +29,9 @@
         
         MiniGameType randomType = _randomProvider.PickRandom(_miniGameSystemSettings.ActiveMiniGames);
         _gameSessionInfoProvider.CurrentMiniGameType = randomType;
-        ChangeScene($"{SceneManagerUtils.MiniGameScenePrefix}{(int)randomType}");
+        string stringId =
+            _miniGameSettingsAccessor.GetSettingsByType(_gameSessionInfoProvider.CurrentMiniGameType).StringId;
+        ChangeScene($"{SceneManagerUtils.MiniGameScenePrefix}{stringId}");
     }
 
     public void ChangeToDesiredMiniGame (int index)
@@ -35,7 +40,7 @@
         _gameSessionInfoProvider.HasStartedGameRun = false;
         
         _gameSessionInfoProvider.CurrentMiniGameType = (MiniGameType)index;
-        ChangeScene($"{SceneManagerUtils.MiniGameScenePrefix}{index}");
+        ChangeScene($"{SceneManagerUtils.MiniGameScenePrefix}{_gameSessionInfoProvider.CurrentMiniGameType}");
     }
     
     public void ChangeToMainMenu ()

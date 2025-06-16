@@ -1703,7 +1703,7 @@ GameObject:
   - component: {fileID: 545444933251891275}
   - component: {fileID: 7151213005531434036}
   m_Layer: 0
-  m_Name: MiniGame3View
+  m_Name: MiniGameMoveFindSceneView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

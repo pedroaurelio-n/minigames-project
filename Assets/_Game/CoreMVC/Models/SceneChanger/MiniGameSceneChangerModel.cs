@@ -1,13 +1,16 @@
 ﻿public class MiniGameSceneChangerModel : BaseSceneChangerModel, IMiniGameSceneChangerModel
 {
     readonly IPlayerInfoModel _playerInfoModel;
+    readonly IMiniGameSettingsAccessor _miniGameSettingsAccessor;
 
     public MiniGameSceneChangerModel (
         ILoadingManager loadingManager,
-        IPlayerInfoModel playerInfoModel
+        IPlayerInfoModel playerInfoModel,
+        IMiniGameSettingsAccessor miniGameSettingsAccessor
     ) : base(loadingManager)
     {
         _playerInfoModel = playerInfoModel;
+        _miniGameSettingsAccessor = miniGameSettingsAccessor;
     }
     
     public void ChangeToNewMiniGame (MiniGameType type)
@@ -18,8 +21,8 @@
             return;
         }
         
-        int newSceneIndex = (int)type;
-        string newSceneName = $"{SceneManagerUtils.MiniGameScenePrefix}{newSceneIndex}";
+        string newStringId = _miniGameSettingsAccessor.GetSettingsByType(type).StringId;
+        string newSceneName = $"{SceneManagerUtils.MiniGameScenePrefix}{newStringId}";
         ChangeScene(newSceneName);
     }
 

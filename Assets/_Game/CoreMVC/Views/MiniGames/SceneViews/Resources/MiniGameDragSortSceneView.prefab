@@ -1109,7 +1109,7 @@ GameObject:
   - component: {fileID: 545444933251891275}
   - component: {fileID: 3060583587280783897}
   m_Layer: 0
-  m_Name: MiniGame1View
+  m_Name: MiniGameDragSortSceneView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

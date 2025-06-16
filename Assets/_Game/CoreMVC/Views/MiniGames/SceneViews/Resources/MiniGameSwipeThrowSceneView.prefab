@@ -1095,7 +1095,7 @@ GameObject:
   - component: {fileID: 545444933251891275}
   - component: {fileID: 2372123473886012463}
   m_Layer: 0
-  m_Name: MiniGame2View
+  m_Name: MiniGameSwipeThrowSceneView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

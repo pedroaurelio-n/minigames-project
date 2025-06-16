@@ -1,5 +1,6 @@
 ﻿{
   "name": "Find Object",
+  "stringId": "MoveFind",
   "instructions": "Find the colored object to win!",
   "baseObjectCount": 10
 }

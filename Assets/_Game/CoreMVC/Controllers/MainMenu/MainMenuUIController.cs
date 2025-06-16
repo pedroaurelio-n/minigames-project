@@ -16,7 +16,7 @@ public class MainMenuUIController : IDisposable
         FadeToBlackManager fadeToBlackManager,
         PoolableViewFactory viewFactory,
         IMiniGameSystemSettings miniGameSystemSettings,
-        IndexedSettingsProvider<IMiniGameSettings, MiniGameSettings> miniGameSettingsProvider
+        IMiniGameSettingsAccessor miniGameSettingsAccessor
     )
     {
         _model = model;
@@ -38,7 +38,7 @@ public class MainMenuUIController : IDisposable
             fadeToBlackManager,
             viewFactory,
             miniGameSystemSettings,
-            miniGameSettingsProvider       
+            miniGameSettingsAccessor       
         );
     }
 

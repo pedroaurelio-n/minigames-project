@@ -74,7 +74,7 @@ public class GameCore : ICoreModule
 
         _cameraProvider.SetMainCamera(Camera.main);
 
-        SelectSettings();
+        InitializeSettings();
 
         SceneModel = SceneModelFactory.CreateScope(
             out _modelScope,
@@ -104,7 +104,7 @@ public class GameCore : ICoreModule
         OnInitializationComplete?.Invoke();
     }
 
-    void SelectSettings ()
+    void InitializeSettings ()
     {
         _settingsManager.MiniGameSettingsProvider.SelectSettings((int)_gameSessionInfoProvider.CurrentMiniGameType);
     }

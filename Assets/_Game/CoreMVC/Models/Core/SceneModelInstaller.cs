@@ -38,6 +38,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(_loadingManager);
         builder.RegisterInstance(_playerInfoModel);
         builder.RegisterInstance(_gameSessionInfoProvider);
+        builder.RegisterInstance(_settingsManager);
         builder.RegisterInstance(_randomProvider);
         builder.RegisterInstance(_physicsProvider);
         builder.RegisterInstance(_cameraProvider);
@@ -60,6 +61,8 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragSortMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.SwipeThrowMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.MoveFindMiniGameOptions);
+
+        builder.Register<IMiniGameSettingsAccessor, MiniGameSettingsAccessor>(Lifetime.Singleton);
 
         //TODO pedro: delete mouse input classes
         // builder.Register<IMouseInputModel, MouseInputModel>(Lifetime.Singleton);
