@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DragObjectsSceneView : SceneView
+public class DragSortSceneView : SceneView
 {
     [field: SerializeField] public DraggableObjectView DraggablePrefab { get; private set; }
     [field: SerializeField] public DraggableContainerView[] Containers { get; private set; }

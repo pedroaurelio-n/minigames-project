@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 84108821467958290}
   - component: {fileID: 9168806684707266772}
   m_Layer: 5
-  m_Name: ClickMilestoneMiniGameUIView
+  m_Name: ButtonMashMiniGameUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

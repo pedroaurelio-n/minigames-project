@@ -36,44 +36,44 @@ public class MiniGameModelFactory : IMiniGameModelFactory
     {
         switch (type)
         {
-            case MiniGameType.TapObjects:
-                ITapObjectsMiniGameModel tapObjectsMiniGameModel = new TapObjectsMiniGameModel(
+            case MiniGameType.TapDestroy:
+                ITapDestroyMiniGameModel tapDestroyMiniGameModel = new TapDestroyMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _pressModel
                 );
-                return tapObjectsMiniGameModel;
-            case MiniGameType.DragObjects:
-                IDragObjectsMiniGameModel dragObjectsMiniGameModel = new DragObjectsMiniGameModel(
+                return tapDestroyMiniGameModel;
+            case MiniGameType.DragSort:
+                IDragSortMiniGameModel dragSortMiniGameModel = new DragSortMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _dragModel
                 );
-                return dragObjectsMiniGameModel;
-            case MiniGameType.ThrowObjects:
-                IThrowObjectsMiniGameModel throwObjectsMiniGameModel = new ThrowObjectsMiniGameModel(
+                return dragSortMiniGameModel;
+            case MiniGameType.SwipeThrow:
+                ISwipeThrowMiniGameModel swipeThrowMiniGameModel = new SwipeThrowMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _cameraProvider,
                     _touchInputModel
                 );
-                return throwObjectsMiniGameModel;
-            case MiniGameType.FindObject:
-                IFindObjectMiniGameModel findObjectMiniGameModel = new FindObjectMiniGameModel(
+                return swipeThrowMiniGameModel;
+            case MiniGameType.MoveFind:
+                IMoveFindMiniGameModel moveFindMiniGameModel = new MoveFindMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _cameraMoveModel,
                     _touchInputModel,
-                    _options.FindObjectMiniGameOptions
+                    _options.MoveFindMiniGameOptions
                     
                 );
-                return findObjectMiniGameModel;
-            case MiniGameType.ClickMilestone:
-                IClickMilestoneMiniGameModel clickMilestoneMiniGameModel = new ClickMilestoneMiniGameModel(
+                return moveFindMiniGameModel;
+            case MiniGameType.ButtonMash:
+                IButtonMashMiniGameModel buttonMashMiniGameModel = new ButtonMashMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel
                 );
-                return clickMilestoneMiniGameModel;
+                return buttonMashMiniGameModel;
             case MiniGameType.JoystickRotate:
                 IJoystickRotateMiniGameModel joystickRotateMiniGameModel = new JoystickRotateMiniGameModel(
                     _miniGameSettings,

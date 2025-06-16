@@ -2,31 +2,31 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DragObjectsMiniGameController : BaseMiniGameController
+public class DragSortMiniGameController : BaseMiniGameController
 {
-    protected override MiniGameType MiniGameType => MiniGameType.DragObjects;
+    protected override MiniGameType MiniGameType => MiniGameType.DragSort;
     
-    IDragObjectsMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IDragObjectsMiniGameModel;
+    IDragSortMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IDragSortMiniGameModel;
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
-    readonly DragObjectsSceneView _sceneView;
+    readonly DragSortSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
     readonly PoolableViewFactory _viewFactory;
-    readonly DragObjectsMiniGameOptions _options;
+    readonly DragSortMiniGameOptions _options;
     readonly List<DraggableObjectView> _objectViews = new();
     readonly Dictionary<DraggableObjectColor, int> _colorCounts = new();
 
-    public DragObjectsMiniGameController (
+    public DragSortMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
-        DragObjectsMiniGameOptions options
+        DragSortMiniGameOptions options
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
-        _sceneView = sceneView as DragObjectsSceneView;
+        _sceneView = sceneView as DragSortSceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
         _options = options;

@@ -1,17 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
-public class ThrowObjectsMiniGameModel : BaseMiniGameModel, IThrowObjectsMiniGameModel
+public class SwipeThrowMiniGameModel : BaseMiniGameModel, ISwipeThrowMiniGameModel
 {
     public event Action<Vector3, Vector3> OnSwipePerformed;
     
-    public override MiniGameType Type => MiniGameType.ThrowObjects;
+    public override MiniGameType Type => MiniGameType.SwipeThrow;
     public override TouchInputType InputTypes => TouchInputType.Swipe;
 
     readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
     
-    public ThrowObjectsMiniGameModel (
+    public SwipeThrowMiniGameModel (
         IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider,

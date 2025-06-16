@@ -2,19 +2,19 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class ClickMilestoneMiniGameUIController : BaseMiniGameUIController
+public class ButtonMashMiniGameUIController : BaseMiniGameUIController
 {
     public event Action OnLeftButtonClick;
     public event Action OnRightButtonClick;
     
-    ClickMilestoneMiniGameUIView _uiView;
+    ButtonMashMiniGameUIView _uiView;
     
     public override void Setup (SceneUIView sceneUIView)
     {
         base.Setup(sceneUIView);
 
         _uiView = Object.Instantiate(
-            Resources.Load<ClickMilestoneMiniGameUIView>("ClickMilestoneMiniGameUIView"),
+            Resources.Load<ButtonMashMiniGameUIView>("ButtonMashMiniGameUIView"),
             SceneUIView.PriorityHUD
         );
         AddViewListeners();

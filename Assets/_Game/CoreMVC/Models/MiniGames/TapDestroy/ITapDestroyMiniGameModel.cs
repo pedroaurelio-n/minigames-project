@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public interface ITapObjectsMiniGameModel : IMiniGameModel
+public interface ITapDestroyMiniGameModel : IMiniGameModel
 {
     event Action<IPressable, Vector2> OnTapPerformed;
     

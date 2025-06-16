@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ClickMilestoneMiniGameUIView : MonoBehaviour
+public class ButtonMashMiniGameUIView : MonoBehaviour
 {
     public event Action OnLeftButtonClick;
     public event Action OnRightButtonClick;

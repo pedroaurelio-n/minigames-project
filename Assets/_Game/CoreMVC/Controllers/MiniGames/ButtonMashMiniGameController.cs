@@ -1,15 +1,15 @@
-﻿public class ClickMilestoneMiniGameController : BaseMiniGameController
+﻿public class ButtonMashMiniGameController : BaseMiniGameController
 {
-    protected override MiniGameType MiniGameType => MiniGameType.ClickMilestone;
+    protected override MiniGameType MiniGameType => MiniGameType.ButtonMash;
     
-    IClickMilestoneMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IClickMilestoneMiniGameModel;
-    ClickMilestoneMiniGameUIController MiniGameUIController => UIController as ClickMilestoneMiniGameUIController;
+    IButtonMashMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IButtonMashMiniGameModel;
+    ButtonMashMiniGameUIController MiniGameUIController => UIController as ButtonMashMiniGameUIController;
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
 
     int _count;
 
-    public ClickMilestoneMiniGameController (
+    public ButtonMashMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView
@@ -28,7 +28,7 @@
 
     protected override void SetupMiniGame ()
     {
-        UIController = new ClickMilestoneMiniGameUIController();
+        UIController = new ButtonMashMiniGameUIController();
         base.SetupMiniGame();
         
         AddUIListeners();

@@ -1,11 +1,11 @@
-﻿public class ClickMilestoneMiniGameModel : BaseMiniGameModel, IClickMilestoneMiniGameModel
+﻿public class ButtonMashMiniGameModel : BaseMiniGameModel, IButtonMashMiniGameModel
 {
     public int ClickMilestone => _settings.BaseObjectiveMilestone.Value;
     
-    public override MiniGameType Type => MiniGameType.ClickMilestone;
+    public override MiniGameType Type => MiniGameType.ButtonMash;
     public override TouchInputType InputTypes => TouchInputType.None;
     
-    public ClickMilestoneMiniGameModel (
+    public ButtonMashMiniGameModel (
         IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel
     ) : base(settings, miniGameTimerModel)

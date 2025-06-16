@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TapObjectsSceneView : SceneView
+public class TapDestroySceneView : SceneView
 {
     [field: SerializeField] public TappableObjectView TappableObjectPrefab { get; private set; }
 }

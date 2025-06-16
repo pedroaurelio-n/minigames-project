@@ -11,11 +11,11 @@ public class SceneControllerInstaller : IInstaller
         
         builder.Register<MiniGameSceneChangerController>(Lifetime.Singleton);
 
-        builder.Register<TapObjectsMiniGameController>(Lifetime.Singleton);
-        builder.Register<ThrowObjectsMiniGameController>(Lifetime.Singleton);
-        builder.Register<DragObjectsMiniGameController>(Lifetime.Singleton);
-        builder.Register<FindObjectMiniGameController>(Lifetime.Singleton);
-        builder.Register<ClickMilestoneMiniGameController>(Lifetime.Singleton);
+        builder.Register<TapDestroyMiniGameController>(Lifetime.Singleton);
+        builder.Register<SwipeThrowMiniGameController>(Lifetime.Singleton);
+        builder.Register<DragSortMiniGameController>(Lifetime.Singleton);
+        builder.Register<MoveFindMiniGameController>(Lifetime.Singleton);
+        builder.Register<ButtonMashMiniGameController>(Lifetime.Singleton);
         builder.Register<JoystickRotateMiniGameController>(Lifetime.Singleton);
         
         builder.Register<SceneController>(Lifetime.Singleton);

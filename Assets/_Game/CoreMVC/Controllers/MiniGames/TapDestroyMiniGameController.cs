@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TapObjectsMiniGameController : BaseMiniGameController
+public class TapDestroyMiniGameController : BaseMiniGameController
 {
-    protected override MiniGameType MiniGameType => MiniGameType.TapObjects;
+    protected override MiniGameType MiniGameType => MiniGameType.TapDestroy;
 
-    ITapObjectsMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as ITapObjectsMiniGameModel;
+    ITapDestroyMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as ITapDestroyMiniGameModel;
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IRandomProvider _randomProvider;
-    readonly TapObjectsSceneView _sceneView;
+    readonly TapDestroySceneView _sceneView;
     readonly PoolableViewFactory _viewFactory;
-    readonly TapObjectsMiniGameOptions _options;
+    readonly TapDestroyMiniGameOptions _options;
     readonly HashSet<TappableObjectView> _objectViews = new();
 
-    public TapObjectsMiniGameController (
+    public TapDestroyMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
-        TapObjectsMiniGameOptions options
+        TapDestroyMiniGameOptions options
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
-        _sceneView = sceneView as TapObjectsSceneView;
+        _sceneView = sceneView as TapDestroySceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
         _options = options;

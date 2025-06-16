@@ -4,27 +4,27 @@ using UnityEngine;
 [Serializable]
 public class MiniGameOptions
 {
-    [field: SerializeField] public TapObjectsMiniGameOptions TapObjectsMiniGameOptions { get; private set; }
-    [field: SerializeField] public DragObjectsMiniGameOptions DragObjectsMiniGameOptions { get; private set; }
-    [field: SerializeField] public ThrowObjectsMiniGameOptions ThrowObjectsMiniGameOptions { get; private set; }
-    [field: SerializeField] public FindObjectMiniGameOptions FindObjectMiniGameOptions { get; private set; }
+    [field: SerializeField] public TapDestroyMiniGameOptions TapDestroyMiniGameOptions { get; private set; }
+    [field: SerializeField] public DragSortMiniGameOptions DragSortMiniGameOptions { get; private set; }
+    [field: SerializeField] public SwipeThrowMiniGameOptions SwipeThrowMiniGameOptions { get; private set; }
+    [field: SerializeField] public MoveFindMiniGameOptions MoveFindMiniGameOptions { get; private set; }
 }
 
 [Serializable]
-public class TapObjectsMiniGameOptions
+public class TapDestroyMiniGameOptions
 {
     [field: SerializeField] public Vector2 SpawnDistance { get; private set; }
 }
 
 [Serializable]
-public class DragObjectsMiniGameOptions
+public class DragSortMiniGameOptions
 {
     [field: SerializeField] public float BallSpawnDistance { get; private set; }
     [field: SerializeField] public float ContainerHorizontalDistance { get; private set; }
 }
 
 [Serializable]
-public class ThrowObjectsMiniGameOptions
+public class SwipeThrowMiniGameOptions
 {
     [field: SerializeField] public float DirectionWeight { get; private set; }
     [field: SerializeField] public float ForwardWeight { get; private set; }
@@ -32,7 +32,7 @@ public class ThrowObjectsMiniGameOptions
 }
 
 [Serializable]
-public class FindObjectMiniGameOptions
+public class MoveFindMiniGameOptions
 {
     [field: SerializeField] public float CheckDelay { get; private set; }
     [field: SerializeField] public Vector2 DistanceRange { get; private set; }

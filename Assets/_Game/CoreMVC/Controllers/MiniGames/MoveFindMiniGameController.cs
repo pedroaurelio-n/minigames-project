@@ -2,39 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FindObjectMiniGameController : BaseMiniGameController
+public class MoveFindMiniGameController : BaseMiniGameController
 {
-    protected override MiniGameType MiniGameType => MiniGameType.FindObject;
+    protected override MiniGameType MiniGameType => MiniGameType.MoveFind;
     
-    IFindObjectMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IFindObjectMiniGameModel;
+    IMoveFindMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IMoveFindMiniGameModel;
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
-    readonly FindObjectSceneView _sceneView;
+    readonly MoveFindSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
     readonly PoolableViewFactory _viewFactory;
     readonly ICameraProvider _cameraProvider;
     readonly UniqueCoroutine _checkForObjectRoutine;
-    readonly FindObjectMiniGameOptions _options;
+    readonly MoveFindMiniGameOptions _options;
     readonly WaitForSeconds _waitForCheck;
     readonly List<FindableObjectView> _objectViews = new();
 
     FindableObjectView _targetObject;
     bool _isObjectVisible;
     
-    public FindObjectMiniGameController(
+    public MoveFindMiniGameController(
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
         ICameraProvider cameraProvider,
-        FindObjectMiniGameOptions options,
+        MoveFindMiniGameOptions options,
         ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _randomProvider = randomProvider;
-        _sceneView = sceneView as FindObjectSceneView;
+        _sceneView = sceneView as MoveFindSceneView;
         _viewFactory = viewFactory;
         _cameraProvider = cameraProvider;
         _options = options;

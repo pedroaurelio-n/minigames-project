@@ -1,18 +1,18 @@
 ﻿using System;
 using UnityEngine;
 
-public class TapObjectsMiniGameModel : BaseMiniGameModel, ITapObjectsMiniGameModel
+public class TapDestroyMiniGameModel : BaseMiniGameModel, ITapDestroyMiniGameModel
 {
     public event Action<IPressable, Vector2> OnTapPerformed;
 
     public int BaseObjectsToSpawn => _settings.BaseObjectCount.Value;
     
-    public override MiniGameType Type => MiniGameType.TapObjects;
+    public override MiniGameType Type => MiniGameType.TapDestroy;
     public override TouchInputType InputTypes => TouchInputType.Tap;
 
     readonly IPressModel _pressModel;
 
-    public TapObjectsMiniGameModel (
+    public TapDestroyMiniGameModel (
         IMiniGameSettings settings,
         IMiniGameTimerModel miniGameTimerModel,
         IPressModel pressModel

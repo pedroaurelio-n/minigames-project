@@ -1,11 +1,11 @@
 ﻿public enum MiniGameType
 {
     None = -1,
-    TapObjects = 0,
-    DragObjects = 1,
-    ThrowObjects = 2,
-    FindObject = 3,
-    ClickMilestone = 4,
+    TapDestroy = 0,
+    DragSort = 1,
+    SwipeThrow = 2,
+    MoveFind = 3,
+    ButtonMash = 4,
     JoystickRotate = 5,
     // TurnShooter = 6,
 }

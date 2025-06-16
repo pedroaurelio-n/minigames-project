@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ThrowObjectsMiniGameController : BaseMiniGameController
+public class SwipeThrowMiniGameController : BaseMiniGameController
 {
-    protected override MiniGameType MiniGameType => MiniGameType.ThrowObjects;
+    protected override MiniGameType MiniGameType => MiniGameType.SwipeThrow;
     
-    IThrowObjectsMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IThrowObjectsMiniGameModel;
+    ISwipeThrowMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as ISwipeThrowMiniGameModel;
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly IRandomProvider _randomProvider;
-    readonly ThrowObjectsSceneView _sceneView;
+    readonly SwipeThrowSceneView _sceneView;
     readonly PoolableViewFactory _viewFactory;
-    readonly ThrowObjectsMiniGameOptions _options;
+    readonly SwipeThrowMiniGameOptions _options;
     readonly UniqueCoroutine _throwDelayCoroutine;
     readonly List<ThrowableObjectView> _objectViews = new();
 
     bool _hasCompleted;
     float _throwTimer;
 
-    public ThrowObjectsMiniGameController (
+    public SwipeThrowMiniGameController (
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
         IRandomProvider randomProvider,
         PoolableViewFactory viewFactory,
-        ThrowObjectsMiniGameOptions options,
+        SwipeThrowMiniGameOptions options,
         ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
-        _sceneView = sceneView as ThrowObjectsSceneView;
+        _sceneView = sceneView as SwipeThrowSceneView;
         _randomProvider = randomProvider;
         _viewFactory = viewFactory;
         _options = options;
