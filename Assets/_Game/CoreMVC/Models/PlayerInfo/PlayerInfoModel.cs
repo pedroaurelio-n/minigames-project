@@ -1,10 +1,11 @@
+//TODO pedro: this class seems useless/refactorable into a cleaner model
 public class PlayerInfoModel : IPlayerInfoModel
 {
     public int CurrentLives { get; private set; }
     public bool HasLivesRemaining => CurrentLives > 0;
     public int CurrentScore { get; private set; }
-    public int HighScore { get; private set; }
 
+    readonly GameSessionData _gameSessionData;
     readonly IPlayerSettings _settings;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
 
@@ -12,25 +13,23 @@ public class PlayerInfoModel : IPlayerInfoModel
     int _previousScore;
 
     public PlayerInfoModel (
+        GameSessionData gameSessionData,
         IPlayerSettings settings,
         IGameSessionInfoProvider gameSessionInfoProvider
     )
     {
+        _gameSessionData = gameSessionData;
         _settings = settings;
         _gameSessionInfoProvider = gameSessionInfoProvider;
-    }
-    
-    public void Initialize ()
-    {
-        CurrentLives = _settings.StartingLives;
-        CurrentScore = 0;
     }
 
     public void Reset ()
     {
         _previousLives = 0;
         _previousScore = 0;
-        Initialize();
+        
+        CurrentLives = _settings.StartingLives;
+        CurrentScore = 0;
     }
 
     public void ModifyLives (int amount)
@@ -50,8 +49,8 @@ public class PlayerInfoModel : IPlayerInfoModel
         _previousScore = CurrentScore;
         CurrentScore += amount;
         
-        if (CurrentScore > HighScore)
-            HighScore = CurrentScore;
+        if (CurrentScore > _gameSessionData.HighScore)
+            _gameSessionData.HighScore = CurrentScore;
     }
 
     public int GetLivesChangeType ()

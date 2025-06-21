@@ -3,6 +3,7 @@ using UnityEngine;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
 
+//TODO pedro: maybe separate GameSession into various parts (IGameScopeInitializer, ISceneNavigator, ICoreFactoryCreator, etc)
 public class GameSession : IGameSessionInfoProvider, IDisposable
 {
     public event Action OnInitializationComplete;
@@ -17,6 +18,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
 
     GameLifetimeScope MainScope => GameLifetimeScope.Instance;
 
+    readonly GameVersion _gameVersion;
     readonly ILoadingManager _loadingManager;
     
     LifetimeScope _gameScope;
@@ -30,13 +32,18 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     IRandomProvider _randomProvider;
     IPhysicsProvider _physicsProvider;
     ICameraProvider _cameraProvider;
+    IDateTimeProvider _dateTimeProvider;
     CoroutineRunner _coroutineRunner;
     
+    IPersistenceModel _persistenceModel;
+    
     public GameSession (
+        GameVersion gameVersion,
         ILoadingManager loadingManager,
         string startScene
     )
     {
+        _gameVersion = gameVersion;
         _loadingManager = loadingManager;
         CurrentScene = startScene;
     }
@@ -47,7 +54,13 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         
         CreateProviders();
 
-        PlayerInfoModel = new PlayerInfoModel(_settingsManager.PlayerSettings.Instance, this);
+        _persistenceModel = new PersistenceModel(_gameVersion, _dateTimeProvider);
+
+        PlayerInfoModel = new PlayerInfoModel(
+            _persistenceModel.Data,
+            _settingsManager.PlayerSettings.Instance,
+            this
+        );
 
         _fadeToBlackManager = Object.Instantiate(
             Resources.Load<FadeToBlackManager>("FadeToBlackManager"),
@@ -73,6 +86,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _randomProvider = new RandomProvider();
         _physicsProvider = new PhysicsProvider();
         _cameraProvider = new CameraProvider();
+        _dateTimeProvider = new DateTimeProvider();
 
         _coroutineRunner = new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
         _coroutineRunner.transform.SetParent(_gameScope.transform);
@@ -90,6 +104,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     {
         _currentCore = new GameCore(
             _gameScope,
+            _persistenceModel,
             this,
             _loadingManager,
             PlayerInfoModel,
@@ -99,6 +114,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
+            _dateTimeProvider,
             _coroutineRunner
         );
         _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;
@@ -111,6 +127,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         
         _currentCore = new MenuCore(
             _gameScope,
+            _persistenceModel,
             this,
             _loadingManager,
             PlayerInfoModel,
@@ -120,6 +137,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
+            _dateTimeProvider,
             _coroutineRunner
         );
         _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;

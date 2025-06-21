@@ -7,6 +7,7 @@ public class MenuCoreFactory
         out MenuView mainMenuView,
         out MenuUIView mainMenuUIView,
         out LifetimeScope menuScope,
+        IPersistenceModel persistenceModel,
         LifetimeScope parentScope,
         FadeToBlackManager fadeToBlackManager,
         PoolableViewFactory poolableViewFactory,
@@ -17,6 +18,7 @@ public class MenuCoreFactory
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
+        IDateTimeProvider dateTimeProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -25,6 +27,8 @@ public class MenuCoreFactory
             Object.Instantiate(Resources.Load<MenuUIView>($"{gameSessionInfoProvider.CurrentScene}UIView"));
         
         MenuCoreInstaller installer = new(
+            persistenceModel,
+            persistenceModel.Data,
             mainMenuView,
             mainMenuUIView,
             poolableViewFactory,
@@ -36,6 +40,7 @@ public class MenuCoreFactory
             randomProvider,
             physicsProvider,
             cameraProvider,
+            dateTimeProvider,
             coroutineRunner
         );
         menuScope = parentScope.CreateChild(installer, "MenuScope");

@@ -26,6 +26,7 @@ public class GameOverUIController : IDisposable
         if (!_initialized)
             return;
         
+        _model.RegisterHighScore();
         AddViewListeners();
         SyncView();
     }

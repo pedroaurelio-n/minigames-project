@@ -12,6 +12,7 @@ public class GameCore : ICoreModule
     public SceneUIController SceneUIController { get; private set; }
 
     readonly LifetimeScope _gameScope;
+    readonly IPersistenceModel _persistenceModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
     readonly IPlayerInfoModel _playerInfoModel;
@@ -21,6 +22,7 @@ public class GameCore : ICoreModule
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
+    readonly IDateTimeProvider _dateTimeProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     SceneView _sceneView;
@@ -34,6 +36,7 @@ public class GameCore : ICoreModule
 
     public GameCore (
         LifetimeScope gameScope,
+        IPersistenceModel persistenceModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
@@ -43,10 +46,12 @@ public class GameCore : ICoreModule
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
+        IDateTimeProvider dateTimeProvider,
         ICoroutineRunner coroutineRunner
     )
     {
         _gameScope = gameScope;
+        _persistenceModel = persistenceModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
         _playerInfoModel = playerInfoModel;
@@ -56,6 +61,7 @@ public class GameCore : ICoreModule
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
+        _dateTimeProvider = dateTimeProvider;
         _coroutineRunner = coroutineRunner;
     }
 
@@ -78,6 +84,7 @@ public class GameCore : ICoreModule
 
         SceneModel = SceneModelFactory.CreateScope(
             out _modelScope,
+            _persistenceModel,
             _uiViewScope,
             _loadingManager,
             _playerInfoModel,
@@ -86,6 +93,7 @@ public class GameCore : ICoreModule
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
+            _dateTimeProvider,
             _coroutineRunner
         );
         SceneModel.Initialize();

@@ -12,6 +12,7 @@ public class MenuCore : ICoreModule
     public MenuUIController MenuUIController { get; private set; }
     
     readonly LifetimeScope _gameScope;
+    readonly IPersistenceModel _persistenceModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
     readonly IPlayerInfoModel _playerInfoModel;
@@ -21,6 +22,7 @@ public class MenuCore : ICoreModule
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
+    readonly IDateTimeProvider _dateTimeProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     MenuView _menuView;
@@ -30,6 +32,7 @@ public class MenuCore : ICoreModule
 
     public MenuCore (
         LifetimeScope gameScope,
+        IPersistenceModel persistenceModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
@@ -39,10 +42,12 @@ public class MenuCore : ICoreModule
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
+        IDateTimeProvider dateTimeProvider,
         ICoroutineRunner coroutineRunner
     )
     {
         _gameScope = gameScope;
+        _persistenceModel = persistenceModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
         _playerInfoModel = playerInfoModel;
@@ -52,6 +57,7 @@ public class MenuCore : ICoreModule
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
+        _dateTimeProvider = dateTimeProvider;
         _coroutineRunner = coroutineRunner;
     }
     
@@ -61,6 +67,7 @@ public class MenuCore : ICoreModule
             out _menuView,
             out _menuUIView,
             out _menuScope,
+            _persistenceModel,
             _gameScope,
             _fadeToBlackManager,
             _poolableViewFactory,
@@ -71,6 +78,7 @@ public class MenuCore : ICoreModule
             _randomProvider,
             _physicsProvider,
             _cameraProvider,
+            _dateTimeProvider,
             _coroutineRunner
         );
 

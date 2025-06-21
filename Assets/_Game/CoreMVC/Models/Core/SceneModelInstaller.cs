@@ -3,6 +3,8 @@ using VContainer.Unity;
 
 public class SceneModelInstaller : IInstaller
 {
+    readonly IPersistenceModel _persistenceModel;
+    readonly GameSessionData _gameSessionData;
     readonly ILoadingManager _loadingManager;
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
@@ -10,9 +12,12 @@ public class SceneModelInstaller : IInstaller
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
+    readonly IDateTimeProvider _dateTimeProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     public SceneModelInstaller (
+        IPersistenceModel persistenceModel,
+        GameSessionData gameSessionData,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
@@ -20,9 +25,12 @@ public class SceneModelInstaller : IInstaller
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
+        IDateTimeProvider dateTimeProvider,
         ICoroutineRunner coroutineRunner
     )
     {
+        _persistenceModel = persistenceModel;
+        _gameSessionData = gameSessionData;
         _loadingManager = loadingManager;
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
@@ -30,11 +38,16 @@ public class SceneModelInstaller : IInstaller
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
+        _dateTimeProvider = dateTimeProvider;
         _coroutineRunner = coroutineRunner;
     }
     
     public void Install (IContainerBuilder builder)
     {
+        builder.RegisterInstance(_persistenceModel);
+        builder.RegisterInstance(_gameSessionData);
+        builder.RegisterInstance(_gameSessionData.MetadataData);
+        
         builder.RegisterInstance(_loadingManager);
         builder.RegisterInstance(_playerInfoModel);
         builder.RegisterInstance(_gameSessionInfoProvider);
@@ -42,6 +55,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(_randomProvider);
         builder.RegisterInstance(_physicsProvider);
         builder.RegisterInstance(_cameraProvider);
+        builder.RegisterInstance(_dateTimeProvider);
         builder.RegisterInstance(_coroutineRunner);
         
         builder.RegisterInstance(_settingsManager.MiniGameSystemSettings.Instance);

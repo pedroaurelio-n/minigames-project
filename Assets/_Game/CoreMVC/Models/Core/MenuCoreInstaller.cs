@@ -3,6 +3,8 @@ using VContainer.Unity;
 
 public class MenuCoreInstaller : IInstaller
 {
+    readonly IPersistenceModel _persistenceModel;
+    readonly GameSessionData _gameSessionData;
     readonly MenuView _mainMenuView;
     readonly MenuUIView _mainMenuUIView;
     readonly PoolableViewFactory _poolableViewFactory;
@@ -14,9 +16,12 @@ public class MenuCoreInstaller : IInstaller
     readonly IRandomProvider _randomProvider;
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
+    readonly IDateTimeProvider _dateTimeProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     public MenuCoreInstaller (
+        IPersistenceModel persistenceModel,
+        GameSessionData gameSessionData,
         MenuView mainMenuView,
         MenuUIView mainMenuUIView,
         PoolableViewFactory poolableViewFactory,
@@ -28,9 +33,12 @@ public class MenuCoreInstaller : IInstaller
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
+        IDateTimeProvider dateTimeProvider,
         ICoroutineRunner coroutineRunner
     )
     {
+        _persistenceModel = persistenceModel;
+        _gameSessionData = gameSessionData;
         _mainMenuView = mainMenuView;
         _mainMenuUIView = mainMenuUIView;
         _poolableViewFactory = poolableViewFactory;
@@ -42,11 +50,16 @@ public class MenuCoreInstaller : IInstaller
         _randomProvider = randomProvider;
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
+        _dateTimeProvider = dateTimeProvider;
         _coroutineRunner = coroutineRunner;
     }
     
     public void Install (IContainerBuilder builder)
     {
+        builder.RegisterInstance(_persistenceModel);
+        builder.RegisterInstance(_gameSessionData);
+        builder.RegisterInstance(_gameSessionData.MetadataData);
+        
         builder.RegisterInstance(_mainMenuView);
         builder.RegisterInstance(_mainMenuUIView);
         builder.RegisterInstance(_poolableViewFactory);
@@ -58,6 +71,7 @@ public class MenuCoreInstaller : IInstaller
         builder.RegisterInstance(_randomProvider);
         builder.RegisterInstance(_physicsProvider);
         builder.RegisterInstance(_cameraProvider);
+        builder.RegisterInstance(_dateTimeProvider);
         builder.RegisterInstance(_coroutineRunner);
         
         builder.RegisterInstance(_settingsManager.MiniGameSystemSettings.Instance);

@@ -5,6 +5,7 @@ public static class SceneModelFactory
 {
     public static ISceneModel CreateScope (
         out LifetimeScope modelScope,
+        IPersistenceModel persistenceModel,
         LifetimeScope parentScope,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
@@ -13,10 +14,13 @@ public static class SceneModelFactory
         IRandomProvider randomProvider,
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
+        IDateTimeProvider dateTimeProvider,
         ICoroutineRunner coroutineRunner
     )
     {
         SceneModelInstaller installer = new(
+            persistenceModel,
+            persistenceModel.Data,
             loadingManager,
             playerInfoModel,
             gameSessionInfoProvider,
@@ -24,6 +28,7 @@ public static class SceneModelFactory
             randomProvider,
             physicsProvider,
             cameraProvider,
+            dateTimeProvider,
             coroutineRunner
         );
         modelScope = parentScope.CreateChild(installer, "ModelScope");

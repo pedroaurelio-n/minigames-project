@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class ApplicationSession
 {
@@ -15,7 +16,14 @@ public class ApplicationSession
 
     public void Initialize (string currentScene)
     {
-        GameSession = new GameSession(_loadingManager, currentScene);
+        GameVersion gameVersion = GameVersion.Parse(Application.version);
+
+        GameSession = new GameSession(
+            gameVersion,
+            _loadingManager,
+            currentScene
+        );
+        
         GameSession.OnInitializationComplete += HandleInitializationComplete;
         GameSession.Initialize();
     }
@@ -36,4 +44,6 @@ public class ApplicationSession
         GameSession.OnInitializationComplete -= HandleInitializationComplete;
         OnInitializationComplete?.Invoke();
     }
+    
+    //TODO pedro: maybe flush save on application quit or game session dispose?
 }
