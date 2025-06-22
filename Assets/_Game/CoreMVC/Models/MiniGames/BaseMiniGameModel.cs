@@ -9,6 +9,7 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     public abstract MiniGameType Type { get; }
     public abstract TouchInputType InputTypes { get; }
     
+    public string StringId => _settings.StringId;
     public string Instructions => _settings.Instructions;
     public bool HasCompleted { get; private set; }
 

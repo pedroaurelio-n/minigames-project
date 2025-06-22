@@ -8,6 +8,7 @@ public interface IMiniGameModel : IDisposable
     
     MiniGameType Type { get; }
     TouchInputType InputTypes { get; }
+    string StringId { get; }
     string Instructions { get; }
     bool HasCompleted { get; }
 

@@ -5,23 +5,24 @@ public class GameSessionData
 {
     //TODO pedro: create scene specific data classes
     [JsonProperty]
-    public int HighScore { get; set; }
+    public MetadataData MetadataData { get; set; }
     
     [JsonProperty]
-    public MetadataData MetadataData { get; set; }
+    public MiniGameData MiniGameData { get; set; }
 
     public GameSessionData ()
     {
         MetadataData = new MetadataData();
+        MiniGameData = new MiniGameData();
     }
     
     [JsonConstructor]
     public GameSessionData (
-        int highScore,
-        MetadataData metadata
+        MetadataData metadataData,
+        MiniGameData miniGameData
     )
     {
-        HighScore = highScore;
-        MetadataData = metadata ?? new MetadataData();
+        MetadataData = metadataData ?? new MetadataData();
+        MiniGameData = miniGameData ?? new MiniGameData();
     }
 }

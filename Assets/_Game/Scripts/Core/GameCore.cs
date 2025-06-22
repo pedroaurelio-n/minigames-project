@@ -12,6 +12,7 @@ public class GameCore : ICoreModule
     public SceneUIController SceneUIController { get; private set; }
 
     readonly LifetimeScope _gameScope;
+    readonly GameSessionData _gameSessionData;
     readonly IPersistenceModel _persistenceModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
@@ -36,6 +37,7 @@ public class GameCore : ICoreModule
 
     public GameCore (
         LifetimeScope gameScope,
+        GameSessionData gameSessionData,
         IPersistenceModel persistenceModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
@@ -51,6 +53,7 @@ public class GameCore : ICoreModule
     )
     {
         _gameScope = gameScope;
+        _gameSessionData = gameSessionData;
         _persistenceModel = persistenceModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
@@ -84,6 +87,7 @@ public class GameCore : ICoreModule
 
         SceneModel = SceneModelFactory.CreateScope(
             out _modelScope,
+            _gameSessionData,
             _persistenceModel,
             _uiViewScope,
             _loadingManager,

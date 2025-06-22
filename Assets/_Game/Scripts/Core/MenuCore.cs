@@ -12,6 +12,7 @@ public class MenuCore : ICoreModule
     public MenuUIController MenuUIController { get; private set; }
     
     readonly LifetimeScope _gameScope;
+    readonly GameSessionData _gameSessionData;
     readonly IPersistenceModel _persistenceModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly ILoadingManager _loadingManager;
@@ -32,6 +33,7 @@ public class MenuCore : ICoreModule
 
     public MenuCore (
         LifetimeScope gameScope,
+        GameSessionData gameSessionData,
         IPersistenceModel persistenceModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
         ILoadingManager loadingManager,
@@ -47,6 +49,7 @@ public class MenuCore : ICoreModule
     )
     {
         _gameScope = gameScope;
+        _gameSessionData = gameSessionData;
         _persistenceModel = persistenceModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _loadingManager = loadingManager;
@@ -67,6 +70,7 @@ public class MenuCore : ICoreModule
             out _menuView,
             out _menuUIView,
             out _menuScope,
+            _gameSessionData,
             _persistenceModel,
             _gameScope,
             _fadeToBlackManager,

@@ -3,8 +3,8 @@ using VContainer.Unity;
 
 public class SceneModelInstaller : IInstaller
 {
-    readonly IPersistenceModel _persistenceModel;
     readonly GameSessionData _gameSessionData;
+    readonly IPersistenceModel _persistenceModel;
     readonly ILoadingManager _loadingManager;
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
@@ -16,8 +16,8 @@ public class SceneModelInstaller : IInstaller
     readonly ICoroutineRunner _coroutineRunner;
     
     public SceneModelInstaller (
-        IPersistenceModel persistenceModel,
         GameSessionData gameSessionData,
+        IPersistenceModel persistenceModel,
         ILoadingManager loadingManager,
         IPlayerInfoModel playerInfoModel,
         IGameSessionInfoProvider gameSessionInfoProvider,
@@ -29,8 +29,8 @@ public class SceneModelInstaller : IInstaller
         ICoroutineRunner coroutineRunner
     )
     {
-        _persistenceModel = persistenceModel;
         _gameSessionData = gameSessionData;
+        _persistenceModel = persistenceModel;
         _loadingManager = loadingManager;
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
@@ -44,9 +44,9 @@ public class SceneModelInstaller : IInstaller
     
     public void Install (IContainerBuilder builder)
     {
-        builder.RegisterInstance(_persistenceModel);
-        builder.RegisterInstance(_gameSessionData);
         builder.RegisterInstance(_gameSessionData.MetadataData);
+        builder.RegisterInstance(_gameSessionData.MiniGameData);
+        builder.RegisterInstance(_persistenceModel);
         
         builder.RegisterInstance(_loadingManager);
         builder.RegisterInstance(_playerInfoModel);

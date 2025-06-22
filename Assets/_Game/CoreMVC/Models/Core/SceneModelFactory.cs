@@ -5,6 +5,7 @@ public static class SceneModelFactory
 {
     public static ISceneModel CreateScope (
         out LifetimeScope modelScope,
+        GameSessionData gameSessionData,
         IPersistenceModel persistenceModel,
         LifetimeScope parentScope,
         ILoadingManager loadingManager,
@@ -19,8 +20,8 @@ public static class SceneModelFactory
     )
     {
         SceneModelInstaller installer = new(
+            gameSessionData,
             persistenceModel,
-            persistenceModel.Data,
             loadingManager,
             playerInfoModel,
             gameSessionInfoProvider,

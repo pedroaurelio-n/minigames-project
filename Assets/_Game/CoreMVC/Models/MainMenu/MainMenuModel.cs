@@ -4,20 +4,17 @@ public class MainMenuModel : IMainMenuModel
 {
     public event Action<MainMenuState> OnMainMenuStateChanged;
     
-    public int HighScore => _gameSessionData.HighScore;
+    public int HighScore => _data.HighScore;
 
-    readonly GameSessionData _gameSessionData;
-    readonly IPlayerInfoModel _playerInfoModel;
+    readonly MiniGameData _data;
     readonly IMenuSceneChangerModel _menuSceneChangerModel;
     
     public MainMenuModel (
-        GameSessionData gameSessionData,
-        IPlayerInfoModel playerInfoModel,
+        MiniGameData data,
         IMenuSceneChangerModel menuSceneChangerModel
     )
     {
-        _gameSessionData = gameSessionData;
-        _playerInfoModel = playerInfoModel;
+        _data = data;
         _menuSceneChangerModel = menuSceneChangerModel;
     }
 

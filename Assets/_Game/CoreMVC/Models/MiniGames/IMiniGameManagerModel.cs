@@ -10,4 +10,6 @@ public interface IMiniGameManagerModel : IDisposable
     
     void Initialize ();
     void LateInitialize ();
+    void ForceCompleteMiniGame ();
+    void ForceFailMiniGame ();
 }

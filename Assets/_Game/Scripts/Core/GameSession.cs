@@ -13,6 +13,8 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     public MiniGameType CurrentMiniGameType { get; set; }
     public MiniGameType NextMiniGameType { get; set; }
     public bool HasStartedGameRun { get; set; }
+    
+    public ICoreModule CurrentCore { get; private set; }
 
     public IPlayerInfoModel PlayerInfoModel { get; private set; }
 
@@ -22,8 +24,6 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     readonly ILoadingManager _loadingManager;
     
     LifetimeScope _gameScope;
-
-    ICoreModule _currentCore;
     
     FadeToBlackManager _fadeToBlackManager;
     PoolableViewFactory _poolableViewFactory;
@@ -35,6 +35,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     IDateTimeProvider _dateTimeProvider;
     CoroutineRunner _coroutineRunner;
     
+    IPersistence _persistence;
     IPersistenceModel _persistenceModel;
     
     public GameSession (
@@ -54,10 +55,12 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         
         CreateProviders();
 
-        _persistenceModel = new PersistenceModel(_gameVersion, _dateTimeProvider);
+        _persistence = new Persistence();
+        _persistenceModel = new PersistenceModel(_persistence, _dateTimeProvider);
+        _persistence.InitializeData(_persistenceModel.Load(), _gameVersion, _persistenceModel.Flush);
 
         PlayerInfoModel = new PlayerInfoModel(
-            _persistenceModel.Data,
+            _persistence.Data.MiniGameData,
             _settingsManager.PlayerSettings.Instance,
             this
         );
@@ -102,8 +105,9 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
 
     void CreateGameCore ()
     {
-        _currentCore = new GameCore(
+        CurrentCore = new GameCore(
             _gameScope,
+            _persistence.Data,
             _persistenceModel,
             this,
             _loadingManager,
@@ -117,16 +121,17 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _dateTimeProvider,
             _coroutineRunner
         );
-        _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;
-        _currentCore.Initialize();
+        CurrentCore.OnInitializationComplete += HandleCoreInitializationComplete;
+        CurrentCore.Initialize();
     }
 
     void CreateMenuCore ()
     {
         CurrentMiniGameType = MiniGameType.None;
         
-        _currentCore = new MenuCore(
+        CurrentCore = new MenuCore(
             _gameScope,
+            _persistence.Data,
             _persistenceModel,
             this,
             _loadingManager,
@@ -140,19 +145,19 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _dateTimeProvider,
             _coroutineRunner
         );
-        _currentCore.OnInitializationComplete += HandleCoreInitializationComplete;
-        _currentCore.Initialize();
+        CurrentCore.OnInitializationComplete += HandleCoreInitializationComplete;
+        CurrentCore.Initialize();
     }
 
     void HandleCoreInitializationComplete ()
     {
-        _currentCore.OnInitializationComplete -= HandleCoreInitializationComplete;
+        CurrentCore.OnInitializationComplete -= HandleCoreInitializationComplete;
         OnInitializationComplete?.Invoke();
     }
 
     public void Dispose ()
     {
-        _currentCore?.Dispose();
-        _currentCore = null;
+        CurrentCore?.Dispose();
+        CurrentCore = null;
     }
 }

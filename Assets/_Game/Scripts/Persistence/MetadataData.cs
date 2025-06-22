@@ -5,23 +5,22 @@ using Newtonsoft.Json;
 public class MetadataData
 {
     [JsonProperty]
-    public DateTime LastPlayedTime { get; set; }
+    public string GameVersion { get; set; }
     
     [JsonProperty]
-    public GameVersion GameVersion { get; set; }
+    public DateTime LastPlayedTime { get; set; }
 
     public MetadataData ()
     {
-        GameVersion = new GameVersion();
     }
 
     [JsonConstructor]
     public MetadataData (
-        DateTime lastPlayedTime,
-        GameVersion gameVersion
+        string gameVersion,
+        DateTime lastPlayedTime
     )
     {
-        LastPlayedTime = lastPlayedTime;
         GameVersion = gameVersion;
+        LastPlayedTime = lastPlayedTime;
     }
 }

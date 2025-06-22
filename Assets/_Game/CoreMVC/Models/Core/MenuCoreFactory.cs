@@ -7,6 +7,7 @@ public class MenuCoreFactory
         out MenuView mainMenuView,
         out MenuUIView mainMenuUIView,
         out LifetimeScope menuScope,
+        GameSessionData gameSessionData,
         IPersistenceModel persistenceModel,
         LifetimeScope parentScope,
         FadeToBlackManager fadeToBlackManager,
@@ -27,8 +28,8 @@ public class MenuCoreFactory
             Object.Instantiate(Resources.Load<MenuUIView>($"{gameSessionInfoProvider.CurrentScene}UIView"));
         
         MenuCoreInstaller installer = new(
+            gameSessionData,
             persistenceModel,
-            persistenceModel.Data,
             mainMenuView,
             mainMenuUIView,
             poolableViewFactory,

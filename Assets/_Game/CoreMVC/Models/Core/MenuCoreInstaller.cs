@@ -3,8 +3,8 @@ using VContainer.Unity;
 
 public class MenuCoreInstaller : IInstaller
 {
-    readonly IPersistenceModel _persistenceModel;
     readonly GameSessionData _gameSessionData;
+    readonly IPersistenceModel _persistenceModel;
     readonly MenuView _mainMenuView;
     readonly MenuUIView _mainMenuUIView;
     readonly PoolableViewFactory _poolableViewFactory;
@@ -20,8 +20,8 @@ public class MenuCoreInstaller : IInstaller
     readonly ICoroutineRunner _coroutineRunner;
     
     public MenuCoreInstaller (
-        IPersistenceModel persistenceModel,
         GameSessionData gameSessionData,
+        IPersistenceModel persistenceModel,
         MenuView mainMenuView,
         MenuUIView mainMenuUIView,
         PoolableViewFactory poolableViewFactory,
@@ -37,8 +37,8 @@ public class MenuCoreInstaller : IInstaller
         ICoroutineRunner coroutineRunner
     )
     {
-        _persistenceModel = persistenceModel;
         _gameSessionData = gameSessionData;
+        _persistenceModel = persistenceModel;
         _mainMenuView = mainMenuView;
         _mainMenuUIView = mainMenuUIView;
         _poolableViewFactory = poolableViewFactory;
@@ -56,9 +56,9 @@ public class MenuCoreInstaller : IInstaller
     
     public void Install (IContainerBuilder builder)
     {
-        builder.RegisterInstance(_persistenceModel);
-        builder.RegisterInstance(_gameSessionData);
         builder.RegisterInstance(_gameSessionData.MetadataData);
+        builder.RegisterInstance(_gameSessionData.MiniGameData);
+        builder.RegisterInstance(_persistenceModel);
         
         builder.RegisterInstance(_mainMenuView);
         builder.RegisterInstance(_mainMenuUIView);

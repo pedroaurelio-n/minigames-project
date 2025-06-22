@@ -5,7 +5,7 @@ public class PlayerInfoModel : IPlayerInfoModel
     public bool HasLivesRemaining => CurrentLives > 0;
     public int CurrentScore { get; private set; }
 
-    readonly GameSessionData _gameSessionData;
+    readonly MiniGameData _data;
     readonly IPlayerSettings _settings;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
 
@@ -13,12 +13,12 @@ public class PlayerInfoModel : IPlayerInfoModel
     int _previousScore;
 
     public PlayerInfoModel (
-        GameSessionData gameSessionData,
+        MiniGameData data,
         IPlayerSettings settings,
         IGameSessionInfoProvider gameSessionInfoProvider
     )
     {
-        _gameSessionData = gameSessionData;
+        _data = data;
         _settings = settings;
         _gameSessionInfoProvider = gameSessionInfoProvider;
     }
@@ -49,8 +49,8 @@ public class PlayerInfoModel : IPlayerInfoModel
         _previousScore = CurrentScore;
         CurrentScore += amount;
         
-        if (CurrentScore > _gameSessionData.HighScore)
-            _gameSessionData.HighScore = CurrentScore;
+        if (CurrentScore > _data.HighScore)
+            _data.HighScore = CurrentScore;
     }
 
     public int GetLivesChangeType ()

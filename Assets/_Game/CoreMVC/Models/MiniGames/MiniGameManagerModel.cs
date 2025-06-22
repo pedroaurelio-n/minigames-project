@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MiniGameManagerModel : IMiniGameManagerModel
@@ -12,6 +13,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
 
     IMiniGameModel _activeMiniGame;
 
+    readonly MiniGameData _data;
     readonly IMiniGameModelFactory _miniGameModelFactory;
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
@@ -19,6 +21,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
     readonly WaitForSeconds _waitForChange;
 
     public MiniGameManagerModel (
+        MiniGameData data,
         IMiniGameSystemSettings miniGameSystemSettings,
         IMiniGameModelFactory miniGameModelFactory,
         IPlayerInfoModel playerInfoModel,
@@ -26,6 +29,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
         ICoroutineRunner coroutineRunner
     )
     {
+        _data = data;
         _miniGameModelFactory = miniGameModelFactory;
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
@@ -45,29 +49,51 @@ public class MiniGameManagerModel : IMiniGameManagerModel
     public void LateInitialize ()
     {
         _activeMiniGame.LateInitialize();
-        AddMiniGameListeners(_activeMiniGame);
+        AddMiniGameListeners();
     }
 
-    void AddMiniGameListeners(IMiniGameModel activeMiniGame)
+    public void ForceCompleteMiniGame () => _activeMiniGame.Complete();
+
+    public void ForceFailMiniGame () => _activeMiniGame.ForceFailure();
+
+    void AddMiniGameListeners()
     {
-        activeMiniGame.OnMiniGameEnded += HandleMiniGameEnded;
+        _activeMiniGame.OnMiniGameEnded += HandleMiniGameEnded;
     }
 
-    void RemoveListeners (IMiniGameModel activeMiniGame)
+    void RemoveMiniGameListeners ()
     {
-        if (activeMiniGame == null)
-            return;
         _activeMiniGame.OnMiniGameEnded -= HandleMiniGameEnded;
     }
     
     void HandleMiniGameEnded (bool hasCompleted)
     {
         _changeCoroutine.Start(ChangeCoroutine());
+        ModifyMiniGameData(hasCompleted);
         
         if (hasCompleted)
             _playerInfoModel.ModifyScore(1);
         else
             _playerInfoModel.ModifyLives(-1);
+    }
+
+    void ModifyMiniGameData (bool hasCompleted)
+    {
+        if (!_gameSessionInfoProvider.HasStartedGameRun)
+            return;
+
+        Dictionary<string, int> chosenDict = hasCompleted ? _data.VictoriesInMiniGame : _data.DefeatsInMiniGame;
+        chosenDict.TryAdd(_activeMiniGame.StringId, 0);
+        chosenDict[_activeMiniGame.StringId]++;
+    }
+
+    void ModifyDefeatsData ()
+    {
+        if (!_gameSessionInfoProvider.HasStartedGameRun)
+            return;
+        
+        _data.DefeatsInMiniGame.TryAdd(_activeMiniGame.StringId, 0);
+        _data.DefeatsInMiniGame[_activeMiniGame.StringId]++;
     }
 
     IEnumerator ChangeCoroutine ()
@@ -83,7 +109,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
     public void Dispose()
     {
         _changeCoroutine.Dispose();
-        RemoveListeners(_activeMiniGame);
+        RemoveMiniGameListeners();
         _activeMiniGame?.Dispose();
         _activeMiniGame = null;
     }

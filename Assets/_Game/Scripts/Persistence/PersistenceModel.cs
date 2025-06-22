@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class PersistenceModel : IPersistenceModel
 {
-    public GameSessionData Data { get; private set; }
-    
+    readonly IPersistence _persistence;
     readonly IDateTimeProvider _dateTimeProvider;
     readonly string _filePath;
 
     public PersistenceModel (
-        GameVersion gameVersion,
+        IPersistence persistence,
         IDateTimeProvider dateTimeProvider
     )
     {
+        _persistence = persistence;
         _dateTimeProvider = dateTimeProvider;
         
 #if UNITY_EDITOR
@@ -22,18 +22,24 @@ public class PersistenceModel : IPersistenceModel
 #else
         _filePath = Path.Combine(Application.persistentDataPath, "ActiveSave.json");
 #endif
-
-        Data = Load(out bool saveNewFile);
-        Data.MetadataData.GameVersion = gameVersion;
-        
-        if (saveNewFile)
-            Flush();
     }
-
+    
     public void Flush ()
     {
-        Data.MetadataData.LastPlayedTime = _dateTimeProvider.UtcNow;
+        _persistence.Data.MetadataData.LastPlayedTime = _dateTimeProvider.UtcNow;
         Save();
+    }
+    
+    public GameSessionData Load ()
+    {
+        if (!File.Exists(_filePath))
+        {
+            DebugUtils.LogWarning($"Save file not found. Returning null.");
+            return null;
+        }
+        
+        string json = File.ReadAllText(_filePath);
+        return JsonConvert.DeserializeObject<GameSessionData>(json);
     }
 
     void Save ()
@@ -45,23 +51,7 @@ public class PersistenceModel : IPersistenceModel
             Formatting = Formatting.None
         };
         
-        string json = JsonConvert.SerializeObject(Data, settings);
+        string json = JsonConvert.SerializeObject(_persistence.Data, settings);
         File.WriteAllText(_filePath, json);
-    }
-
-    GameSessionData Load (out bool saveNewFile)
-    {
-        saveNewFile = false;
-        
-        //TODO pedro: transfer this responsability to GameSession
-        if (!File.Exists(_filePath))
-        {
-            saveNewFile = true;
-            DebugUtils.LogWarning($"Save file not found. Returning new data.");
-            return new GameSessionData();
-        }
-        
-        string json = File.ReadAllText(_filePath);
-        return JsonConvert.DeserializeObject<GameSessionData>(json);
     }
 }
