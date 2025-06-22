@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/_Game/Scenes/Loading.unity
     guid: 24a546507e6892744b841ef9971b4856
   - enabled: 1
+    path: Assets/_Game/Scenes/MainMenu.unity
+    guid: 1d8f303ad2a0a8342bf5318dda463842
+  - enabled: 1
+    path: Assets/_Game/Scenes/GameOver.unity
+    guid: a371d0e5be9a48f49b656ff9e6fc67a9
+  - enabled: 1
     path: Assets/_Game/Scenes/MiniGames/MiniGameTapDestroy.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
@@ -27,11 +33,8 @@ EditorBuildSettings:
     path: Assets/_Game/Scenes/MiniGames/MiniGameJoystickRotate.unity
     guid: c72e2f1d230f0a147965274a1193509e
   - enabled: 1
-    path: Assets/_Game/Scenes/MainMenu.unity
-    guid: 1d8f303ad2a0a8342bf5318dda463842
-  - enabled: 1
-    path: Assets/_Game/Scenes/GameOver.unity
-    guid: a371d0e5be9a48f49b656ff9e6fc67a9
+    path: Assets/_Game/Scenes/MiniGames/MiniGameTapFloating.unity
+    guid: 863974f729140b84baed204121c69927
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: ec2a90b0261623941b9d91ebc678e3b1,
       type: 2}

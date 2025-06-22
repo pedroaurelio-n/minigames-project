@@ -1,0 +1,7 @@
+﻿{
+  "name": "Floating Objects",
+  "stringId": "TapFloating",
+  "instructions": "Tap only the floating balloons!",
+  "baseObjectCount": 5,
+  "baseObjectiveMilestone": 5
+}

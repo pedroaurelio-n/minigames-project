@@ -7,7 +7,8 @@ public abstract class BaseMiniGameController : IDisposable
     protected BaseMiniGameUIController UIController { get; set; }
     
     protected bool Initialized { get; private set; }
-
+    protected bool IsActive { get; private set; }
+    
     IMiniGameModel ActiveMiniGame => _miniGameManagerModel.ActiveMiniGame;
 
     readonly IMiniGameManagerModel _miniGameManagerModel;
@@ -57,6 +58,7 @@ public abstract class BaseMiniGameController : IDisposable
             return;
         ActiveMiniGame.OnMiniGameStarted += HandleMiniGameStarted;
         ActiveMiniGame.OnMiniGameTimerEnded += HandleMiniGameTimerEnded;
+        ActiveMiniGame.OnMiniGameEnded += HandleMiniGameEnded;
     }
 
     protected virtual void RemoveListeners ()
@@ -65,10 +67,12 @@ public abstract class BaseMiniGameController : IDisposable
             return;
         ActiveMiniGame.OnMiniGameStarted -= HandleMiniGameStarted;
         ActiveMiniGame.OnMiniGameTimerEnded -= HandleMiniGameTimerEnded;
+        ActiveMiniGame.OnMiniGameEnded -= HandleMiniGameEnded;
     }
 
     void HandleMiniGameStarted ()
     {
+        IsActive = true;
     }
 
     void HandleMiniGameTimerEnded ()
@@ -78,6 +82,11 @@ public abstract class BaseMiniGameController : IDisposable
         
         if (!_miniGameManagerModel.ActiveMiniGame.HasCompleted)
             CheckWinCondition(true);
+    }
+    
+    void HandleMiniGameEnded (bool hasCompleted)
+    {
+        IsActive = false;
     }
     
     public virtual void Dispose ()

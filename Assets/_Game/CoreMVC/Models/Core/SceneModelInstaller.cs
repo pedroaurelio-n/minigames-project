@@ -75,6 +75,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragSortMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.SwipeThrowMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.MoveFindMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapFloatingMiniGameOptions);
 
         builder.Register<IMiniGameSettingsAccessor, MiniGameSettingsAccessor>(Lifetime.Singleton);
 

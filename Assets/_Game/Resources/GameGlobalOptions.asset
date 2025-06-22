@@ -54,3 +54,8 @@ MonoBehaviour:
       <ZoomSpeed>k__BackingField: 0.01
       <MinCameraZoom>k__BackingField: 75
       <MaxCameraZoom>k__BackingField: 140
+    <TapFloatingMiniGameOptions>k__BackingField:
+      <SpeedRange>k__BackingField: {x: 10, y: 22}
+      <DelayRange>k__BackingField: {x: 0, y: 2.5}
+      <XSpawnDistance>k__BackingField: 25
+      <YDistanceRange>k__BackingField: {x: -60, y: 0}

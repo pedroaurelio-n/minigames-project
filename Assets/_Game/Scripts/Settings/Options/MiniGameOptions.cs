@@ -8,6 +8,7 @@ public class MiniGameOptions
     [field: SerializeField] public DragSortMiniGameOptions DragSortMiniGameOptions { get; private set; }
     [field: SerializeField] public SwipeThrowMiniGameOptions SwipeThrowMiniGameOptions { get; private set; }
     [field: SerializeField] public MoveFindMiniGameOptions MoveFindMiniGameOptions { get; private set; }
+    [field: SerializeField] public TapFloatingMiniGameOptions TapFloatingMiniGameOptions { get; private set; }
 }
 
 [Serializable]
@@ -40,4 +41,13 @@ public class MoveFindMiniGameOptions
     [field: SerializeField] public float ZoomSpeed { get; private set; }
     [field: SerializeField] public float MinCameraZoom { get; private set; }
     [field: SerializeField] public float MaxCameraZoom { get; private set; }
+}
+
+[Serializable]
+public class TapFloatingMiniGameOptions
+{
+    [field: SerializeField] public Vector2 SpeedRange { get; private set; }
+    [field: SerializeField] public Vector2 DelayRange { get; private set; }
+    [field: SerializeField] public float XSpawnDistance { get; private set; }
+    [field: SerializeField] public Vector2 YDistanceRange { get; private set; }
 }

@@ -37,51 +37,48 @@ public class MiniGameModelFactory : IMiniGameModelFactory
         switch (type)
         {
             case MiniGameType.TapDestroy:
-                ITapDestroyMiniGameModel tapDestroyMiniGameModel = new TapDestroyMiniGameModel(
+                return new TapDestroyMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _pressModel
                 );
-                return tapDestroyMiniGameModel;
             case MiniGameType.DragSort:
-                IDragSortMiniGameModel dragSortMiniGameModel = new DragSortMiniGameModel(
+                return new DragSortMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _dragModel
                 );
-                return dragSortMiniGameModel;
             case MiniGameType.SwipeThrow:
-                ISwipeThrowMiniGameModel swipeThrowMiniGameModel = new SwipeThrowMiniGameModel(
+                return new SwipeThrowMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _cameraProvider,
                     _touchInputModel
                 );
-                return swipeThrowMiniGameModel;
             case MiniGameType.MoveFind:
-                IMoveFindMiniGameModel moveFindMiniGameModel = new MoveFindMiniGameModel(
+                return new MoveFindMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _cameraMoveModel,
                     _touchInputModel,
                     _options.MoveFindMiniGameOptions
-                    
                 );
-                return moveFindMiniGameModel;
             case MiniGameType.ButtonMash:
-                IButtonMashMiniGameModel buttonMashMiniGameModel = new ButtonMashMiniGameModel(
+                return new ButtonMashMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel
                 );
-                return buttonMashMiniGameModel;
             case MiniGameType.JoystickRotate:
-                IJoystickRotateMiniGameModel joystickRotateMiniGameModel = new JoystickRotateMiniGameModel(
+                return new JoystickRotateMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel
                 );
-                return joystickRotateMiniGameModel;
-            // case MiniGameType.TurnShooter:
-            //     return null;
+            case MiniGameType.TapFloating:
+                return new TapFloatingMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel,
+                    _pressModel
+                );
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

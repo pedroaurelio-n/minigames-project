@@ -82,11 +82,11 @@ public class TapDestroyMiniGameController : BaseMiniGameController
 
     void HandleTapPerformed (IPressable pressable, Vector2 tapPosition)
     {
-        if (!_objectViews.Contains(pressable as TappableObjectView))
+        TappableObjectView obj = pressable as TappableObjectView;
+        if (obj == null || !_objectViews.Contains(obj))
             throw new InvalidOperationException($"Tap performed on invalid scene object.");
         
-        _objectViews.Remove(pressable as TappableObjectView);
-        TappableObjectView obj = pressable as TappableObjectView;
+        _objectViews.Remove(obj);
         _viewFactory.ReleaseView(obj);
 
         if (CheckWinCondition(false))

@@ -51,7 +51,11 @@ public class PressModel : IPressModel
         IPressable pressable = hit.collider.GetComponent<IPressable>();
             
         if (pressable == null)
-            return;
+        {
+            pressable = hit.collider.GetComponentInParent<IPressable>();
+            if (pressable == null)
+                return;
+        }
         
         OnTapPerformed?.Invoke(pressable, touchPosition);
         pressable.OnTapped();
