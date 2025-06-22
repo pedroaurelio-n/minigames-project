@@ -30,10 +30,17 @@ public class PoolableViewFactory
     public T GetView<T> (string poolName, Transform container) where T : PoolableView
     {
         if (!_pools.TryGetValue(poolName, out ObjectPool<PoolableView> pool))
+        {
+            DebugUtils.LogError(
+                $"Trying to get a null poolable object. Make sure the pool was setup for {typeof(T).Name}",
+                true
+            );
             return default;
+        }
 
         T poolableObj = pool.Get() as T;
         poolableObj.transform.SetParent(container);
+        
         return poolableObj;
     }
     

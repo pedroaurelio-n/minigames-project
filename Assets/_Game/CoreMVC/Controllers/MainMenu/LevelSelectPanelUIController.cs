@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 
-public class LevelSelectPanelUIController
+public class LevelSelectPanelUIController : BaseMainMenuPanelUIController
 {
-    readonly IMainMenuModel _model;
+    protected override MainMenuState State => MainMenuState.LevelSelect;
+    
     readonly LevelSelectPanelUIView _view;
     readonly FadeToBlackManager _fadeToBlackManager;
     readonly PoolableViewFactory _viewFactory;
@@ -17,9 +18,8 @@ public class LevelSelectPanelUIController
         PoolableViewFactory viewFactory,
         IMiniGameSystemSettings miniGameSystemSettings,
         IMiniGameSettingsAccessor miniGameSettingsAccessor
-    )
+    ) : base(model)
     {
-        _model = model;
         _view = view;
         _fadeToBlackManager = fadeToBlackManager;
         _viewFactory = viewFactory;
@@ -27,15 +27,15 @@ public class LevelSelectPanelUIController
         _miniGameSettingsAccessor = miniGameSettingsAccessor;
     }
     
-    public void Initialize ()
+    public override void Initialize ()
     {
-        AddListeners();
+        base.Initialize();
         AddViewListeners();
         
         _viewFactory.SetupPool(_view.LevelSelectButtonPrefab);
     }
     
-    void Enable ()
+    protected override void Enable ()
     {
         _view.SetActive(true);
 
@@ -43,7 +43,7 @@ public class LevelSelectPanelUIController
         UpdateInstances();
     }
 
-    void Disable ()
+    protected override void Disable ()
     {
         _view.SetActive(false);
     }
@@ -64,21 +64,7 @@ public class LevelSelectPanelUIController
     void UpdateInstances ()
     {
         foreach (LevelSelectButtonUIView buttonUIView in _buttonUIViews)
-        {
-            buttonUIView.SetNameText(
-                _miniGameSettingsAccessor.GetSettingsByIndex(buttonUIView.LevelIndex).Name
-            );
-        }
-    }
-
-    void AddListeners ()
-    {
-        _model.OnMainMenuStateChanged += HandleMainMenuStateChanged;
-    }
-    
-    void RemoveListeners ()
-    {
-        _model.OnMainMenuStateChanged -= HandleMainMenuStateChanged;
+            buttonUIView.SetNameText(_miniGameSettingsAccessor.GetSettingsByIndex(buttonUIView.LevelIndex).Name);
     }
 
     void AddViewListeners ()
@@ -91,33 +77,23 @@ public class LevelSelectPanelUIController
         _view.OnBackButtonClick -= HandleBackButtonClick;
     }
 
-    void HandleMainMenuStateChanged (MainMenuState newState)
-    {
-        if (newState == MainMenuState.LevelSelect)
-        {
-            Enable();
-            return;
-        }
-        
-        Disable();
-    }
-
     void HandleBackButtonClick ()
     {
-        _model.ChangeMainMenuState(MainMenuState.Menu);
+        Model.ChangeMainMenuState(MainMenuState.Menu);
     }
 
     void HandleLevelButtonClick (int levelIndex)
     {
-        _fadeToBlackManager.FadeIn(() => _model.SelectLevel(levelIndex), true);
+        _fadeToBlackManager.FadeIn(() => Model.SelectLevel(levelIndex), true);
     }
     
-    public void Dispose ()
+    public override void Dispose ()
     {
         foreach (LevelSelectButtonUIView buttonUIView in _buttonUIViews)
             buttonUIView.OnClick -= HandleLevelButtonClick;
         _buttonUIViews.DisposeAndClear();
-        RemoveListeners();
+        
+        base.Dispose();
         RemoveViewListeners();
     }
 }

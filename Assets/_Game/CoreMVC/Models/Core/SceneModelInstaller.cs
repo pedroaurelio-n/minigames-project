@@ -88,6 +88,7 @@ public class SceneModelInstaller : IInstaller
         
         builder.Register<IMiniGameSceneChangerModel, MiniGameSceneChangerModel>(Lifetime.Singleton);
 
+        builder.Register<IMiniGameStatisticsModel, MiniGameStatisticsModel>(Lifetime.Singleton);
         builder.Register<IMiniGameTimerModel, MiniGameTimerModel>(Lifetime.Singleton);
         builder.Register<IMiniGameModelFactory, MiniGameModelFactory>(Lifetime.Singleton);
         builder.Register<IMiniGameManagerModel, MiniGameManagerModel>(Lifetime.Singleton);

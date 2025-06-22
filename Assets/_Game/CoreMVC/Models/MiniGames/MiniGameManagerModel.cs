@@ -82,9 +82,10 @@ public class MiniGameManagerModel : IMiniGameManagerModel
         if (!_gameSessionInfoProvider.HasStartedGameRun)
             return;
 
+        string stringId = _activeMiniGame.StringId.ToFirstCharLower();
         Dictionary<string, int> chosenDict = hasCompleted ? _data.VictoriesInMiniGame : _data.DefeatsInMiniGame;
-        chosenDict.TryAdd(_activeMiniGame.StringId, 0);
-        chosenDict[_activeMiniGame.StringId]++;
+        chosenDict.TryAdd(stringId, 0);
+        chosenDict[stringId]++;
     }
 
     void ModifyDefeatsData ()

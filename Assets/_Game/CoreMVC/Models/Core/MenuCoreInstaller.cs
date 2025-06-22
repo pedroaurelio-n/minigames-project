@@ -82,6 +82,8 @@ public class MenuCoreInstaller : IInstaller
         builder.Register<IMainMenuModel, MainMenuModel>(Lifetime.Singleton);
         builder.Register<IGameOverModel, GameOverModel>(Lifetime.Singleton);
         
+        builder.Register<IMiniGameStatisticsModel, MiniGameStatisticsModel>(Lifetime.Singleton);
+        
         builder.Register<IMenuModel, MenuModel>(Lifetime.Singleton);
 
         builder.Register<MenuSceneChangerController>(Lifetime.Singleton);

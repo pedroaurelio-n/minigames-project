@@ -1,8 +1,7 @@
-﻿using System;
-
-public class MainMenuPanelUIController : IDisposable
+﻿public class MainMenuPanelUIController : BaseMainMenuPanelUIController
 {
-    readonly IMainMenuModel _model;
+    protected override MainMenuState State => MainMenuState.Menu;
+    
     readonly MainMenuPanelUIView _view;
     readonly FadeToBlackManager _fadeToBlackManager;
     
@@ -10,76 +9,52 @@ public class MainMenuPanelUIController : IDisposable
         IMainMenuModel model,
         MainMenuPanelUIView view,
         FadeToBlackManager fadeToBlackManager
-    )
+    ) : base(model)
     {
-        _model = model;
         _view = view;
         _fadeToBlackManager = fadeToBlackManager;
     }
-
-    public void Initialize ()
+    
+    public override void Initialize ()
     {
-        AddListeners();
+        base.Initialize();
         AddViewListeners();
     }
     
-    void Enable ()
+    protected override void Enable ()
     {
         _view.SetActive(true);
-        _view.SetHighScoreText(_model.HighScore.ToString());
+        _view.SetHighScoreText(Model.HighScore.ToString());
     }
 
-    void Disable ()
+    protected override void Disable ()
     {
         _view.SetActive(false);
-    }
-
-    void AddListeners ()
-    {
-        _model.OnMainMenuStateChanged += HandleMainMenuStateChanged;
-    }
-    
-    void RemoveListeners ()
-    {
-        _model.OnMainMenuStateChanged -= HandleMainMenuStateChanged;
     }
 
     void AddViewListeners ()
     {
         _view.OnPlayButtonClick += HandlePlayButtonClick;
         _view.OnLevelSelectButtonClick += HandleLevelSelectButtonClick;
+        _view.OnStatisticsButtonClick += HandleStatisticsButtonClick;
     }
     
     void RemoveViewListeners ()
     {
         _view.OnPlayButtonClick -= HandlePlayButtonClick;
         _view.OnLevelSelectButtonClick -= HandleLevelSelectButtonClick;
+        _view.OnStatisticsButtonClick -= HandleStatisticsButtonClick;
     }
 
-    void HandleMainMenuStateChanged (MainMenuState newState)
-    {
-        if (newState == MainMenuState.Menu)
-        {
-            Enable();
-            return;
-        }
-        
-        Disable();
-    }
+    void HandlePlayButtonClick () => _fadeToBlackManager.FadeIn(() => Model.PlayGame(), true);
 
-    void HandlePlayButtonClick ()
-    {
-        _fadeToBlackManager.FadeIn(() => _model.PlayGame(), true);
-    }
+    void HandleLevelSelectButtonClick () => Model.ChangeMainMenuState(MainMenuState.LevelSelect);
+
+    void HandleStatisticsButtonClick () => Model.ChangeMainMenuState(MainMenuState.Statistics);
     
-    void HandleLevelSelectButtonClick ()
+    public override void Dispose ()
     {
-        _model.ChangeMainMenuState(MainMenuState.LevelSelect);
-    }
-    
-    public void Dispose ()
-    {
-        RemoveListeners();
+        base.Dispose();
         RemoveViewListeners();
     }
 }

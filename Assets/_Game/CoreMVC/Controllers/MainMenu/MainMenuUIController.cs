@@ -7,6 +7,7 @@ public class MainMenuUIController : IDisposable
 
     readonly MainMenuPanelUIController _mainMenuPanelUIController;
     readonly LevelSelectPanelUIController _levelSelectPanelUIController;
+    readonly StatisticsPanelUIController _statisticsPanelUIController;
 
     bool _initialized;
     
@@ -16,7 +17,8 @@ public class MainMenuUIController : IDisposable
         FadeToBlackManager fadeToBlackManager,
         PoolableViewFactory viewFactory,
         IMiniGameSystemSettings miniGameSystemSettings,
-        IMiniGameSettingsAccessor miniGameSettingsAccessor
+        IMiniGameSettingsAccessor miniGameSettingsAccessor,
+        IMiniGameStatisticsModel miniGameStatisticsModel
     )
     {
         _model = model;
@@ -40,6 +42,12 @@ public class MainMenuUIController : IDisposable
             miniGameSystemSettings,
             miniGameSettingsAccessor       
         );
+        _statisticsPanelUIController = new StatisticsPanelUIController(
+            model,
+            _view.StatisticsPanelUIView,
+            miniGameStatisticsModel,
+            viewFactory
+        );
     }
 
     public void Initialize ()
@@ -49,6 +57,7 @@ public class MainMenuUIController : IDisposable
         
         _mainMenuPanelUIController.Initialize();
         _levelSelectPanelUIController.Initialize();
+        _statisticsPanelUIController.Initialize();
         
         _model.ChangeMainMenuState(MainMenuState.Menu);
     }
@@ -59,5 +68,6 @@ public class MainMenuUIController : IDisposable
             return;
         _mainMenuPanelUIController.Dispose();
         _levelSelectPanelUIController.Dispose();
+        _statisticsPanelUIController.Dispose();
     }
 }

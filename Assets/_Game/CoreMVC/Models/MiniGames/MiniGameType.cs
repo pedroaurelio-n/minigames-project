@@ -6,6 +6,5 @@
     SwipeThrow = 2,
     MoveFind = 3,
     ButtonMash = 4,
-    JoystickRotate = 5,
-    // TurnShooter = 6,
+    JoystickRotate = 5
 }
