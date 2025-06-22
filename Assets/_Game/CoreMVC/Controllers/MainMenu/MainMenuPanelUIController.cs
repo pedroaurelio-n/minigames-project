@@ -37,6 +37,7 @@
         _view.OnPlayButtonClick += HandlePlayButtonClick;
         _view.OnLevelSelectButtonClick += HandleLevelSelectButtonClick;
         _view.OnStatisticsButtonClick += HandleStatisticsButtonClick;
+        _view.OnClearSaveButtonClick += HandleClearSaveButtonClick;
     }
     
     void RemoveViewListeners ()
@@ -44,6 +45,7 @@
         _view.OnPlayButtonClick -= HandlePlayButtonClick;
         _view.OnLevelSelectButtonClick -= HandleLevelSelectButtonClick;
         _view.OnStatisticsButtonClick -= HandleStatisticsButtonClick;
+        _view.OnClearSaveButtonClick -= HandleClearSaveButtonClick;
     }
 
     void HandlePlayButtonClick () => _fadeToBlackManager.FadeIn(() => Model.PlayGame(), true);
@@ -52,6 +54,8 @@
 
     void HandleStatisticsButtonClick () => Model.ChangeMainMenuState(MainMenuState.Statistics);
     
+    void HandleClearSaveButtonClick () => Model.ClearSave();
+
     public override void Dispose ()
     {
         base.Dispose();

@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class PersistenceModel : IPersistenceModel
 {
+    readonly GameVersion _gameVersion;
     readonly IPersistence _persistence;
     readonly IDateTimeProvider _dateTimeProvider;
     readonly string _filePath;
 
     public PersistenceModel (
+        GameVersion gameVersion,
         IPersistence persistence,
         IDateTimeProvider dateTimeProvider
     )
     {
+        _gameVersion = gameVersion;
         _persistence = persistence;
         _dateTimeProvider = dateTimeProvider;
         
@@ -40,6 +43,18 @@ public class PersistenceModel : IPersistenceModel
         
         string json = File.ReadAllText(_filePath);
         return JsonConvert.DeserializeObject<GameSessionData>(json);
+    }
+
+    public void ClearSave ()
+    {
+        if (!File.Exists(_filePath))
+        {
+            DebugUtils.LogWarning($"Save file not found.", true);
+            return;
+        }
+        
+        File.Delete(_filePath);
+        DebugUtils.Log($"Save file at {_filePath} has been deleted.", true);
     }
 
     void Save ()

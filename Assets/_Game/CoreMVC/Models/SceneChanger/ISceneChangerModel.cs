@@ -1,1 +1,4 @@
-public interface ISceneChangerModel { }
+public interface ISceneChangerModel
+{
+    void ReloadGame ();
+}

@@ -56,7 +56,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         CreateProviders();
 
         _persistence = new Persistence();
-        _persistenceModel = new PersistenceModel(_persistence, _dateTimeProvider);
+        _persistenceModel = new PersistenceModel(_gameVersion, _persistence, _dateTimeProvider);
         _persistence.InitializeData(_persistenceModel.Load(), _gameVersion, _persistenceModel.Flush);
 
         PlayerInfoModel = new PlayerInfoModel(

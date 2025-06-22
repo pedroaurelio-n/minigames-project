@@ -2,4 +2,5 @@
 {
     void Flush ();
     GameSessionData Load ();
+    void ClearSave ();
 }

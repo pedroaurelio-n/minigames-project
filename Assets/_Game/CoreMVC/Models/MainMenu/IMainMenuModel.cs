@@ -9,4 +9,5 @@ public interface IMainMenuModel
     void ChangeMainMenuState (MainMenuState state);
     void PlayGame ();
     void SelectLevel (int index);
+    void ClearSave ();
 }

@@ -6,6 +6,11 @@ public abstract class BaseSceneChangerModel : ISceneChangerModel
     {
         _loadingManager = loadingManager;
     }
+
+    public void ReloadGame ()
+    {
+        _loadingManager.ReloadFromStart();
+    }
     
     protected void ChangeScene (string newScene)
     {

@@ -7,10 +7,12 @@ public class MainMenuPanelUIView : MonoBehaviour
     public event Action OnPlayButtonClick;
     public event Action OnLevelSelectButtonClick;
     public event Action OnStatisticsButtonClick;
+    public event Action OnClearSaveButtonClick;
     
     [SerializeField] ButtonUIComponent playButton;
     [SerializeField] ButtonUIComponent levelSelectButton;
     [SerializeField] ButtonUIComponent statisticsButton;
+    [SerializeField] ButtonUIComponent clearSaveButton;
     [SerializeField] TextMeshProUGUI highScoreText;
 
     void Awake ()
@@ -18,6 +20,7 @@ public class MainMenuPanelUIView : MonoBehaviour
         playButton.OnClick += () => OnPlayButtonClick?.Invoke();
         levelSelectButton.OnClick += () => OnLevelSelectButtonClick?.Invoke();
         statisticsButton.OnClick += () => OnStatisticsButtonClick?.Invoke();
+        clearSaveButton.OnClick += () => OnClearSaveButtonClick?.Invoke();
     }
 
     public void SetHighScoreText (string text) => highScoreText.text = text;

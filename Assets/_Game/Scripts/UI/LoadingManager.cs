@@ -43,6 +43,14 @@ public class LoadingManager : MonoBehaviour, ILoadingManager
             obj.SetActive(false);
     }
 
+    public void ReloadFromStart ()
+    {
+        ApplicationSession?.DisposeCurrentScope();
+        ApplicationSession = null;
+        
+        SceneManager.LoadScene(0);
+    }
+
     public void LoadNewScene (string newScene)
     {
         //TODO pedro: review loading flow/order
