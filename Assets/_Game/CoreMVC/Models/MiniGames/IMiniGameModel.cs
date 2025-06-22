@@ -10,6 +10,7 @@ public interface IMiniGameModel : IDisposable
     TouchInputType InputTypes { get; }
     string StringId { get; }
     string Instructions { get; }
+    bool IsActive { get; }
     bool HasCompleted { get; }
 
     void Initialize ();

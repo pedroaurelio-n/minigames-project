@@ -12,6 +12,7 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     public string StringId => _settings.StringId;
     public string Instructions => _settings.Instructions;
     public bool HasCompleted { get; private set; }
+    public bool IsActive { get; private set; }
 
     protected readonly IMiniGameSettings _settings;
 
@@ -35,17 +36,24 @@ public abstract class BaseMiniGameModel : IMiniGameModel
 
     public void LateInitialize ()
     {
+        IsActive = true;
         OnMiniGameStarted?.Invoke();
     }
 
     public void Complete ()
     {
+        if (!IsActive)
+            return;
+        
         HasCompleted = true;
         _miniGameTimerModel.ForceExpire(HasCompleted);
     }
 
     public void ForceFailure ()
     {
+        if (!IsActive)
+            return;
+        
         _forceFailed = true;
         _miniGameTimerModel.ForceExpire(_forceFailed);
     }
@@ -62,6 +70,7 @@ public abstract class BaseMiniGameModel : IMiniGameModel
 
     void HandleTimerEnded ()
     {
+        IsActive = false;
         OnMiniGameTimerEnded?.Invoke();
         OnMiniGameEnded?.Invoke(HasCompleted);
     }

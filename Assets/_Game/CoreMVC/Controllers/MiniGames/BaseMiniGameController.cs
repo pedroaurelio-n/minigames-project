@@ -7,7 +7,7 @@ public abstract class BaseMiniGameController : IDisposable
     protected BaseMiniGameUIController UIController { get; set; }
     
     protected bool Initialized { get; private set; }
-    protected bool IsActive { get; private set; }
+    protected bool IsActive => ActiveMiniGame.IsActive;
     
     IMiniGameModel ActiveMiniGame => _miniGameManagerModel.ActiveMiniGame;
 
@@ -72,7 +72,6 @@ public abstract class BaseMiniGameController : IDisposable
 
     void HandleMiniGameStarted ()
     {
-        IsActive = true;
     }
 
     void HandleMiniGameTimerEnded ()
@@ -86,7 +85,6 @@ public abstract class BaseMiniGameController : IDisposable
     
     void HandleMiniGameEnded (bool hasCompleted)
     {
-        IsActive = false;
     }
     
     public virtual void Dispose ()
