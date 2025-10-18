@@ -59,6 +59,8 @@ public class TapFloatingMiniGameController : BaseMiniGameController
     {
         return _targetObjectViews.Count == 0;
     }
+    
+    //TODO pedro: CheckFailureCondition when a target object goes beyond screen framing
 
     protected override void AddListeners ()
     {

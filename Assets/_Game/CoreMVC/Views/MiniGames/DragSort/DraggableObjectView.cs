@@ -39,7 +39,7 @@ public class DraggableObjectView : PoolableView, IDraggable
         
         Vector3 force = desiredVelocity.normalized * distance * forceMultiplier;
         
-        force -= rb.velocity * damping;
+        force -= rb.linearVelocity * damping;
         
         float maxForce = 20f;
         if (force.magnitude > maxForce)
