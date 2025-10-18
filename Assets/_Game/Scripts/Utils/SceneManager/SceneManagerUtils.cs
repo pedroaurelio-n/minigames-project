@@ -4,6 +4,7 @@ public static class SceneManagerUtils
 {
     public static readonly string MainMenuSceneName = "MainMenu";
     public static readonly string GameOverSceneName = "GameOver";
+    public static readonly string MiniGameDefaultSceneName = "MiniGameDefaultScene";
     public static readonly string MiniGameScenePrefix = "MiniGame";
     
     public static string GetSceneNameFromBuildIndex (int index)

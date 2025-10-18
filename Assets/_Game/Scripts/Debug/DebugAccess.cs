@@ -7,7 +7,7 @@ public class DebugAccess : MonoBehaviour
     
     void Awake ()
     {
-        _loadingManager = FindObjectOfType<LoadingManager>(true);
+        _loadingManager = FindFirstObjectByType<LoadingManager>();
     }
     
     void Update ()

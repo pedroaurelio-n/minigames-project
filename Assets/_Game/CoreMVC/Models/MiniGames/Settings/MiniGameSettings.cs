@@ -10,6 +10,9 @@ public class MiniGameSettings : IMiniGameSettings
     public string StringId { get; }
     
     [JsonProperty]
+    public bool HasCustomScene { get; }
+    
+    [JsonProperty]
     public string Instructions { get; }
     
     [JsonProperty]
@@ -22,6 +25,7 @@ public class MiniGameSettings : IMiniGameSettings
     public MiniGameSettings (
         string name,
         string stringId,
+        bool hasCustomScene,
         string instructions,
         int? baseObjectCount,
         int? baseObjectiveMilestone
@@ -29,6 +33,7 @@ public class MiniGameSettings : IMiniGameSettings
     {
         Name = name;
         StringId = stringId;
+        HasCustomScene = hasCustomScene;
         Instructions = instructions;
         BaseObjectCount = baseObjectCount;
         BaseObjectiveMilestone = baseObjectiveMilestone;

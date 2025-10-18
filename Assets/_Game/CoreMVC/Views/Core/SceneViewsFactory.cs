@@ -14,7 +14,7 @@ public static class SceneViewsFactory
         IGameSessionInfoProvider gameSessionInfoProvider
     )
     {
-        sceneView = Object.Instantiate(Resources.Load<SceneView>($"{gameSessionInfoProvider.CurrentScene}SceneView"));
+        sceneView = Object.Instantiate(Resources.Load<SceneView>($"{gameSessionInfoProvider.CurrentSceneViewName}SceneView"));
         sceneView.Initialize();
         
         SceneViewInstaller viewInstaller = new(sceneView, poolableViewFactory);

@@ -9,6 +9,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     public event Action OnInitializationComplete;
     
     public string CurrentScene { get; private set; }
+    public string CurrentSceneViewName { get; set; }
     //TODO pedro: maybe not expose set property
     public MiniGameType CurrentMiniGameType { get; set; }
     public MiniGameType NextMiniGameType { get; set; }
@@ -47,6 +48,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _gameVersion = gameVersion;
         _loadingManager = loadingManager;
         CurrentScene = startScene;
+        CurrentSceneViewName = CurrentScene;
     }
 
     public void Initialize ()

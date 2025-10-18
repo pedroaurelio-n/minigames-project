@@ -23,9 +23,9 @@ public class MenuCoreFactory
         ICoroutineRunner coroutineRunner
     )
     {
-        mainMenuView = Object.Instantiate(Resources.Load<MenuView>($"{gameSessionInfoProvider.CurrentScene}View"));
+        mainMenuView = Object.Instantiate(Resources.Load<MenuView>($"{gameSessionInfoProvider.CurrentSceneViewName}View"));
         mainMenuUIView =
-            Object.Instantiate(Resources.Load<MenuUIView>($"{gameSessionInfoProvider.CurrentScene}UIView"));
+            Object.Instantiate(Resources.Load<MenuUIView>($"{gameSessionInfoProvider.CurrentSceneViewName}UIView"));
         
         MenuCoreInstaller installer = new(
             gameSessionData,

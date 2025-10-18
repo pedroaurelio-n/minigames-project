@@ -5,9 +5,10 @@
 
     public MiniGameSceneChangerModel (
         ILoadingManager loadingManager,
+        IGameSessionInfoProvider gameSessionInfoProvider,
         IPlayerInfoModel playerInfoModel,
         IMiniGameSettingsAccessor miniGameSettingsAccessor
-    ) : base(loadingManager)
+    ) : base(loadingManager, gameSessionInfoProvider)
     {
         _playerInfoModel = playerInfoModel;
         _miniGameSettingsAccessor = miniGameSettingsAccessor;
@@ -20,10 +21,13 @@
             ChangeScene(SceneManagerUtils.GameOverSceneName);
             return;
         }
-        
-        string newStringId = _miniGameSettingsAccessor.GetSettingsByType(type).StringId;
-        string newSceneName = $"{SceneManagerUtils.MiniGameScenePrefix}{newStringId}";
-        ChangeScene(newSceneName);
+
+        IMiniGameSettings miniGameSettings = _miniGameSettingsAccessor.GetSettingsByType(type);
+        string sceneViewName = $"{SceneManagerUtils.MiniGameScenePrefix}{miniGameSettings.StringId}";
+        string sceneName = miniGameSettings.HasCustomScene
+            ? sceneViewName
+            : SceneManagerUtils.MiniGameDefaultSceneName;
+        ChangeScene(sceneName, sceneViewName);
     }
 
     public void ChangeToMainMenu ()
