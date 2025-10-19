@@ -13,6 +13,7 @@ public class SceneModelInstaller : IInstaller
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
     readonly IDateTimeProvider _dateTimeProvider;
+    readonly IInputRaycastProvider _inputRaycastProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     public SceneModelInstaller (
@@ -26,6 +27,7 @@ public class SceneModelInstaller : IInstaller
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
         IDateTimeProvider dateTimeProvider,
+        IInputRaycastProvider inputRaycastProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -39,6 +41,7 @@ public class SceneModelInstaller : IInstaller
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
         _dateTimeProvider = dateTimeProvider;
+        _inputRaycastProvider = inputRaycastProvider;
         _coroutineRunner = coroutineRunner;
     }
     
@@ -56,6 +59,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(_physicsProvider);
         builder.RegisterInstance(_cameraProvider);
         builder.RegisterInstance(_dateTimeProvider);
+        builder.RegisterInstance(_inputRaycastProvider);
         builder.RegisterInstance(_coroutineRunner);
         
         builder.RegisterInstance(_settingsManager.MiniGameSystemSettings.Instance);
@@ -76,6 +80,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.SwipeThrowMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.MoveFindMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapFloatingMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapMovingMiniGameOptions);
 
         builder.Register<IMiniGameSettingsAccessor, MiniGameSettingsAccessor>(Lifetime.Singleton);
 

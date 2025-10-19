@@ -24,6 +24,7 @@ public class MenuCore : ICoreModule
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
     readonly IDateTimeProvider _dateTimeProvider;
+    readonly IInputRaycastProvider _inputRaycastProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     MenuView _menuView;
@@ -45,6 +46,7 @@ public class MenuCore : ICoreModule
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
         IDateTimeProvider dateTimeProvider,
+        IInputRaycastProvider inputRaycastProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -61,6 +63,7 @@ public class MenuCore : ICoreModule
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
         _dateTimeProvider = dateTimeProvider;
+        _inputRaycastProvider = inputRaycastProvider;
         _coroutineRunner = coroutineRunner;
     }
     
@@ -83,6 +86,7 @@ public class MenuCore : ICoreModule
             _physicsProvider,
             _cameraProvider,
             _dateTimeProvider,
+            _inputRaycastProvider,
             _coroutineRunner
         );
 

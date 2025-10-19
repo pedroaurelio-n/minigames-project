@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //TODO pedro: refactor this Pressable implementation
-public class FloatingObjectView : PoolableView, IPressable
+public class FloatingObjectView : PoolableView, ITappable
 {
     [SerializeField] GameObject[] meshes;
     
@@ -33,18 +33,6 @@ public class FloatingObjectView : PoolableView, IPressable
     }
     
     public void OnTapped ()
-    {
-    }
-
-    public void OnLongPressedBegan ()
-    {
-    }
-
-    public void OnLongPressedEnded ()
-    {
-    }
-
-    public void OnLongPressedCancelled ()
     {
     }
 }

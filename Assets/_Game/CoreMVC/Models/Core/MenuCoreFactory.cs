@@ -20,6 +20,7 @@ public class MenuCoreFactory
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
         IDateTimeProvider dateTimeProvider,
+        IInputRaycastProvider inputRaycastProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -42,6 +43,7 @@ public class MenuCoreFactory
             physicsProvider,
             cameraProvider,
             dateTimeProvider,
+            inputRaycastProvider,
             coroutineRunner
         );
         menuScope = parentScope.CreateChild(installer, "MenuScope");

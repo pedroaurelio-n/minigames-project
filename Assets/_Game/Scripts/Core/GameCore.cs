@@ -24,6 +24,7 @@ public class GameCore : ICoreModule
     readonly IPhysicsProvider _physicsProvider;
     readonly ICameraProvider _cameraProvider;
     readonly IDateTimeProvider _dateTimeProvider;
+    readonly IInputRaycastProvider _inputRaycastProvider;
     readonly ICoroutineRunner _coroutineRunner;
     
     SceneView _sceneView;
@@ -49,6 +50,7 @@ public class GameCore : ICoreModule
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
         IDateTimeProvider dateTimeProvider,
+        IInputRaycastProvider inputRaycastProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -65,6 +67,7 @@ public class GameCore : ICoreModule
         _physicsProvider = physicsProvider;
         _cameraProvider = cameraProvider;
         _dateTimeProvider = dateTimeProvider;
+        _inputRaycastProvider = inputRaycastProvider;
         _coroutineRunner = coroutineRunner;
     }
 
@@ -98,6 +101,7 @@ public class GameCore : ICoreModule
             _physicsProvider,
             _cameraProvider,
             _dateTimeProvider,
+            _inputRaycastProvider,
             _coroutineRunner
         );
         SceneModel.Initialize();

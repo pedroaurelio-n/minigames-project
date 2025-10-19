@@ -7,7 +7,7 @@ public class DragModel : IDragModel
     
     readonly ICameraProvider _cameraProvider;
     readonly ITouchInputModel _touchInputModel;
-    readonly IPhysicsProvider _physicsProvider;
+    readonly IInputRaycastProvider _inputRaycastProvider;
     readonly LayerMaskOptions _layerMaskOptions;
 
     Collider _currentDraggableCollider;
@@ -15,13 +15,13 @@ public class DragModel : IDragModel
     public DragModel (
         ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel,
-        IPhysicsProvider physicsProvider,
+        IInputRaycastProvider inputRaycastProvider,
         LayerMaskOptions layerMaskOptions
     )
     {
         _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;
-        _physicsProvider = physicsProvider;
+        _inputRaycastProvider = inputRaycastProvider;
         _layerMaskOptions = layerMaskOptions;
     }
     
@@ -46,12 +46,9 @@ public class DragModel : IDragModel
 
     void HandleTouchDragBegan (Vector2 touchPosition)
     {
-        if (_cameraProvider.MainCamera == null)
-            return;
-        
-        Ray ray = _cameraProvider.MainCamera.ScreenPointToRay(touchPosition);
-
-        if (!_physicsProvider.Raycast(ray, _layerMaskOptions.InteractableLayers, out RaycastHit hit))
+        if (!_inputRaycastProvider.TryGetRaycastHit(touchPosition,
+                _layerMaskOptions.InteractableLayers,
+                out RaycastHit hit))
             return;
         
         if (hit.collider == _currentDraggableCollider)

@@ -111,9 +111,9 @@ public class TapFloatingMiniGameController : BaseMiniGameController
         }
     }
 
-    void HandleTapPerformed (IPressable pressable, Vector2 tapPosition)
+    void HandleTapPerformed (ITappable tappable, Vector2 tapPosition)
     {
-        FloatingObjectView obj = pressable as FloatingObjectView;
+        FloatingObjectView obj = tappable as FloatingObjectView;
         if (obj == null || (!_targetObjectViews.Contains(obj) && !_fillerObjectViews.Contains(obj)))
             throw new InvalidOperationException($"Tap performed on invalid scene object.");
         

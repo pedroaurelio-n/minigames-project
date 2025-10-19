@@ -79,6 +79,12 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameTimerModel,
                     _pressModel
                 );
+            case MiniGameType.TapMoving:
+                return new TapMovingMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel,
+                    _pressModel
+                );
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

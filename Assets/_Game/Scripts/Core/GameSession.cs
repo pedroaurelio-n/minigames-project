@@ -34,6 +34,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     IPhysicsProvider _physicsProvider;
     ICameraProvider _cameraProvider;
     IDateTimeProvider _dateTimeProvider;
+    IInputRaycastProvider _inputRaycastProvider;
     CoroutineRunner _coroutineRunner;
     
     IPersistence _persistence;
@@ -92,6 +93,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _physicsProvider = new PhysicsProvider();
         _cameraProvider = new CameraProvider();
         _dateTimeProvider = new DateTimeProvider();
+        _inputRaycastProvider = new InputRaycastProvider(_cameraProvider, _physicsProvider);
 
         _coroutineRunner = new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
         _coroutineRunner.transform.SetParent(_gameScope.transform);
@@ -121,6 +123,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _physicsProvider,
             _cameraProvider,
             _dateTimeProvider,
+            _inputRaycastProvider,
             _coroutineRunner
         );
         CurrentCore.OnInitializationComplete += HandleCoreInitializationComplete;
@@ -145,6 +148,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
             _physicsProvider,
             _cameraProvider,
             _dateTimeProvider,
+            _inputRaycastProvider,
             _coroutineRunner
         );
         CurrentCore.OnInitializationComplete += HandleCoreInitializationComplete;

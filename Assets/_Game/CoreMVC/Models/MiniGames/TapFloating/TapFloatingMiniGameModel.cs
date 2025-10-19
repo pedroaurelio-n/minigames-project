@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TapFloatingMiniGameModel : BaseMiniGameModel, ITapFloatingMiniGameModel
 {
-    public event Action<IPressable, Vector2> OnTapPerformed;
+    public event Action<ITappable, Vector2> OnTapPerformed;
 
     public int BaseTargetsToSpawn => _settings.BaseObjectiveMilestone.Value;
     public int BaseObjectsToSpawn => _settings.BaseObjectCount.Value;
@@ -34,8 +34,8 @@ public class TapFloatingMiniGameModel : BaseMiniGameModel, ITapFloatingMiniGameM
         _pressModel.OnTapPerformed -= HandleTapPerformed;
     }
 
-    void HandleTapPerformed (IPressable pressable, Vector2 tapPosition)
+    void HandleTapPerformed (ITappable tappable, Vector2 tapPosition)
     {
-        OnTapPerformed?.Invoke(pressable, tapPosition);
+        OnTapPerformed?.Invoke(tappable, tapPosition);
     }
 }

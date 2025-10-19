@@ -1,0 +1,6 @@
+﻿{
+  "name": "Moving Spheres",
+  "stringId": "TapMoving",
+  "instructions": "Tap all the moving spheres!",
+  "baseObjectCount": 5
+}

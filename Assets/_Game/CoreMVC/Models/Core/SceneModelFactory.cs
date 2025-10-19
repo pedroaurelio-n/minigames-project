@@ -16,6 +16,7 @@ public static class SceneModelFactory
         IPhysicsProvider physicsProvider,
         ICameraProvider cameraProvider,
         IDateTimeProvider dateTimeProvider,
+        IInputRaycastProvider inputRaycastProvider,
         ICoroutineRunner coroutineRunner
     )
     {
@@ -30,6 +31,7 @@ public static class SceneModelFactory
             physicsProvider,
             cameraProvider,
             dateTimeProvider,
+            inputRaycastProvider,
             coroutineRunner
         );
         modelScope = parentScope.CreateChild(installer, "ModelScope");

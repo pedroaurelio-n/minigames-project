@@ -18,6 +18,7 @@ public class SceneControllerInstaller : IInstaller
         builder.Register<ButtonMashMiniGameController>(Lifetime.Singleton);
         builder.Register<JoystickRotateMiniGameController>(Lifetime.Singleton);
         builder.Register<TapFloatingMiniGameController>(Lifetime.Singleton);
+        builder.Register<TapMovingMiniGameController>(Lifetime.Singleton);
         
         builder.Register<SceneController>(Lifetime.Singleton);
     }
