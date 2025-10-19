@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
-public class ButtonStopwatchMiniGameUIController : BaseMiniGameUIController
+public class ButtonStopwatchMiniGameUIController : BaseMiniGameUIController<ButtonStopwatchMiniGameUIView>
 {
     public event Action OnButtonClick;
-    
-    public ButtonStopwatchMiniGameUIView UIView { get; private set; }
     
     public override void Setup (SceneUIView sceneUIView)
     {
         base.Setup(sceneUIView);
-
-        UIView = Object.Instantiate(
-            Resources.Load<ButtonStopwatchMiniGameUIView>("ButtonStopwatchMiniGameUIView"),
-            SceneUIView.PriorityHUD
-        );
-        
         AddViewListeners();
     }
 
@@ -32,12 +22,12 @@ public class ButtonStopwatchMiniGameUIController : BaseMiniGameUIController
             entryViews[i].SetTimeText(entryValues[i].ToString("F2"));
     }
 
-    void AddViewListeners ()
+    protected override void AddViewListeners ()
     {
         UIView.OnButtonClick += HandleButtonClick;
     }
     
-    void RemoveViewListeners ()
+    protected override void RemoveViewListeners ()
     {
         UIView.OnButtonClick -= HandleButtonClick;
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 //TODO pedro: maybe put some of this logic on the model?
 public class JoystickRotateMiniGameController : BaseMiniGameController
@@ -14,6 +15,7 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly JoystickRotateSceneView _sceneView;
     readonly IRandomProvider _randomProvider;
+    readonly UniqueCoroutine _updateCoroutine;
 
     float _targetAngleY;
 
@@ -21,12 +23,14 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
-        IRandomProvider randomProvider
+        IRandomProvider randomProvider,
+        ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as JoystickRotateSceneView;
         _randomProvider = randomProvider;
+        _updateCoroutine = new UniqueCoroutine(coroutineRunner);
     }
 
     public override void Initialize ()
@@ -46,6 +50,8 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
 
         _targetAngleY = _randomProvider.Range(30f, 330f);
         _sceneView.Target.rotation = Quaternion.Euler(0, _targetAngleY, 0);
+        
+        _updateCoroutine.Start(UpdateCoroutine());
     }
 
     protected override bool CheckWinCondition (bool timerEnded)
@@ -83,6 +89,21 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
         
         if (CheckWinCondition(false))
             MiniGameModel.Complete();
+    }
+
+    IEnumerator UpdateCoroutine ()
+    {
+        while (true)
+        {
+            if (!IsActive)
+            {
+                yield return null;
+                continue;
+            }
+            
+            MiniGameUIController.UIView.UpdateJoystick();
+            yield return null;
+        }
     }
 
     public override void Dispose ()

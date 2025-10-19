@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ButtonMashMiniGameUIView : MonoBehaviour
+public class ButtonMashMiniGameUIView : MiniGameUIView
 {
     public event Action OnLeftButtonClick;
     public event Action OnRightButtonClick;

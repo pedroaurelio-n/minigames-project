@@ -1,41 +1,32 @@
 ﻿using System;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
-public class ButtonMashMiniGameUIController : BaseMiniGameUIController
+public class ButtonMashMiniGameUIController : BaseMiniGameUIController<ButtonMashMiniGameUIView>
 {
     public event Action OnLeftButtonClick;
     public event Action OnRightButtonClick;
     
-    ButtonMashMiniGameUIView _uiView;
-    
     public override void Setup (SceneUIView sceneUIView)
     {
         base.Setup(sceneUIView);
-
-        _uiView = Object.Instantiate(
-            Resources.Load<ButtonMashMiniGameUIView>("ButtonMashMiniGameUIView"),
-            SceneUIView.PriorityHUD
-        );
         AddViewListeners();
     }
 
     public void SyncView (int current, int milestone)
     {
-        _uiView.SetLeftButtonText($"{current}/{milestone}");
-        _uiView.SetRightButtonText($"Click to fail");
+        UIView.SetLeftButtonText($"{current}/{milestone}");
+        UIView.SetRightButtonText($"Click to fail");
     }
 
-    void AddViewListeners ()
+    protected override void AddViewListeners ()
     {
-        _uiView.OnLeftButtonClick += HandleLeftButtonClick;
-        _uiView.OnRightButtonClick += HandleRightButtonClick;
+        UIView.OnLeftButtonClick += HandleLeftButtonClick;
+        UIView.OnRightButtonClick += HandleRightButtonClick;
     }
     
-    void RemoveViewListeners ()
+    protected override void RemoveViewListeners ()
     {
-        _uiView.OnLeftButtonClick -= HandleLeftButtonClick;
-        _uiView.OnRightButtonClick -= HandleRightButtonClick;
+        UIView.OnLeftButtonClick -= HandleLeftButtonClick;
+        UIView.OnRightButtonClick -= HandleRightButtonClick;
     }
     
     void HandleLeftButtonClick () => OnLeftButtonClick?.Invoke();

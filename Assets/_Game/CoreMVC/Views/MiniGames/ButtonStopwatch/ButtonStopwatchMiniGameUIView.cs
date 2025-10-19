@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ButtonStopwatchMiniGameUIView : MonoBehaviour
+public class ButtonStopwatchMiniGameUIView : MiniGameUIView
 {
     public event Action OnButtonClick;
 
