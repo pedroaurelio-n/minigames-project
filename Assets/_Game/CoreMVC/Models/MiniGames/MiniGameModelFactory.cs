@@ -85,6 +85,11 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameTimerModel,
                     _pressModel
                 );
+            case MiniGameType.ButtonStopwatch:
+                return new ButtonStopwatchMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel
+                );
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

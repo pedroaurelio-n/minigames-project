@@ -60,7 +60,9 @@ MonoBehaviour:
       <XSpawnDistance>k__BackingField: 25
       <YDistanceRange>k__BackingField: {x: -60, y: 0}
     <TapMovingMiniGameOptions>k__BackingField:
-      <SpeedRange>k__BackingField: {x: 20, y: 40}
+      <SpeedRange>k__BackingField: {x: 25, y: 45}
       <DelayRange>k__BackingField: {x: 0, y: 0.5}
       <XSpawnDistance>k__BackingField: 15
       <YSpawnDistance>k__BackingField: 35
+    <ButtonStopwatchMiniGameOptions>k__BackingField:
+      <SuccessThreshold>k__BackingField: 0.05

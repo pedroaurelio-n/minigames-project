@@ -14,6 +14,7 @@ public class SceneController : IDisposable
     public JoystickRotateMiniGameController JoystickRotateMiniGameController { get; }
     public TapFloatingMiniGameController TapFloatingMiniGameController { get; }
     public TapMovingMiniGameController TapMovingMiniGameController { get; }
+    public ButtonStopwatchMiniGameController ButtonStopwatchMiniGameController { get; }
 
     public SceneController (
         // MouseInputController mouseInputController,
@@ -26,7 +27,8 @@ public class SceneController : IDisposable
         ButtonMashMiniGameController buttonMashMiniGameController,
         JoystickRotateMiniGameController joystickRotateMiniGameController,
         TapFloatingMiniGameController tapFloatingMiniGameController,
-        TapMovingMiniGameController tapMovingMiniGameController
+        TapMovingMiniGameController tapMovingMiniGameController,
+        ButtonStopwatchMiniGameController buttonStopwatchMiniGameController
     )
     {
         // MouseInputController = mouseInputController;
@@ -40,6 +42,7 @@ public class SceneController : IDisposable
         JoystickRotateMiniGameController = joystickRotateMiniGameController;
         TapFloatingMiniGameController = tapFloatingMiniGameController;
         TapMovingMiniGameController = tapMovingMiniGameController;
+        ButtonStopwatchMiniGameController = buttonStopwatchMiniGameController;
     }
 
     public void Initialize ()
@@ -55,6 +58,7 @@ public class SceneController : IDisposable
         JoystickRotateMiniGameController.Initialize();
         TapFloatingMiniGameController.Initialize();
         TapMovingMiniGameController.Initialize();
+        ButtonStopwatchMiniGameController.Initialize();
     }
 
     public void LateInitialize ()

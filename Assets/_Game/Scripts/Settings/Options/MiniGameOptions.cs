@@ -10,6 +10,7 @@ public class MiniGameOptions
     [field: SerializeField] public MoveFindMiniGameOptions MoveFindMiniGameOptions { get; private set; }
     [field: SerializeField] public TapFloatingMiniGameOptions TapFloatingMiniGameOptions { get; private set; }
     [field: SerializeField] public TapMovingMiniGameOptions TapMovingMiniGameOptions { get; private set; }
+    [field: SerializeField] public ButtonStopwatchMiniGameOptions ButtonStopwatchMiniGameOptions { get; private set; }
 }
 
 [Serializable]
@@ -60,4 +61,10 @@ public class TapMovingMiniGameOptions
     [field: SerializeField] public Vector2 DelayRange { get; private set; }
     [field: SerializeField] public float XSpawnDistance { get; private set; }
     [field: SerializeField] public float YSpawnDistance { get; private set; }
+}
+
+[Serializable]
+public class ButtonStopwatchMiniGameOptions
+{
+    [field: SerializeField] public float SuccessThreshold { get; private set; }
 }

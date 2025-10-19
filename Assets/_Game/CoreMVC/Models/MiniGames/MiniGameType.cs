@@ -8,5 +8,6 @@
     ButtonMash = 4,
     JoystickRotate = 5,
     TapFloating = 6,
-    TapMoving = 7
+    TapMoving = 7,
+    ButtonStopwatch = 8
 }
