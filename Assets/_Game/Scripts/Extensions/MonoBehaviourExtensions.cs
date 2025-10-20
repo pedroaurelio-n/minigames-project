@@ -6,4 +6,9 @@ public static class MonoBehaviourExtensions
     {
         monoBehaviour.gameObject.SetActive(active);
     }
+
+    public static bool ActiveInHierarchy (this MonoBehaviour monoBehaviour)
+    {
+        return monoBehaviour.gameObject.activeInHierarchy;
+    }
 }

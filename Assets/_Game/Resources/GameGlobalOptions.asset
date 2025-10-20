@@ -30,7 +30,7 @@ MonoBehaviour:
       <MinMovementThreshold>k__BackingField: 100
       <DiagonalThreshold>k__BackingField: 0.5
     <LongPressInputOptions>k__BackingField:
-      <MinTimeThreshold>k__BackingField: 1
+      <MinTimeThreshold>k__BackingField: 0.6
       <MaxMovementStartThreshold>k__BackingField: 25
       <MaxMovementCancelThreshold>k__BackingField: 100
     <TwoPointMoveInputOptions>k__BackingField:
@@ -39,7 +39,7 @@ MonoBehaviour:
       <MinZoomDistance>k__BackingField: 10
   <MiniGameOptions>k__BackingField:
     <TapDestroyMiniGameOptions>k__BackingField:
-      <SpawnDistance>k__BackingField: {x: 20, y: 35}
+      <SpawnRange>k__BackingField: {x: 20, y: 35}
     <DragSortMiniGameOptions>k__BackingField:
       <BallSpawnDistance>k__BackingField: 15
       <ContainerHorizontalDistance>k__BackingField: 13.5
@@ -60,9 +60,14 @@ MonoBehaviour:
       <XSpawnDistance>k__BackingField: 25
       <YDistanceRange>k__BackingField: {x: -60, y: 0}
     <TapMovingMiniGameOptions>k__BackingField:
+      <SpawnRange>k__BackingField: {x: 15, y: 35}
       <SpeedRange>k__BackingField: {x: 25, y: 45}
       <DelayRange>k__BackingField: {x: 0, y: 0.5}
-      <XSpawnDistance>k__BackingField: 15
-      <YSpawnDistance>k__BackingField: 35
     <ButtonStopwatchMiniGameOptions>k__BackingField:
       <SuccessThreshold>k__BackingField: 0.05
+    <LongPressBombsMiniGameOptions>k__BackingField:
+      <SpawnRange>k__BackingField: {x: 20, y: 30}
+      <DelayRange>k__BackingField: {x: 1, y: 2.5}
+      <TimerRange>k__BackingField: {x: 1.5, y: 3}
+      <DefuseRange>k__BackingField: {x: 1, y: 2}
+      <TimerGrace>k__BackingField: 0.5

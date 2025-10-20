@@ -9,5 +9,6 @@
     JoystickRotate = 5,
     TapFloating = 6,
     TapMoving = 7,
-    ButtonStopwatch = 8
+    ButtonStopwatch = 8,
+    LongPressBombs = 9
 }

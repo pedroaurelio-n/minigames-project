@@ -20,6 +20,7 @@ public class SceneControllerInstaller : IInstaller
         builder.Register<TapFloatingMiniGameController>(Lifetime.Singleton);
         builder.Register<TapMovingMiniGameController>(Lifetime.Singleton);
         builder.Register<ButtonStopwatchMiniGameController>(Lifetime.Singleton);
+        builder.Register<LongPressBombsMiniGameController>(Lifetime.Singleton);
         
         builder.Register<SceneController>(Lifetime.Singleton);
     }

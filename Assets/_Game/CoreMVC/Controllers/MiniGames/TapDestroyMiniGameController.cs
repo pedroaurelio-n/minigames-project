@@ -73,8 +73,8 @@ public class TapDestroyMiniGameController : BaseMiniGameController
         {
             TappableObjectView obj = _viewFactory.GetView<TappableObjectView>(_sceneView.transform);
             obj.transform.position = _randomProvider.Range(
-                new Vector2(-_options.SpawnDistance.x, -_options.SpawnDistance.y),
-                new Vector2(_options.SpawnDistance.x, _options.SpawnDistance.y)
+                new Vector2(-_options.SpawnRange.x, -_options.SpawnRange.y),
+                new Vector2(_options.SpawnRange.x, _options.SpawnRange.y)
             );
             _objectViews.Add(obj);
         }

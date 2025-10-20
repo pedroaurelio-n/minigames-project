@@ -90,6 +90,12 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameSettings,
                     _miniGameTimerModel
                 );
+            case MiniGameType.LongPressBombs:
+                return new LongPressBombsMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel,
+                    _pressModel
+                );
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

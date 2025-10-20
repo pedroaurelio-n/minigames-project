@@ -78,8 +78,8 @@ public class TapMovingMiniGameController : BaseMiniGameController
         {
             TappableMovingObjectView obj = _viewFactory.GetView<TappableMovingObjectView>(_sceneView.transform);
             obj.transform.position = _randomProvider.Range(
-                new Vector2(-_options.XSpawnDistance, -_options.YSpawnDistance),
-                new Vector2(_options.XSpawnDistance, _options.YSpawnDistance)
+                new Vector2(-_options.SpawnRange.x, -_options.SpawnRange.y),
+                new Vector2(_options.SpawnRange.x, _options.SpawnRange.y)
             );
 
             Vector2 randomDirection = _randomProvider.InsideCircle *
