@@ -10,5 +10,6 @@
     TapFloating = 6,
     TapMoving = 7,
     ButtonStopwatch = 8,
-    LongPressBombs = 9
+    LongPressBombs = 9,
+    DragRemove = 10,
 }

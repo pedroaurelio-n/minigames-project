@@ -1,0 +1,6 @@
+﻿{
+  "name": "Remove Clutter",
+  "stringId": "DragRemove",
+  "instructions": "Drag the clutter away from the objective!",
+  "baseObjectCount": 8
+}

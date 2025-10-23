@@ -75,7 +75,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         
         GameObject poolParent = new("ViewFactory");
         poolParent.transform.SetParent(_gameScope.transform);
-        _poolableViewFactory = new PoolableViewFactory(poolParent.transform);
+        _poolableViewFactory = new PoolableViewFactory(poolParent.transform, _randomProvider);
         
         CreateCore();
     }

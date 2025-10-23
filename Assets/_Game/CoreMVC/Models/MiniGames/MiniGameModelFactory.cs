@@ -96,6 +96,12 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameTimerModel,
                     _pressModel
                 );
+            case MiniGameType.DragRemove:
+                return new DragRemoveMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel,
+                    _dragModel
+                );
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

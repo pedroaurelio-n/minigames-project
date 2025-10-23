@@ -64,7 +64,7 @@ public class DragModel : IDragModel
         Vector3 worldPosition = GetCorrectedWorldPosition(touchPosition);
         IsDragging = true;
         CurrentDraggable = draggable;
-        CurrentDraggable.OnDragBegan();
+        CurrentDraggable.OnDragBegan(worldPosition);
         
         DebugUtils.Log($"Touch drag began for {draggable.Name}, at {worldPosition}");
     }
@@ -88,7 +88,7 @@ public class DragModel : IDragModel
         Vector3 worldPosition = GetCorrectedWorldPosition(touchPosition);
         DebugUtils.Log($"Touch drag ended for {CurrentDraggable.Name}, at {worldPosition}");
         
-        CurrentDraggable.OnDragEnded();
+        CurrentDraggable.OnDragEnded(worldPosition);
         CurrentDraggable = null;
         _currentDraggableCollider = null;
         IsDragging = false;

@@ -83,6 +83,7 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapMovingMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.ButtonStopwatchMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.LongPressBombsMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragRemoveMiniGameOptions);
 
         builder.Register<IMiniGameSettingsAccessor, MiniGameSettingsAccessor>(Lifetime.Singleton);
 

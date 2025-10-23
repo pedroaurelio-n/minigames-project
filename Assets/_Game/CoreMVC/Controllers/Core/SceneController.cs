@@ -16,6 +16,7 @@ public class SceneController : IDisposable
     public TapMovingMiniGameController TapMovingMiniGameController { get; }
     public ButtonStopwatchMiniGameController ButtonStopwatchMiniGameController { get; }
     public LongPressBombsMiniGameController LongPressBombsMiniGameController { get; }
+    public DragRemoveMiniGameController DragRemoveMiniGameController { get; }
 
     public SceneController (
         // MouseInputController mouseInputController,
@@ -30,7 +31,8 @@ public class SceneController : IDisposable
         TapFloatingMiniGameController tapFloatingMiniGameController,
         TapMovingMiniGameController tapMovingMiniGameController,
         ButtonStopwatchMiniGameController buttonStopwatchMiniGameController,
-        LongPressBombsMiniGameController longPressBombsMiniGameController
+        LongPressBombsMiniGameController longPressBombsMiniGameController,
+        DragRemoveMiniGameController dragRemoveMiniGameController
     )
     {
         // MouseInputController = mouseInputController;
@@ -46,6 +48,7 @@ public class SceneController : IDisposable
         TapMovingMiniGameController = tapMovingMiniGameController;
         ButtonStopwatchMiniGameController = buttonStopwatchMiniGameController;
         LongPressBombsMiniGameController = longPressBombsMiniGameController;
+        DragRemoveMiniGameController = dragRemoveMiniGameController;
     }
 
     public void Initialize ()
@@ -63,6 +66,7 @@ public class SceneController : IDisposable
         TapMovingMiniGameController.Initialize();
         ButtonStopwatchMiniGameController.Initialize();
         LongPressBombsMiniGameController.Initialize();
+        DragRemoveMiniGameController.Initialize();
     }
 
     public void LateInitialize ()

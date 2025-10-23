@@ -23,7 +23,7 @@ public class DraggableObjectView : PoolableView, IDraggable
         meshRenderer.material = _defaultMaterial;
     }
 
-    public void OnDragBegan ()
+    public void OnDragBegan (Vector3 worldPosition)
     {
         meshRenderer.material = _dragMaterial;
     }
@@ -55,7 +55,7 @@ public class DraggableObjectView : PoolableView, IDraggable
         }
     }
 
-    public void OnDragEnded ()
+    public void OnDragEnded (Vector3 worldPosition)
     {
         meshRenderer.material = _defaultMaterial;
     }

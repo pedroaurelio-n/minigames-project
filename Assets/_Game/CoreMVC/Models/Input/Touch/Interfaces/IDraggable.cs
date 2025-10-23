@@ -4,7 +4,7 @@ public interface IDraggable
 {
     string Name { get; }
     
-    void OnDragBegan ();
+    void OnDragBegan (Vector3 worldPosition);
     void OnDragMoved (Vector3 worldPosition);
-    void OnDragEnded ();
+    void OnDragEnded (Vector3 worldPosition);
 }
