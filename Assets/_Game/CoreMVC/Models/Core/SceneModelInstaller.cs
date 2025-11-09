@@ -74,16 +74,19 @@ public class SceneModelInstaller : IInstaller
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.LongPressInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointMoveInputOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.InputOptions.TwoPointZoomInputOptions);
+        
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions);
-        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapDestroyMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.ButtonStopwatchMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragSortMiniGameOptions);
-        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.SwipeThrowMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragRemoveMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.JoystickRotateMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.JoystickAimMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.LongPressBombsMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.MoveFindMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.SwipeThrowMiniGameOptions);
+        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapDestroyMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapFloatingMiniGameOptions);
         builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.TapMovingMiniGameOptions);
-        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.ButtonStopwatchMiniGameOptions);
-        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.LongPressBombsMiniGameOptions);
-        builder.RegisterInstance(GameGlobalOptions.Instance.MiniGameOptions.DragRemoveMiniGameOptions);
 
         builder.Register<IMiniGameSettingsAccessor, MiniGameSettingsAccessor>(Lifetime.Singleton);
 

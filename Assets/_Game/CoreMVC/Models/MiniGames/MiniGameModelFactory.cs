@@ -36,11 +36,15 @@ public class MiniGameModelFactory : IMiniGameModelFactory
     {
         switch (type)
         {
-            case MiniGameType.TapDestroy:
-                return new TapDestroyMiniGameModel(
+            case MiniGameType.ButtonMash:
+                return new ButtonMashMiniGameModel(
                     _miniGameSettings,
-                    _miniGameTimerModel,
-                    _pressModel
+                    _miniGameTimerModel
+                );
+            case MiniGameType.ButtonStopwatch:
+                return new ButtonStopwatchMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel
                 );
             case MiniGameType.DragSort:
                 return new DragSortMiniGameModel(
@@ -48,12 +52,27 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameTimerModel,
                     _dragModel
                 );
-            case MiniGameType.SwipeThrow:
-                return new SwipeThrowMiniGameModel(
+            case MiniGameType.DragRemove:
+                return new DragRemoveMiniGameModel(
                     _miniGameSettings,
                     _miniGameTimerModel,
-                    _cameraProvider,
-                    _touchInputModel
+                    _dragModel
+                );
+            case MiniGameType.JoystickRotate:
+                return new JoystickRotateMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel
+                );
+            case MiniGameType.JoystickAim:
+                return new JoystickAimMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel
+                );
+            case MiniGameType.LongPressBombs:
+                return new LongPressBombsMiniGameModel(
+                    _miniGameSettings,
+                    _miniGameTimerModel,
+                    _pressModel
                 );
             case MiniGameType.MoveFind:
                 return new MoveFindMiniGameModel(
@@ -63,15 +82,18 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _touchInputModel,
                     _options.MoveFindMiniGameOptions
                 );
-            case MiniGameType.ButtonMash:
-                return new ButtonMashMiniGameModel(
+            case MiniGameType.SwipeThrow:
+                return new SwipeThrowMiniGameModel(
                     _miniGameSettings,
-                    _miniGameTimerModel
+                    _miniGameTimerModel,
+                    _cameraProvider,
+                    _touchInputModel
                 );
-            case MiniGameType.JoystickRotate:
-                return new JoystickRotateMiniGameModel(
+            case MiniGameType.TapDestroy:
+                return new TapDestroyMiniGameModel(
                     _miniGameSettings,
-                    _miniGameTimerModel
+                    _miniGameTimerModel,
+                    _pressModel
                 );
             case MiniGameType.TapFloating:
                 return new TapFloatingMiniGameModel(
@@ -84,23 +106,6 @@ public class MiniGameModelFactory : IMiniGameModelFactory
                     _miniGameSettings,
                     _miniGameTimerModel,
                     _pressModel
-                );
-            case MiniGameType.ButtonStopwatch:
-                return new ButtonStopwatchMiniGameModel(
-                    _miniGameSettings,
-                    _miniGameTimerModel
-                );
-            case MiniGameType.LongPressBombs:
-                return new LongPressBombsMiniGameModel(
-                    _miniGameSettings,
-                    _miniGameTimerModel,
-                    _pressModel
-                );
-            case MiniGameType.DragRemove:
-                return new DragRemoveMiniGameModel(
-                    _miniGameSettings,
-                    _miniGameTimerModel,
-                    _dragModel
                 );
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);

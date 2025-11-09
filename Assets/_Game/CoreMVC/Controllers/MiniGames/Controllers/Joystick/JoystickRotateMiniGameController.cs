@@ -4,9 +4,6 @@ using UnityEngine;
 //TODO pedro: maybe put some of this logic on the model?
 public class JoystickRotateMiniGameController : BaseMiniGameController
 {
-    const float ROTATION_SPEED = 50f;
-    const float WIN_ANGLE_TOLERANCE = 5f;
-    
     protected override MiniGameType MiniGameType => MiniGameType.JoystickRotate;
     
     IJoystickRotateMiniGameModel MiniGameModel => _miniGameManagerModel.ActiveMiniGame as IJoystickRotateMiniGameModel;
@@ -14,6 +11,7 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
     
     readonly IMiniGameManagerModel _miniGameManagerModel;
     readonly JoystickRotateSceneView _sceneView;
+    readonly JoystickRotateMiniGameOptions _options;
     readonly IRandomProvider _randomProvider;
     readonly UniqueCoroutine _updateCoroutine;
 
@@ -23,12 +21,14 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
         IMiniGameManagerModel miniGameManagerModel,
         SceneView sceneView,
         SceneUIView sceneUIView,
+        JoystickRotateMiniGameOptions options,
         IRandomProvider randomProvider,
         ICoroutineRunner coroutineRunner
     ) : base(miniGameManagerModel, sceneView, sceneUIView)
     {
         _miniGameManagerModel = miniGameManagerModel;
         _sceneView = sceneView as JoystickRotateSceneView;
+        _options = options;
         _randomProvider = randomProvider;
         _updateCoroutine = new UniqueCoroutine(coroutineRunner);
     }
@@ -58,7 +58,7 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
     {
         float currentY = _sceneView.RotatingObject.eulerAngles.y;
         float angleDiff = Mathf.Abs(Mathf.DeltaAngle(currentY, _targetAngleY));
-        return angleDiff <= WIN_ANGLE_TOLERANCE;
+        return angleDiff <= _options.WinAngleTolerance;
     }
 
     void AddUIListeners ()
@@ -80,7 +80,7 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
         float currentY = _sceneView.RotatingObject.eulerAngles.y;
         
         float angleDiff = Mathf.DeltaAngle(currentY, targetInputAngle);
-        float step = ROTATION_SPEED * Time.deltaTime;
+        float step = _options.RotationSpeed * Time.deltaTime;
 
         float newY = currentY + Mathf.Clamp(angleDiff, -step, step);
 
@@ -108,6 +108,8 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
 
     public override void Dispose ()
     {
+        _updateCoroutine.Dispose();
+        
         if (UIController != null)
             RemoveUIListeners();
         

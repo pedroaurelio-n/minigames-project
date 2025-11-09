@@ -1,0 +1,6 @@
+﻿{
+  "name": "Shoot Targets",
+  "stringId": "JoystickAim",
+  "instructions": "Aim the cannon to hit the targets!",
+  "baseObjectCount": 4
+}

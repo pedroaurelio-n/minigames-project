@@ -12,4 +12,5 @@
     ButtonStopwatch = 8,
     LongPressBombs = 9,
     DragRemove = 10,
+    JoystickAim = 11
 }

@@ -40,15 +40,27 @@ MonoBehaviour:
     <TwoPointZoomInputOptions>k__BackingField:
       <MinZoomDistance>k__BackingField: 10
   <MiniGameOptions>k__BackingField:
-    <TapDestroyMiniGameOptions>k__BackingField:
-      <SpawnRange>k__BackingField: {x: 20, y: 35}
+    <ButtonStopwatchMiniGameOptions>k__BackingField:
+      <SuccessThreshold>k__BackingField: 0.05
     <DragSortMiniGameOptions>k__BackingField:
       <BallSpawnDistance>k__BackingField: 15
       <ContainerHorizontalDistance>k__BackingField: 13.5
-    <SwipeThrowMiniGameOptions>k__BackingField:
-      <DirectionWeight>k__BackingField: 10
-      <ForwardWeight>k__BackingField: 23
-      <ThrowDelay>k__BackingField: 0.6
+    <DragRemoveMiniGameOptions>k__BackingField:
+      <SpawnRange>k__BackingField: {x: 12, y: 20}
+    <JoystickRotateMiniGameOptions>k__BackingField:
+      <RotationSpeed>k__BackingField: 50
+      <WinAngleTolerance>k__BackingField: 5
+    <JoystickAimMiniGameOptions>k__BackingField:
+      <RotationSpeed>k__BackingField: 75
+      <ShootDelay>k__BackingField: 0.6
+      <ShootSpeed>k__BackingField: 60
+      <SpawnRange>k__BackingField: {x: 38, y: 48}
+    <LongPressBombsMiniGameOptions>k__BackingField:
+      <SpawnRange>k__BackingField: {x: 20, y: 30}
+      <DelayRange>k__BackingField: {x: 1, y: 2.5}
+      <TimerRange>k__BackingField: {x: 1.5, y: 3}
+      <DefuseRange>k__BackingField: {x: 1, y: 2}
+      <TimerGrace>k__BackingField: 0.5
     <MoveFindMiniGameOptions>k__BackingField:
       <CheckDelay>k__BackingField: 0.3
       <DistanceRange>k__BackingField: {x: 3, y: 20}
@@ -56,6 +68,12 @@ MonoBehaviour:
       <ZoomSpeed>k__BackingField: 0.01
       <MinCameraZoom>k__BackingField: 75
       <MaxCameraZoom>k__BackingField: 140
+    <SwipeThrowMiniGameOptions>k__BackingField:
+      <DirectionWeight>k__BackingField: 10
+      <ForwardWeight>k__BackingField: 23
+      <ThrowDelay>k__BackingField: 0.6
+    <TapDestroyMiniGameOptions>k__BackingField:
+      <SpawnRange>k__BackingField: {x: 20, y: 35}
     <TapFloatingMiniGameOptions>k__BackingField:
       <SpeedRange>k__BackingField: {x: 10, y: 22}
       <DelayRange>k__BackingField: {x: 0, y: 2.5}
@@ -65,13 +83,3 @@ MonoBehaviour:
       <SpawnRange>k__BackingField: {x: 15, y: 35}
       <SpeedRange>k__BackingField: {x: 25, y: 45}
       <DelayRange>k__BackingField: {x: 0, y: 0.5}
-    <ButtonStopwatchMiniGameOptions>k__BackingField:
-      <SuccessThreshold>k__BackingField: 0.05
-    <LongPressBombsMiniGameOptions>k__BackingField:
-      <SpawnRange>k__BackingField: {x: 20, y: 30}
-      <DelayRange>k__BackingField: {x: 1, y: 2.5}
-      <TimerRange>k__BackingField: {x: 1.5, y: 3}
-      <DefuseRange>k__BackingField: {x: 1, y: 2}
-      <TimerGrace>k__BackingField: 0.5
-    <DragRemoveMiniGameOptions>k__BackingField:
-      <SpawnRange>k__BackingField: {x: 12, y: 20}

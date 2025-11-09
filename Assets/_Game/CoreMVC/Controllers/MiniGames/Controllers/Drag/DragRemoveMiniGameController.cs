@@ -81,9 +81,12 @@ public class DragRemoveMiniGameController : BaseMiniGameController
 
     public override void Dispose ()
     {
-        _objectiveView.OnObjectiveDragBegan -= HandleObjectiveDragBegan;
-        _objectiveView.Despawn();
-        _objectiveView = null;
+        if (_objectiveView != null)
+        {
+            _objectiveView.OnObjectiveDragBegan -= HandleObjectiveDragBegan;
+            _objectiveView.Despawn();
+            _objectiveView = null;
+        }
         
         _clutterViews.DisposeAndClear();
         base.Dispose();

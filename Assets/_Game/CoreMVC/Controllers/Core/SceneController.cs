@@ -6,49 +6,53 @@ public class SceneController : IDisposable
     public TouchInputController TouchInputController { get; }
     public MiniGameSceneChangerController MiniGameSceneChangerController { get; }
     
-    public TapDestroyMiniGameController TapDestroyMiniGameController { get; }
-    public SwipeThrowMiniGameController SwipeThrowMiniGameController { get; }
-    public DragSortMiniGameController DragSortMiniGameController { get; }
-    public MoveFindMiniGameController MoveFindMiniGameController { get; }
     public ButtonMashMiniGameController ButtonMashMiniGameController { get; }
+    public ButtonStopwatchMiniGameController ButtonStopwatchMiniGameController { get; }
+    public DragSortMiniGameController DragSortMiniGameController { get; }
+    public DragRemoveMiniGameController DragRemoveMiniGameController { get; }
     public JoystickRotateMiniGameController JoystickRotateMiniGameController { get; }
+    public JoystickAimMiniGameController JoystickAimMiniGameController { get; }
+    public LongPressBombsMiniGameController LongPressBombsMiniGameController { get; }
+    public MoveFindMiniGameController MoveFindMiniGameController { get; }
+    public SwipeThrowMiniGameController SwipeThrowMiniGameController { get; }
+    public TapDestroyMiniGameController TapDestroyMiniGameController { get; }
     public TapFloatingMiniGameController TapFloatingMiniGameController { get; }
     public TapMovingMiniGameController TapMovingMiniGameController { get; }
-    public ButtonStopwatchMiniGameController ButtonStopwatchMiniGameController { get; }
-    public LongPressBombsMiniGameController LongPressBombsMiniGameController { get; }
-    public DragRemoveMiniGameController DragRemoveMiniGameController { get; }
 
     public SceneController (
         // MouseInputController mouseInputController,
         TouchInputController touchInputController,
         MiniGameSceneChangerController miniGameSceneChangerController,
-        TapDestroyMiniGameController tapDestroyMiniGameController,
-        SwipeThrowMiniGameController swipeThrowMiniGameController,
-        DragSortMiniGameController dragSortMiniGameController,
-        MoveFindMiniGameController moveFindMiniGameController,
         ButtonMashMiniGameController buttonMashMiniGameController,
-        JoystickRotateMiniGameController joystickRotateMiniGameController,
-        TapFloatingMiniGameController tapFloatingMiniGameController,
-        TapMovingMiniGameController tapMovingMiniGameController,
         ButtonStopwatchMiniGameController buttonStopwatchMiniGameController,
+        DragSortMiniGameController dragSortMiniGameController,
+        DragRemoveMiniGameController dragRemoveMiniGameController,
         LongPressBombsMiniGameController longPressBombsMiniGameController,
-        DragRemoveMiniGameController dragRemoveMiniGameController
+        JoystickRotateMiniGameController joystickRotateMiniGameController,
+        JoystickAimMiniGameController joystickAimMiniGameController,
+        MoveFindMiniGameController moveFindMiniGameController,
+        SwipeThrowMiniGameController swipeThrowMiniGameController,
+        TapDestroyMiniGameController tapDestroyMiniGameController,
+        TapFloatingMiniGameController tapFloatingMiniGameController,
+        TapMovingMiniGameController tapMovingMiniGameController
     )
     {
         // MouseInputController = mouseInputController;
         TouchInputController = touchInputController;
         MiniGameSceneChangerController = miniGameSceneChangerController;
-        TapDestroyMiniGameController = tapDestroyMiniGameController;
-        SwipeThrowMiniGameController = swipeThrowMiniGameController;
-        DragSortMiniGameController = dragSortMiniGameController;
-        MoveFindMiniGameController = moveFindMiniGameController;
+        
         ButtonMashMiniGameController = buttonMashMiniGameController;
+        ButtonStopwatchMiniGameController = buttonStopwatchMiniGameController;
+        DragSortMiniGameController = dragSortMiniGameController;
+        DragRemoveMiniGameController = dragRemoveMiniGameController;
         JoystickRotateMiniGameController = joystickRotateMiniGameController;
+        JoystickAimMiniGameController = joystickAimMiniGameController;
+        LongPressBombsMiniGameController = longPressBombsMiniGameController;
+        MoveFindMiniGameController = moveFindMiniGameController;
+        SwipeThrowMiniGameController = swipeThrowMiniGameController;
+        TapDestroyMiniGameController = tapDestroyMiniGameController;
         TapFloatingMiniGameController = tapFloatingMiniGameController;
         TapMovingMiniGameController = tapMovingMiniGameController;
-        ButtonStopwatchMiniGameController = buttonStopwatchMiniGameController;
-        LongPressBombsMiniGameController = longPressBombsMiniGameController;
-        DragRemoveMiniGameController = dragRemoveMiniGameController;
     }
 
     public void Initialize ()
@@ -56,17 +60,19 @@ public class SceneController : IDisposable
         // MouseInputController.Initialize();
         TouchInputController.Initialize();
         MiniGameSceneChangerController.Initialize();
-        TapDestroyMiniGameController.Initialize();
-        SwipeThrowMiniGameController.Initialize();
-        DragSortMiniGameController.Initialize();
-        MoveFindMiniGameController.Initialize();
+        
         ButtonMashMiniGameController.Initialize();
+        ButtonStopwatchMiniGameController.Initialize();
+        DragSortMiniGameController.Initialize();
+        DragRemoveMiniGameController.Initialize();
         JoystickRotateMiniGameController.Initialize();
+        JoystickAimMiniGameController.Initialize();
+        LongPressBombsMiniGameController.Initialize();
+        MoveFindMiniGameController.Initialize();
+        SwipeThrowMiniGameController.Initialize();
+        TapDestroyMiniGameController.Initialize();
         TapFloatingMiniGameController.Initialize();
         TapMovingMiniGameController.Initialize();
-        ButtonStopwatchMiniGameController.Initialize();
-        LongPressBombsMiniGameController.Initialize();
-        DragRemoveMiniGameController.Initialize();
     }
 
     public void LateInitialize ()

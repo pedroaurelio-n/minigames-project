@@ -8,7 +8,7 @@ public class PoolableView : MonoBehaviour
     
     Action _despawnCallback;
 
-    public void Setup (Action despawnCallback, int poolIndex)
+    public void SetupView (Action despawnCallback, int poolIndex)
     {
         _despawnCallback = despawnCallback;
         PoolIndex = poolIndex;
