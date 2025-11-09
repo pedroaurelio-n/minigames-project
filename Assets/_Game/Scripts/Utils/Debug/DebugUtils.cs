@@ -12,7 +12,7 @@ public static class DebugUtils
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging && !forceLog)
+        if (!GameGlobalOptions.Instance.DebugOptions.EnableNormalLogs && !forceLog)
             return;
         Debug.Log(Format(message, memberName, sourceFilePath, sourceLineNumber));
     }
@@ -25,7 +25,7 @@ public static class DebugUtils
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging && !forceLog)
+        if (!GameGlobalOptions.Instance.DebugOptions.EnableWarnings && !forceLog)
             return;
         Debug.LogWarning(Format(message, memberName, sourceFilePath, sourceLineNumber));
     }
@@ -38,7 +38,7 @@ public static class DebugUtils
         [CallerLineNumber] int sourceLineNumber = 0
     )
     {
-        if (!GameGlobalOptions.Instance.DebugOptions.EnableLogging && !forceLog)
+        if (!GameGlobalOptions.Instance.DebugOptions.EnableErrors && !forceLog)
             return;
         Debug.LogError(Format(message, memberName, sourceFilePath, sourceLineNumber));
     }

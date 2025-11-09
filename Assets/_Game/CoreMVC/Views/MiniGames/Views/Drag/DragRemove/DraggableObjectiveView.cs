@@ -12,9 +12,6 @@ public class DraggableObjectiveView : PoolableView, IDraggable
 
     public string Name => gameObject.name;
     
-    Material _defaultMaterial;
-    Material _dragMaterial;
-    
     Vector3 _lastDragPosition;
 
     public void Setup (Vector3 position, Quaternion rotation)
@@ -22,7 +19,7 @@ public class DraggableObjectiveView : PoolableView, IDraggable
         transform.position = position;
         transform.rotation = rotation;
 
-        meshRenderer.material = _defaultMaterial;
+        meshRenderer.material = defaultMaterial;
     }
 
     public void OnDragBegan (Vector3 worldPosition)

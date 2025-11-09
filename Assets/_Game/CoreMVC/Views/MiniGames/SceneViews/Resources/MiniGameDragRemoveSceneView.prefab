@@ -157,8 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 087b3c9bf34b4ab7879779031dad1cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::DragRemoveSceneView
-  <ClutterPrefabs>k__BackingField: {fileID: 2674700353759707925, guid: 5430e0577d2f9ba4e9f40c4b59141983,
-    type: 3}
+  <ClutterPrefabs>k__BackingField:
+  - {fileID: 2674700353759707925, guid: 5430e0577d2f9ba4e9f40c4b59141983, type: 3}
+  - {fileID: 2674700353759707925, guid: 2ce6a4958da90ef4d9e9191af8b3e9cf, type: 3}
+  - {fileID: 2674700353759707925, guid: 9a2c439bfa4e9ef4cb6c266fe8757827, type: 3}
   <ObjectivePrefab>k__BackingField: {fileID: 4341328026609735067, guid: 3a4706034b8d6ed4dad69c3777deae8e,
     type: 3}
 --- !u!1 &8435005626451664515

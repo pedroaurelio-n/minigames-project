@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 437784102400916711}
   - component: {fileID: 67376102339820486}
   m_Layer: 6
-  m_Name: DraggableClutterView
+  m_Name: DraggableClutterView2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202f01b1645042edbcc14b83934188fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::DraggableClutterObjectView
-  defaultMaterial: {fileID: 2100000, guid: b8564acf426f81348815a0ac82669a86, type: 2}
-  dragMaterial: {fileID: 2100000, guid: bc5ad1122c17f284ba654a28e280087b, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 57982e6eb18377c49b4208d81892466c, type: 2}
+  dragMaterial: {fileID: 2100000, guid: 39f26cabfc30c2244b4417c55c48a12b, type: 2}
   meshRenderer: {fileID: 5681674001723693844}
   rb: {fileID: 437784102400916711}
 --- !u!33 &5247486098367227216
@@ -85,7 +85,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8564acf426f81348815a0ac82669a86, type: 2}
+  - {fileID: 2100000, guid: 57982e6eb18377c49b4208d81892466c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

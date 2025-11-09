@@ -18,10 +18,10 @@ public class ObjectPool<T> where T : PoolableView
         _viewFactory = viewFactory;
     }
 
-    public T Get ()
+    public T Get (int poolIndex = 0)
     {
         if (_inactiveObjects.Count == 0)
-            return Create();
+            return Create(poolIndex);
 
         T obj = Enumerable.First(_inactiveObjects);
         obj.gameObject.SetActive(true);
@@ -41,10 +41,10 @@ public class ObjectPool<T> where T : PoolableView
         _inactiveObjects.Add(obj);
     }
 
-    T Create ()
+    T Create (int poolIndex)
     {
-        T obj = GameObject.Instantiate(_prefab);
-        obj.Setup(() => _viewFactory.ReleaseView(obj));
+        T obj = Object.Instantiate(_prefab);
+        obj.Setup(() => _viewFactory.ReleaseView(obj), poolIndex);
         obj.gameObject.SetActive(true);
         _activeObjects.Add(obj);
         return obj;
