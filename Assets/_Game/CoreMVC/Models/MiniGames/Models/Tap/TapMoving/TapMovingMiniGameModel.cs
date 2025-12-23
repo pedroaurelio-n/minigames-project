@@ -5,7 +5,7 @@ public class TapMovingMiniGameModel : BaseMiniGameModel, ITapMovingMinigameModel
 {
     public event Action<ITappable, Vector2> OnTapPerformed;
 
-    public int BaseObjectsToSpawn => _settings.BaseObjectCount.Value;
+    public int BaseObjectsToSpawn => _Settings.BaseObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.TapMoving;
     public override TouchInputType InputTypes => TouchInputType.Tap;
@@ -14,9 +14,10 @@ public class TapMovingMiniGameModel : BaseMiniGameModel, ITapMovingMinigameModel
 
     public TapMovingMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         IPressModel pressModel
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _pressModel = pressModel;
     }

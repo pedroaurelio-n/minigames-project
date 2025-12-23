@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class MiniGameManagerModel : IMiniGameManagerModel
 {
+    public event MiniGameEndedHandler OnMiniGameEnded;
     public event Action OnMiniGameChanged;
-    public event Action OnSingleMiniGameEnded;
+    public event Action OnSingleMiniGameChange;
     
     public IMiniGameModel ActiveMiniGame => _activeMiniGame;
     public MiniGameType ActiveMiniGameType => _activeMiniGame.Type;
@@ -34,7 +35,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
         _playerInfoModel = playerInfoModel;
         _gameSessionInfoProvider = gameSessionInfoProvider;
         _changeCoroutine = new UniqueCoroutine(coroutineRunner);
-        _waitForChange = new WaitForSeconds(miniGameSystemSettings.NextMiniGameDelay);
+        _waitForChange = new WaitForSeconds(miniGameSystemSettings.TimingSettings.NextWaitDuration);
     }
 
     public void Initialize ()
@@ -75,6 +76,8 @@ public class MiniGameManagerModel : IMiniGameManagerModel
             _playerInfoModel.ModifyScore(1);
         else
             _playerInfoModel.ModifyLives(-1);
+        
+        OnMiniGameEnded?.Invoke(hasCompleted, _gameSessionInfoProvider.HasStartedGameRun);
     }
 
     void ModifyMiniGameData (bool hasCompleted)
@@ -88,15 +91,6 @@ public class MiniGameManagerModel : IMiniGameManagerModel
         chosenDict[stringId]++;
     }
 
-    void ModifyDefeatsData ()
-    {
-        if (!_gameSessionInfoProvider.HasStartedGameRun)
-            return;
-        
-        _data.DefeatsInMiniGame.TryAdd(_activeMiniGame.StringId, 0);
-        _data.DefeatsInMiniGame[_activeMiniGame.StringId]++;
-    }
-
     IEnumerator ChangeCoroutine ()
     {
         yield return _waitForChange;
@@ -104,7 +98,7 @@ public class MiniGameManagerModel : IMiniGameManagerModel
         if (_gameSessionInfoProvider.HasStartedGameRun)
             OnMiniGameChanged?.Invoke();
         else
-            OnSingleMiniGameEnded?.Invoke();
+            OnSingleMiniGameChange?.Invoke();
     }
 
     public void Dispose()

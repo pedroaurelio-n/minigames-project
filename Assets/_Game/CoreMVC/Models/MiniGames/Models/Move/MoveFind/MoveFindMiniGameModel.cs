@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MoveFindMiniGameModel : BaseMiniGameModel, IMoveFindMiniGameModel
 {
-    public int BaseStartObjects => _settings.BaseObjectCount.Value;
+    public int BaseStartObjects => _Settings.BaseObjectCount.Value;
 
     public override MiniGameType Type => MiniGameType.MoveFind;
     public override TouchInputType InputTypes => TouchInputType.TwoPointMove | TouchInputType.TwoPointZoom;
@@ -13,11 +13,12 @@ public class MoveFindMiniGameModel : BaseMiniGameModel, IMoveFindMiniGameModel
     
     public MoveFindMiniGameModel(
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraMoveModel cameraMoveModel,
         ITouchInputModel touchInputModel,
         MoveFindMiniGameOptions options
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _cameraMoveModel = cameraMoveModel;
         _touchInputModel = touchInputModel;

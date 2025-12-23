@@ -1,6 +1,6 @@
 ﻿public class DragSortMiniGameModel : BaseMiniGameModel, IDragSortMiniGameModel
 {
-    public int BaseStartObjects => _settings.BaseObjectCount.Value;
+    public int BaseStartObjects => _Settings.BaseObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.DragSort;
     public override TouchInputType InputTypes => TouchInputType.Drag;
@@ -9,9 +9,10 @@
     
     public DragSortMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         IDragModel dragModel
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _dragModel = dragModel;
     }

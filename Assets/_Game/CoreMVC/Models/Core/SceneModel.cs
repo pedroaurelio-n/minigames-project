@@ -7,6 +7,7 @@ public class SceneModel : ISceneModel
     public ICameraMoveModel CameraMoveModel { get; }
     
     public IMiniGameSceneChangerModel MiniGameSceneChangerModel { get; }
+    public IMiniGameDifficultyModel MiniGameDifficultyModel { get; }
     public IMiniGameTimerModel MiniGameTimerModel { get; }
     public IMiniGameModelFactory MiniGameModelFactory { get; }
     public IMiniGameManagerModel MiniGameManagerModel { get; }
@@ -19,6 +20,7 @@ public class SceneModel : ISceneModel
         IPressModel pressModel,
         ICameraMoveModel cameraMoveModel,
         IMiniGameSceneChangerModel miniGameSceneChangerModel,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         IMiniGameModelFactory miniGameModelFactory,
         IMiniGameManagerModel miniGameManagerModel,
@@ -31,6 +33,7 @@ public class SceneModel : ISceneModel
         PressModel = pressModel;
         CameraMoveModel = cameraMoveModel;
         MiniGameSceneChangerModel = miniGameSceneChangerModel;
+        MiniGameDifficultyModel = miniGameDifficultyModel;
         MiniGameTimerModel = miniGameTimerModel;
         MiniGameModelFactory = miniGameModelFactory;
         MiniGameManagerModel = miniGameManagerModel;
@@ -43,6 +46,7 @@ public class SceneModel : ISceneModel
         DragModel.Initialize();
         PressModel.Initialize();
         
+        MiniGameDifficultyModel.Initialize();
         MiniGameTimerModel.Initialize();
         MiniGameManagerModel.Initialize();
         MiniGameSelectorModel.Initialize();

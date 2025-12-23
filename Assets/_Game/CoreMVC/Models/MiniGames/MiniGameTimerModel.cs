@@ -6,9 +6,10 @@ public class MiniGameTimerModel : IMiniGameTimerModel
 {
     public event Action OnTimerStarted;
     public event Action OnTimerEnded;
-    public event Action<float, float> OnTimerChanged;
+    public event TimerChangeHandler OnTimerChanged;
 
     readonly IMiniGameSystemSettings _settings;
+    readonly IMiniGameDifficultyModel _miniGameDifficultyModel;
     readonly UniqueCoroutine _timerCoroutine;
     readonly WaitForSeconds _waitForEnd;
 
@@ -17,12 +18,14 @@ public class MiniGameTimerModel : IMiniGameTimerModel
 
     public MiniGameTimerModel (
         IMiniGameSystemSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         ICoroutineRunner coroutineRunner
     )
     {
         _settings = settings;
+        _miniGameDifficultyModel = miniGameDifficultyModel;
         _timerCoroutine = new UniqueCoroutine(coroutineRunner);
-        _waitForEnd = new WaitForSeconds(_settings.EndGraceDuration);
+        _waitForEnd = new WaitForSeconds(_settings.TimingSettings.EndGraceDuration);
     }
     
     public void Initialize ()
@@ -39,12 +42,16 @@ public class MiniGameTimerModel : IMiniGameTimerModel
 
     IEnumerator TimerCoroutine ()
     {
-        _timer = _settings.BaseDuration;
+        float maxTimer = Mathf.Max(
+            _settings.TimingSettings.MinTimerDuration,
+            _settings.TimingSettings.BaseDuration - _miniGameDifficultyModel.CurrentTimerDecrease
+        );
+        _timer = maxTimer;
 
         while (_timer > 0f)
         {
             _timer -= Time.deltaTime;
-            OnTimerChanged?.Invoke(_timer, _settings.BaseDuration);
+            OnTimerChanged?.Invoke(_timer, maxTimer);
             yield return null;
         }
         

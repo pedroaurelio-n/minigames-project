@@ -47,8 +47,9 @@ public class SceneModelInstaller : IInstaller
     
     public void Install (IContainerBuilder builder)
     {
-        builder.RegisterInstance(_gameSessionData.MetadataData);
         builder.RegisterInstance(_gameSessionData.MiniGameData);
+        builder.RegisterInstance(_gameSessionData.MiniGameCurrentRunData);
+        builder.RegisterInstance(_gameSessionData.MetadataData);
         builder.RegisterInstance(_persistenceModel);
         
         builder.RegisterInstance(_loadingManager);
@@ -101,6 +102,7 @@ public class SceneModelInstaller : IInstaller
         builder.Register<IMiniGameSceneChangerModel, MiniGameSceneChangerModel>(Lifetime.Singleton);
 
         builder.Register<IMiniGameStatisticsModel, MiniGameStatisticsModel>(Lifetime.Singleton);
+        builder.Register<IMiniGameDifficultyModel, MiniGameDifficultyModel>(Lifetime.Singleton);
         builder.Register<IMiniGameTimerModel, MiniGameTimerModel>(Lifetime.Singleton);
         builder.Register<IMiniGameModelFactory, MiniGameModelFactory>(Lifetime.Singleton);
         builder.Register<IMiniGameManagerModel, MiniGameManagerModel>(Lifetime.Singleton);

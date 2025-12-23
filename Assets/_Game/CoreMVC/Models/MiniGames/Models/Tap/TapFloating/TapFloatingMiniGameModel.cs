@@ -5,8 +5,8 @@ public class TapFloatingMiniGameModel : BaseMiniGameModel, ITapFloatingMiniGameM
 {
     public event Action<ITappable, Vector2> OnTapPerformed;
 
-    public int BaseTargetsToSpawn => _settings.BaseObjectiveMilestone.Value;
-    public int BaseObjectsToSpawn => _settings.BaseObjectCount.Value;
+    public int BaseTargetsToSpawn => _Settings.BaseObjectiveMilestone.Value;
+    public int BaseObjectsToSpawn => _Settings.BaseObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.TapFloating;
     public override TouchInputType InputTypes => TouchInputType.Tap;
@@ -15,9 +15,10 @@ public class TapFloatingMiniGameModel : BaseMiniGameModel, ITapFloatingMiniGameM
 
     public TapFloatingMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         IPressModel pressModel
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _pressModel = pressModel;
     }

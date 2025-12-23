@@ -21,18 +21,18 @@
     protected override void AddListeners ()
     {
         _miniGameManagerModel.OnMiniGameChanged += HandleMiniGameChanged;
-        _miniGameManagerModel.OnSingleMiniGameEnded += HandleSingleMiniGameEnded;
+        _miniGameManagerModel.OnSingleMiniGameChange += HandleSingleMiniGameChange;
     }
     
     protected override void RemoveListeners ()
     {
         _miniGameManagerModel.OnMiniGameChanged -= HandleMiniGameChanged;
-        _miniGameManagerModel.OnSingleMiniGameEnded -= HandleSingleMiniGameEnded;
+        _miniGameManagerModel.OnSingleMiniGameChange -= HandleSingleMiniGameChange;
     }
     
     void HandleMiniGameChanged () => ChangeToRandomMiniGame();
     
-    void HandleSingleMiniGameEnded () => GoToMainMenu();
+    void HandleSingleMiniGameChange () => GoToMainMenu();
     
     void ChangeToRandomMiniGame ()
     {

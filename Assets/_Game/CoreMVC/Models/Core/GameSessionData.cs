@@ -5,24 +5,30 @@ public class GameSessionData
 {
     //TODO pedro: create scene specific data classes
     [JsonProperty]
-    public MetadataData MetadataData { get; set; }
+    public MiniGameData MiniGameData { get; set; }
     
     [JsonProperty]
-    public MiniGameData MiniGameData { get; set; }
+    public MiniGameCurrentRunData MiniGameCurrentRunData { get; set; }
+    
+    [JsonProperty]
+    public MetadataData MetadataData { get; set; }
 
     public GameSessionData ()
     {
-        MetadataData = new MetadataData();
         MiniGameData = new MiniGameData();
+        MiniGameCurrentRunData = new MiniGameCurrentRunData();
+        MetadataData = new MetadataData();
     }
     
     [JsonConstructor]
     public GameSessionData (
-        MetadataData metadataData,
-        MiniGameData miniGameData
+        MiniGameData miniGameData,
+        MiniGameCurrentRunData miniGameCurrentRunData,
+        MetadataData metadataData
     )
     {
-        MetadataData = metadataData ?? new MetadataData();
         MiniGameData = miniGameData ?? new MiniGameData();
+        MiniGameCurrentRunData = miniGameCurrentRunData ?? new MiniGameCurrentRunData();
+        MetadataData = metadataData ?? new MetadataData();
     }
 }

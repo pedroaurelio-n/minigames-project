@@ -36,7 +36,17 @@ public static class SceneModelFactory
         );
         modelScope = parentScope.CreateChild(installer, "ModelScope");
 
+        ResolveUnorderedDependencies(modelScope.Container);
+
         ISceneModel sceneModel = modelScope.Container.Resolve<ISceneModel>();
         return sceneModel;
+    }
+
+    static void ResolveUnorderedDependencies (IObjectResolver container)
+    {
+        IMiniGameDifficultyModel miniGameDifficultyModel = container.Resolve<IMiniGameDifficultyModel>();
+        IMiniGameManagerModel miniGameManagerModel = container.Resolve<IMiniGameManagerModel>();
+        
+        miniGameDifficultyModel.UpdateDependencies(miniGameManagerModel);
     }
 }

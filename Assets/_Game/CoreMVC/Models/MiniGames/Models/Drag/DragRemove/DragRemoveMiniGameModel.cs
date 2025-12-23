@@ -1,6 +1,6 @@
 ﻿public class DragRemoveMiniGameModel : BaseMiniGameModel, IDragRemoveMiniGameModel
 {
-    public int BaseStartObjects => _settings.BaseObjectCount.Value;
+    public int BaseStartObjects => _Settings.BaseObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.DragRemove;
     public override TouchInputType InputTypes => TouchInputType.Drag;
@@ -10,9 +10,10 @@
     
     public DragRemoveMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         IDragModel dragModel
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _dragModel = dragModel;
     }

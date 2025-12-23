@@ -62,9 +62,12 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
         _persistenceModel = new PersistenceModel(_gameVersion, _persistence, _dateTimeProvider);
         _persistence.InitializeData(_persistenceModel.Load(), _gameVersion, _persistenceModel.Flush);
 
+        //TODO pedro: these access are getting weird
         PlayerInfoModel = new PlayerInfoModel(
             _persistence.Data.MiniGameData,
+            _persistence.Data.MiniGameCurrentRunData,
             _settingsManager.PlayerSettings.Instance,
+            _settingsManager.MiniGameSystemSettings.Instance,
             this
         );
 

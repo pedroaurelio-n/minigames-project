@@ -9,23 +9,28 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     public abstract MiniGameType Type { get; }
     public abstract TouchInputType InputTypes { get; }
     
-    public string StringId => _settings.StringId;
-    public string Instructions => _settings.Instructions;
+    public string StringId => _Settings.StringId;
+    public string Instructions => _Settings.Instructions;
     public bool HasCompleted { get; private set; }
     public bool IsActive { get; private set; }
 
-    protected readonly IMiniGameSettings _settings;
+    protected float CurrentDifficulty => _miniGameDifficultyModel.CurrentDifficultyLevel;
 
+    protected readonly IMiniGameSettings _Settings;
+    
+    readonly IMiniGameDifficultyModel _miniGameDifficultyModel;
     readonly IMiniGameTimerModel _miniGameTimerModel;
 
     bool _forceFailed;
 
     public BaseMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel
     )
     {
-        _settings = settings;
+        _Settings = settings;
+        _miniGameDifficultyModel = miniGameDifficultyModel;
         _miniGameTimerModel = miniGameTimerModel;
     }
 

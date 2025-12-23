@@ -13,10 +13,11 @@ public class SwipeThrowMiniGameModel : BaseMiniGameModel, ISwipeThrowMiniGameMod
     
     public SwipeThrowMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider,
         ITouchInputModel touchInputModel
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _cameraProvider = cameraProvider;
         _touchInputModel = touchInputModel;

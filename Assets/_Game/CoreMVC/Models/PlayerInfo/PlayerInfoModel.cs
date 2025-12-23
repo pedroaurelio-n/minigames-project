@@ -5,21 +5,27 @@ public class PlayerInfoModel : IPlayerInfoModel
     public bool HasLivesRemaining => CurrentLives > 0;
     public int CurrentScore { get; private set; }
 
-    readonly MiniGameData _data;
-    readonly IPlayerSettings _settings;
+    readonly MiniGameData _miniGameData;
+    readonly MiniGameCurrentRunData _miniGameCurrentRunData;
+    readonly IPlayerSettings _playerSettings;
+    readonly IMiniGameSystemSettings _miniGameSystemSettings;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
 
     int _previousLives;
     int _previousScore;
 
     public PlayerInfoModel (
-        MiniGameData data,
-        IPlayerSettings settings,
+        MiniGameData miniGameData,
+        MiniGameCurrentRunData miniGameCurrentRunData,
+        IPlayerSettings playerSettings,
+        IMiniGameSystemSettings miniGameSystemSettings,
         IGameSessionInfoProvider gameSessionInfoProvider
     )
     {
-        _data = data;
-        _settings = settings;
+        _miniGameData = miniGameData;
+        _miniGameCurrentRunData = miniGameCurrentRunData;
+        _playerSettings = playerSettings;
+        _miniGameSystemSettings = miniGameSystemSettings;
         _gameSessionInfoProvider = gameSessionInfoProvider;
     }
 
@@ -28,8 +34,11 @@ public class PlayerInfoModel : IPlayerInfoModel
         _previousLives = 0;
         _previousScore = 0;
         
-        CurrentLives = _settings.StartingLives;
+        CurrentLives = _playerSettings.StartingLives;
         CurrentScore = 0;
+        
+        //TODO pedro: maybe isolate in a different (context) model
+        _miniGameCurrentRunData.Reset();
     }
 
     public void ModifyLives (int amount)
@@ -49,13 +58,13 @@ public class PlayerInfoModel : IPlayerInfoModel
         _previousScore = CurrentScore;
         CurrentScore += amount;
         
-        if (CurrentScore > _data.HighScore)
-            _data.HighScore = CurrentScore;
+        if (CurrentScore > _miniGameData.HighScore)
+            _miniGameData.HighScore = CurrentScore;
     }
 
     public int GetLivesChangeType ()
     {
-        int changeType = _previousLives == CurrentLives || CurrentLives == _settings.StartingLives
+        int changeType = _previousLives == CurrentLives || CurrentLives == _playerSettings.StartingLives
             ? 0
             : _previousLives < CurrentLives
                 ? 1

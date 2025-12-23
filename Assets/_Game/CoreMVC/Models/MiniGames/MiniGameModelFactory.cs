@@ -3,6 +3,7 @@
 public class MiniGameModelFactory : IMiniGameModelFactory
 {
     readonly IMiniGameSettings _miniGameSettings;
+    readonly IMiniGameDifficultyModel _miniGameDifficultyModel;
     readonly IMiniGameTimerModel _miniGameTimerModel;
     readonly ICameraProvider _cameraProvider;
     readonly ICameraMoveModel _cameraMoveModel;
@@ -13,6 +14,7 @@ public class MiniGameModelFactory : IMiniGameModelFactory
 
     public MiniGameModelFactory (
         IMiniGameSettings miniGameSettings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         ICameraProvider cameraProvider,
         ICameraMoveModel cameraMoveModel,
@@ -23,6 +25,7 @@ public class MiniGameModelFactory : IMiniGameModelFactory
     )
     {
         _miniGameSettings = miniGameSettings;
+        _miniGameDifficultyModel = miniGameDifficultyModel;
         _miniGameTimerModel = miniGameTimerModel;
         _cameraProvider = cameraProvider;
         _cameraMoveModel = cameraMoveModel;
@@ -39,44 +42,52 @@ public class MiniGameModelFactory : IMiniGameModelFactory
             case MiniGameType.ButtonMash:
                 return new ButtonMashMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel
                 );
             case MiniGameType.ButtonStopwatch:
                 return new ButtonStopwatchMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel
                 );
             case MiniGameType.DragSort:
                 return new DragSortMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _dragModel
                 );
             case MiniGameType.DragRemove:
                 return new DragRemoveMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _dragModel
                 );
             case MiniGameType.JoystickRotate:
                 return new JoystickRotateMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel
                 );
             case MiniGameType.JoystickAim:
                 return new JoystickAimMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel
                 );
             case MiniGameType.LongPressBombs:
                 return new LongPressBombsMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _pressModel
                 );
             case MiniGameType.MoveFind:
                 return new MoveFindMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _cameraMoveModel,
                     _touchInputModel,
@@ -85,6 +96,7 @@ public class MiniGameModelFactory : IMiniGameModelFactory
             case MiniGameType.SwipeThrow:
                 return new SwipeThrowMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _cameraProvider,
                     _touchInputModel
@@ -92,18 +104,21 @@ public class MiniGameModelFactory : IMiniGameModelFactory
             case MiniGameType.TapDestroy:
                 return new TapDestroyMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _pressModel
                 );
             case MiniGameType.TapFloating:
                 return new TapFloatingMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _pressModel
                 );
             case MiniGameType.TapMoving:
                 return new TapMovingMiniGameModel(
                     _miniGameSettings,
+                    _miniGameDifficultyModel,
                     _miniGameTimerModel,
                     _pressModel
                 );

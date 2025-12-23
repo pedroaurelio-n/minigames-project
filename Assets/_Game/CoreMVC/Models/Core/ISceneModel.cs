@@ -8,6 +8,7 @@ public interface ISceneModel : IDisposable
     IPressModel PressModel { get; }
     ICameraMoveModel CameraMoveModel { get; }
     IMiniGameSceneChangerModel MiniGameSceneChangerModel { get; }
+    IMiniGameDifficultyModel MiniGameDifficultyModel { get; }
     IMiniGameTimerModel MiniGameTimerModel { get; }
     IMiniGameModelFactory MiniGameModelFactory { get; }
     IMiniGameManagerModel MiniGameManagerModel { get; }

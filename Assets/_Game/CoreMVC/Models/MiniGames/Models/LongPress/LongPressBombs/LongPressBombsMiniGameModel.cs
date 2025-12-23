@@ -7,7 +7,7 @@ public class LongPressBombsMiniGameModel : BaseMiniGameModel, ILongPressBombsMin
     public event Action<ILongPressable, Vector2> OnLongPressCancelled;
     public event Action<ILongPressable, Vector2, float> OnLongPressEnded;
 
-    public int BaseObjectsToSpawn => _settings.BaseObjectCount.Value;
+    public int BaseObjectsToSpawn => _Settings.BaseObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.LongPressBombs;
     public override TouchInputType InputTypes => TouchInputType.LongPress;
@@ -16,9 +16,10 @@ public class LongPressBombsMiniGameModel : BaseMiniGameModel, ILongPressBombsMin
 
     public LongPressBombsMiniGameModel (
         IMiniGameSettings settings,
+        IMiniGameDifficultyModel miniGameDifficultyModel,
         IMiniGameTimerModel miniGameTimerModel,
         IPressModel pressModel
-    ) : base(settings, miniGameTimerModel)
+    ) : base(settings, miniGameDifficultyModel, miniGameTimerModel)
     {
         _pressModel = pressModel;
     }

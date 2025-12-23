@@ -1,7 +1,21 @@
 ﻿{
-  "baseDuration": 10,
-  "endGraceDuration": 0.5,
-  "nextMiniGameDelay": 1.5,
+  "timingSettings": {
+    "baseDuration": 10,
+    "minTimerDuration": 4,
+    "endGraceDuration": 0.5,
+    "nextWaitDuration": 1.5
+  },
+  "difficultySettings": {
+    "maxDifficultyLevelIndex": 5,
+    "miniGameEvaluationRange": 6,
+    "winAmountToIncreaseLevel": 5,
+    "timerDecreasePerStep": 0.5,
+    "timerDecreaseStep": 5,
+    "enableDifficultyVariance": true,
+    "difficultyVarianceChance": 0.25,
+    "dropLevelOnLoss": true,
+    "lossAmountToDropLevel": 2
+  },
   "randomOrder": true,
   "canRepeatPrevious": false,
   "activeMiniGames": [
