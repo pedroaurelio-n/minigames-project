@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameGlobalOptions
   m_EditorClassIdentifier: 
   <DebugOptions>k__BackingField:
-    <EnableNormalLogs>k__BackingField: 0
+    <EnableNormalLogs>k__BackingField: 1
     <EnableWarnings>k__BackingField: 1
     <EnableErrors>k__BackingField: 1
     <DebugMode>k__BackingField: 0

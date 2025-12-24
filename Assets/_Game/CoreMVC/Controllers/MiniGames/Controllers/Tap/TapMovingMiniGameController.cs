@@ -82,6 +82,7 @@ public class TapMovingMiniGameController : BaseMiniGameController
                 new Vector2(_options.SpawnRange.x, _options.SpawnRange.y)
             );
 
+            //TODO pedro: use speed modifier to increase speed in higher difficulties (also check other minigames)
             Vector2 randomDirection = _randomProvider.InsideCircle *
                                       _randomProvider.Range(_options.SpeedRange.x, _options.SpeedRange.y);
             float randomDelay = _randomProvider.Range(_options.DelayRange.x, _options.DelayRange.y);

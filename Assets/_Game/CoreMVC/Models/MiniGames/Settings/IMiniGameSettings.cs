@@ -1,9 +1,10 @@
-﻿public interface IMiniGameSettings
+﻿using System.Collections.Generic;
+
+public interface IMiniGameSettings
 {
     string Name { get; }
     string StringId { get; }
     bool HasCustomScene { get; }
     string Instructions { get; }
-    int? BaseObjectCount { get; }
-    int? BaseObjectiveMilestone { get; }
+    IReadOnlyList<IMiniGameLevelSettings> LevelSettings { get; }
 }

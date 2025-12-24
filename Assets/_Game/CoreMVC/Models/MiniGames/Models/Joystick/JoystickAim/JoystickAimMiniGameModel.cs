@@ -1,6 +1,6 @@
 ﻿public class JoystickAimMiniGameModel : BaseMiniGameModel, IJoystickAimMiniGameModel
 {
-    public int BaseObjectsToSpawn => _Settings.BaseObjectCount.Value;
+    public int BaseObjectsToSpawn => CurrentLevelSettings.MilestoneCount.Value;
     
     public override MiniGameType Type => MiniGameType.JoystickAim;
     public override TouchInputType InputTypes => TouchInputType.None;

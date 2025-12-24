@@ -2,5 +2,18 @@
   "name": "Remove Clutter",
   "stringId": "DragRemove",
   "instructions": "Drag the clutter away from the objective!",
-  "baseObjectCount": 8
+  "levelSettings": [
+    {
+      "level": 1,
+      "objectCount": 5
+    },
+    {
+      "level": 3,
+      "objectCount": 8
+    },
+    {
+      "level": 5,
+      "objectCount": 13
+    }
+  ]
 }

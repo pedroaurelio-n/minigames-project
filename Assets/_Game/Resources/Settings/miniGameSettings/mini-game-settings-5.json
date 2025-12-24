@@ -1,5 +1,18 @@
 ﻿{
   "name": "Joystick Rotate",
   "stringId": "JoystickRotate",
-  "instructions": "Rotate the object until you find the right angle!"
+  "instructions": "Rotate the object until you find the right angle!",
+  "levelSettings": [
+    {
+      "level": 1
+    },
+    {
+      "level": 3,
+      "speedModifier": 1.15
+    },
+    {
+      "level": 5,
+      "speedModifier": 1.3
+    }
+  ]
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MoveFindMiniGameModel : BaseMiniGameModel, IMoveFindMiniGameModel
 {
-    public int BaseStartObjects => _Settings.BaseObjectCount.Value;
+    public int BaseStartObjects => CurrentLevelSettings.ObjectCount.Value;
 
     public override MiniGameType Type => MiniGameType.MoveFind;
     public override TouchInputType InputTypes => TouchInputType.TwoPointMove | TouchInputType.TwoPointZoom;

@@ -2,5 +2,18 @@
   "name": "Drag Objects",
   "stringId": "DragSort",
   "instructions": "Move the objects to their colored boxes!",
-  "baseObjectCount": 3
+  "levelSettings": [
+    {
+      "level": 1,
+      "milestoneCount": 2
+    },
+    {
+      "level": 3,
+      "milestoneCount": 3
+    },
+    {
+      "level": 5,
+      "milestoneCount": 4
+    }
+  ]
 }

@@ -2,6 +2,21 @@
   "name": "Floating Objects",
   "stringId": "TapFloating",
   "instructions": "Tap only the floating balloons!",
-  "baseObjectCount": 5,
-  "baseObjectiveMilestone": 5
+  "levelSettings": [
+    {
+      "level": 1,
+      "objectCount": 3,
+      "milestoneCount": 4
+    },
+    {
+      "level": 3,
+      "objectCount": 6,
+      "milestoneCount": 5
+    },
+    {
+      "level": 5,
+      "objectCount": 9,
+      "milestoneCount": 7
+    }
+  ]
 }

@@ -2,5 +2,18 @@
   "name": "Find Object",
   "stringId": "MoveFind",
   "instructions": "Find the colored object to win!",
-  "baseObjectCount": 10
+  "levelSettings": [
+    {
+      "level": 1,
+      "objectCount": 7
+    },
+    {
+      "level": 3,
+      "objectCount": 10
+    },
+    {
+      "level": 5,
+      "objectCount": 15
+    }
+  ]
 }

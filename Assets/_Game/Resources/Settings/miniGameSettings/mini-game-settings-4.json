@@ -2,5 +2,18 @@
   "name": "Click Milestone",
   "stringId": "ButtonMash",
   "instructions": "Click until you reach the milestone!",
-  "baseObjectiveMilestone": 30
+  "levelSettings": [
+    {
+      "level": 1,
+      "milestoneCount": 20
+    },
+    {
+      "level": 3,
+      "milestoneCount": 30
+    },
+    {
+      "level": 5,
+      "milestoneCount": 40
+    }
+  ]
 }

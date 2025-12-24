@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class MiniGameSettings : IMiniGameSettings
@@ -16,10 +17,7 @@ public class MiniGameSettings : IMiniGameSettings
     public string Instructions { get; }
     
     [JsonProperty]
-    public int? BaseObjectCount { get; }
-    
-    [JsonProperty]
-    public int? BaseObjectiveMilestone { get; }
+    public IReadOnlyList<IMiniGameLevelSettings> LevelSettings { get; }
 
     [JsonConstructor]
     public MiniGameSettings (
@@ -27,15 +25,13 @@ public class MiniGameSettings : IMiniGameSettings
         string stringId,
         bool hasCustomScene,
         string instructions,
-        int? baseObjectCount,
-        int? baseObjectiveMilestone
+        MiniGameLevelSettings[] levelSettings
     )
     {
         Name = name;
         StringId = stringId;
         HasCustomScene = hasCustomScene;
         Instructions = instructions;
-        BaseObjectCount = baseObjectCount;
-        BaseObjectiveMilestone = baseObjectiveMilestone;
+        LevelSettings = levelSettings;
     }
 }

@@ -1,6 +1,6 @@
 ﻿public class DragSortMiniGameModel : BaseMiniGameModel, IDragSortMiniGameModel
 {
-    public int BaseStartObjects => _Settings.BaseObjectCount.Value;
+    public int BaseStartObjects => CurrentLevelSettings.MilestoneCount.Value;
     
     public override MiniGameType Type => MiniGameType.DragSort;
     public override TouchInputType InputTypes => TouchInputType.Drag;

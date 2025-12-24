@@ -2,5 +2,18 @@
   "name": "Tap Objects",
   "stringId": "TapDestroy",
   "instructions": "Tap all objects to win!",
-  "baseObjectCount": 5
+  "levelSettings": [
+    {
+      "level": 1,
+      "milestoneCount": 4
+    },
+    {
+      "level": 3,
+      "milestoneCount": 7
+    },
+    {
+      "level": 5,
+      "milestoneCount": 10
+    }
+  ]
 }

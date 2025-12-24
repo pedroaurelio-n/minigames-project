@@ -100,7 +100,8 @@ public class JoystickAimMiniGameController : BaseMiniGameController
         float currentY = _sceneView.RotatingObject.eulerAngles.y;
         
         float angleDiff = Mathf.DeltaAngle(currentY, targetInputAngle);
-        float step = _options.RotationSpeed * Time.deltaTime;
+        float modifier = MiniGameModel.CurrentLevelSettings.SpeedModifier ?? 1;
+        float step = _options.RotationSpeed * modifier * Time.deltaTime;
 
         float newY = currentY + Mathf.Clamp(angleDiff, -step, step);
 
@@ -135,7 +136,8 @@ public class JoystickAimMiniGameController : BaseMiniGameController
             MiniGameUIController.UIView.UpdateJoystick();
             
             _shootTimer += Time.deltaTime;
-            if (_shootTimer >= _options.ShootDelay)
+            float modifier = 1 / MiniGameModel.CurrentLevelSettings.RateModifier ?? 1;
+            if (_shootTimer >= _options.ShootDelay * modifier)
             {
                 Shoot();
                 _shootTimer = 0f;
@@ -154,7 +156,8 @@ public class JoystickAimMiniGameController : BaseMiniGameController
         forwardDirection.Normalize();
         
         _projectileViews.Add(projectile);
-        projectile.Setup(new Vector3(forwardDirection.x, 0f, forwardDirection.z) * _options.ShootSpeed);
+        float modifier = MiniGameModel.CurrentLevelSettings.SpeedModifier ?? 1;
+        projectile.Setup(_options.ShootSpeed * modifier * new Vector3(forwardDirection.x, 0f, forwardDirection.z));
     }
 
     public override void Dispose ()

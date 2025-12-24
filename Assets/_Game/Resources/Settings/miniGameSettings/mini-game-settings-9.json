@@ -2,5 +2,18 @@
   "name": "Defuse Bombs",
   "stringId": "LongPressBombs",
   "instructions": "Hold the bombs until they defuse!",
-  "baseObjectCount": 3
+  "levelSettings": [
+    {
+      "level": 1,
+      "milestoneCount": 1
+    },
+    {
+      "level": 3,
+      "milestoneCount": 3
+    },
+    {
+      "level": 5,
+      "milestoneCount": 4
+    }
+  ]
 }

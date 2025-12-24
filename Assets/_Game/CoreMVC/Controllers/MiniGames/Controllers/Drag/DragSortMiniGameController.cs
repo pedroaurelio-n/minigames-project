@@ -121,6 +121,7 @@ public class DragSortMiniGameController : BaseMiniGameController
 
     void HandleDraggableEnter (IDraggable draggable, DraggableContainerView container)
     {
+        //TODO pedro: check for physics differences between editor and build
         DraggableObjectView obj = draggable as DraggableObjectView;
         if (obj.Color != container.Color)
             return;

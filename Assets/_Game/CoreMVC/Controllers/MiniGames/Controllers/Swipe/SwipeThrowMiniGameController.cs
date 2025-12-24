@@ -103,6 +103,7 @@ public class SwipeThrowMiniGameController : BaseMiniGameController
 
     void CreateAndThrowObject (Vector3 rawDirection, Vector3 forwardDirection)
     {
+        //TODO pedro: check for physics differences between editor and build
         Vector3 adjustedRawDirection = (rawDirection * _options.DirectionWeight) / Screen.dpi;
         Vector3 adjustedForwardDirection = forwardDirection * _options.ForwardWeight;
         Vector3 finalDirection = adjustedForwardDirection + adjustedRawDirection;

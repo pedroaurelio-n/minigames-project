@@ -12,6 +12,7 @@ public interface IMiniGameModel : IDisposable
     string Instructions { get; }
     bool IsActive { get; }
     bool HasCompleted { get; }
+    IMiniGameLevelSettings CurrentLevelSettings { get; }
 
     void Initialize ();
     void LateInitialize ();

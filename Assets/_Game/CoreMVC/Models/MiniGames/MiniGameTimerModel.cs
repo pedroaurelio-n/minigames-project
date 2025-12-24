@@ -46,6 +46,8 @@ public class MiniGameTimerModel : IMiniGameTimerModel
             _settings.TimingSettings.MinTimerDuration,
             _settings.TimingSettings.BaseDuration - _miniGameDifficultyModel.CurrentTimerDecrease
         );
+        maxTimer *= _miniGameDifficultyModel.CurrentTimerModifier;
+        
         _timer = maxTimer;
 
         while (_timer > 0f)

@@ -5,8 +5,8 @@ public class TapFloatingMiniGameModel : BaseMiniGameModel, ITapFloatingMiniGameM
 {
     public event Action<ITappable, Vector2> OnTapPerformed;
 
-    public int BaseTargetsToSpawn => _Settings.BaseObjectiveMilestone.Value;
-    public int BaseObjectsToSpawn => _Settings.BaseObjectCount.Value;
+    public int BaseTargetsToSpawn => CurrentLevelSettings.MilestoneCount.Value;
+    public int BaseObjectsToSpawn => CurrentLevelSettings.ObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.TapFloating;
     public override TouchInputType InputTypes => TouchInputType.Tap;

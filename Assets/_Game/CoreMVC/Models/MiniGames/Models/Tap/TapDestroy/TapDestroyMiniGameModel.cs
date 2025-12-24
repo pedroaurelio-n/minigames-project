@@ -5,7 +5,7 @@ public class TapDestroyMiniGameModel : BaseMiniGameModel, ITapDestroyMiniGameMod
 {
     public event Action<ITappable, Vector2> OnTapPerformed;
 
-    public int BaseObjectsToSpawn => _Settings.BaseObjectCount.Value;
+    public int BaseObjectsToSpawn => CurrentLevelSettings.MilestoneCount.Value;
     
     public override MiniGameType Type => MiniGameType.TapDestroy;
     public override TouchInputType InputTypes => TouchInputType.Tap;

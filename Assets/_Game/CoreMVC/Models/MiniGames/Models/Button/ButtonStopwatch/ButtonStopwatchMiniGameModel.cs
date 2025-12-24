@@ -1,6 +1,6 @@
 ﻿public class ButtonStopwatchMiniGameModel : BaseMiniGameModel, IButtonStopwatchMiniGameModel
 {
-    public int MaxTries => _Settings.BaseObjectiveMilestone.Value;
+    public int MaxTries => CurrentLevelSettings.ObjectCount.Value;
     
     public override MiniGameType Type => MiniGameType.ButtonStopwatch;
     public override TouchInputType InputTypes => TouchInputType.None;

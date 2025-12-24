@@ -2,5 +2,18 @@
   "name": "Stop Watch",
   "stringId": "ButtonStopwatch",
   "instructions": "Try to click on full seconds!",
-  "baseObjectiveMilestone": 3
+  "levelSettings": [
+    {
+      "level": 1,
+      "objectCount": 5
+    },
+    {
+      "level": 3,
+      "objectCount": 4
+    },
+    {
+      "level": 5,
+      "objectCount": 3
+    }
+  ]
 }

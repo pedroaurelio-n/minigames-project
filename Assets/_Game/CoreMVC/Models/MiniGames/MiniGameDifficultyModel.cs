@@ -6,6 +6,7 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
 {
     public int CurrentDifficultyLevel => _variantDifficulty ?? _data.CurrentDifficultyLevel;
     public float CurrentTimerDecrease { get; private set; }
+    public float CurrentTimerModifier => _miniGameManagerModel.ActiveMiniGame?.CurrentLevelSettings?.TimerModifier ?? 1;
     public bool IsVariantLevel => _variantDifficulty.HasValue;
     
     readonly MiniGameCurrentRunData _data;
@@ -76,6 +77,7 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
 
             _data.LastResults = new List<bool>();
             _data.CurrentDifficultyLevel = Mathf.Max(1, _data.CurrentDifficultyLevel - 1);
+            DebugUtils.Log($"Dynamic difficulty dropped to {CurrentDifficultyLevel}");
             return;
         }
         
@@ -89,6 +91,7 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
                 _settings.DifficultySettings.MaxDifficultyLevelIndex,
                 _data.CurrentDifficultyLevel + 1
             );
+            DebugUtils.Log($"Dynamic difficulty increased to {CurrentDifficultyLevel}");
         }
     }
 
@@ -107,6 +110,7 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
             _settings.DifficultySettings.MaxDifficultyLevelIndex,
             _data.CurrentDifficultyLevel + 1
         );
+        DebugUtils.Log($"Variant difficulty activated. Level will be played with difficulty {CurrentDifficultyLevel}");
     }
 
     void EvaluateTimerDecrease ()

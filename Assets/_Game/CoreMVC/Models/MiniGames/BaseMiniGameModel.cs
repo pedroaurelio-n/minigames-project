@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 public abstract class BaseMiniGameModel : IMiniGameModel
 {
@@ -9,15 +10,13 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     public abstract MiniGameType Type { get; }
     public abstract TouchInputType InputTypes { get; }
     
-    public string StringId => _Settings.StringId;
-    public string Instructions => _Settings.Instructions;
+    public string StringId => _settings.StringId;
+    public string Instructions => _settings.Instructions;
     public bool HasCompleted { get; private set; }
     public bool IsActive { get; private set; }
+    public IMiniGameLevelSettings CurrentLevelSettings { get; private set; }
 
-    protected float CurrentDifficulty => _miniGameDifficultyModel.CurrentDifficultyLevel;
-
-    protected readonly IMiniGameSettings _Settings;
-    
+    readonly IMiniGameSettings _settings;
     readonly IMiniGameDifficultyModel _miniGameDifficultyModel;
     readonly IMiniGameTimerModel _miniGameTimerModel;
 
@@ -29,7 +28,7 @@ public abstract class BaseMiniGameModel : IMiniGameModel
         IMiniGameTimerModel miniGameTimerModel
     )
     {
-        _Settings = settings;
+        _settings = settings;
         _miniGameDifficultyModel = miniGameDifficultyModel;
         _miniGameTimerModel = miniGameTimerModel;
     }
@@ -37,6 +36,7 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     public void Initialize ()
     {
         AddListeners();
+        UpdateCurrentDifficultySettings();
     }
 
     public void LateInitialize ()
@@ -71,6 +71,26 @@ public abstract class BaseMiniGameModel : IMiniGameModel
     protected virtual void RemoveListeners ()
     {
         _miniGameTimerModel.OnTimerEnded += HandleTimerEnded;
+    }
+
+    void UpdateCurrentDifficultySettings ()
+    {
+        if (_settings.LevelSettings == null)
+            return;
+        
+        int targetDifficulty = _miniGameDifficultyModel.CurrentDifficultyLevel;
+        
+        CurrentLevelSettings = _settings.LevelSettings
+            .Where(x => x.Level <= targetDifficulty)
+            .OrderByDescending(x => x.Level)
+            .FirstOrDefault();
+        
+        if (CurrentLevelSettings == null)
+        {
+            CurrentLevelSettings = _settings.LevelSettings
+                .OrderBy(x => x.Level)
+                .FirstOrDefault();
+        }
     }
 
     void HandleTimerEnded ()

@@ -80,7 +80,8 @@ public class JoystickRotateMiniGameController : BaseMiniGameController
         float currentY = _sceneView.RotatingObject.eulerAngles.y;
         
         float angleDiff = Mathf.DeltaAngle(currentY, targetInputAngle);
-        float step = _options.RotationSpeed * Time.deltaTime;
+        float modifier = MiniGameModel.CurrentLevelSettings.SpeedModifier ?? 1;
+        float step = _options.RotationSpeed * modifier * Time.deltaTime;
 
         float newY = currentY + Mathf.Clamp(angleDiff, -step, step);
 
