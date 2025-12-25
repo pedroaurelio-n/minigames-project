@@ -18,18 +18,89 @@
   },
   "randomOrder": true,
   "canRepeatPrevious": false,
-  "activeMiniGames": [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11
-  ]
+  "miniGameSkillPoolActive": true,
+  "poolSettings": {
+    "skillTierSettings": [
+      {
+        "tier": 0,
+        "activeMiniGames": [
+          0,
+          3,
+          4,
+          5,
+          11
+        ]
+      },
+      {
+        "tier": 1,
+        "activeMiniGames": [
+          6,
+          7,
+          8,
+          10
+        ]
+      },
+      {
+        "tier": 2,
+        "activeMiniGames": [
+          1,
+          2,
+          9
+        ]
+      }
+    ],
+    "probabilitySettings": [
+      {
+        "difficultyLevel": 1,
+        "chances": [
+          {
+            "tier": 0,
+            "chance": 0.6
+          },
+          {
+            "tier": 1,
+            "chance": 0.25
+          },
+          {
+            "tier": 2,
+            "chance": 0.15
+          }
+        ]
+      },
+      {
+        "difficultyLevel": 3,
+        "chances": [
+          {
+            "tier": 0,
+            "chance": 0.35
+          },
+          {
+            "tier": 1,
+            "chance": 0.35
+          },
+          {
+            "tier": 2,
+            "chance": 0.3
+          }
+        ]
+      },
+      {
+        "difficultyLevel": 5,
+        "chances": [
+          {
+            "tier": 0,
+            "chance": 0.2
+          },
+          {
+            "tier": 1,
+            "chance": 0.45
+          },
+          {
+            "tier": 2,
+            "chance": 0.35
+          }
+        ]
+      }
+    ]
+  }
 }

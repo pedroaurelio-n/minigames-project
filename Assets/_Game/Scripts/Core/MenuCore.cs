@@ -93,11 +93,17 @@ public class MenuCore : ICoreModule
         _cameraProvider.SetMainCamera(Camera.main);
 
         MenuModel = _menuScope.Container.Resolve<IMenuModel>();
+        MenuModel.Initialize();
         
         MenuController = _menuScope.Container.Resolve<MenuController>();
+        MenuController.Initialize();
         
         MenuUIController = _menuScope.Container.Resolve<MenuUIController>();
         MenuUIController.Initialize();
+        
+        MenuModel.LateInitialize();
+        MenuController.LateInitialize();
+        MenuUIController.LateInitialize();
 
         _fadeToBlackManager.FadeOut(null);
         OnInitializationComplete?.Invoke();

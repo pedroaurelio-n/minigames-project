@@ -18,6 +18,7 @@ public class MainMenuUIController : IDisposable
         PoolableViewFactory viewFactory,
         IMiniGameSystemSettings miniGameSystemSettings,
         IMiniGameSettingsAccessor miniGameSettingsAccessor,
+        IMiniGameSelectorModel miniGameSelectorModel,
         IMiniGameStatisticsModel miniGameStatisticsModel
     )
     {
@@ -40,7 +41,8 @@ public class MainMenuUIController : IDisposable
             fadeToBlackManager,
             viewFactory,
             miniGameSystemSettings,
-            miniGameSettingsAccessor       
+            miniGameSettingsAccessor,
+            miniGameSelectorModel
         );
         _statisticsPanelUIController = new StatisticsPanelUIController(
             model,

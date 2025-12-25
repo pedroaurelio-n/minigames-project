@@ -10,6 +10,7 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
     
     public string CurrentScene { get; private set; }
     public string CurrentSceneViewName { get; set; }
+    public ContextType CurrentContextType { get; private set; }
     //TODO pedro: maybe not expose set property
     public MiniGameType CurrentMiniGameType { get; set; }
     public MiniGameType NextMiniGameType { get; set; }
@@ -104,10 +105,17 @@ public class GameSession : IGameSessionInfoProvider, IDisposable
 
     void CreateCore ()
     {
+        //TODO pedro: maybe differentiate between menu and game contexts in another way
         if (CurrentScene.StartsWith(SceneManagerUtils.MiniGameScenePrefix))
+        {
+            CurrentContextType = ContextType.Game;
             CreateGameCore();
+        }
         else
+        {
+            CurrentContextType = ContextType.Menu;
             CreateMenuCore();
+        }
     }
 
     void CreateGameCore ()

@@ -11,6 +11,7 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
     
     readonly MiniGameCurrentRunData _data;
     readonly IMiniGameSystemSettings _settings;
+    readonly IGameSessionInfoProvider _gameSessionInfoProvider;
     readonly IRandomProvider _randomProvider;
     
     IMiniGameManagerModel _miniGameManagerModel;
@@ -20,11 +21,13 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
     public MiniGameDifficultyModel (
         MiniGameCurrentRunData data,
         IMiniGameSystemSettings settings,
+        IGameSessionInfoProvider gameSessionInfoProvider,
         IRandomProvider randomProvider
     )
     {
         _data = data;
         _settings = settings;
+        _gameSessionInfoProvider = gameSessionInfoProvider;
         _randomProvider = randomProvider;
     }
 
@@ -35,6 +38,9 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
 
     public void Initialize ()
     {
+        if (_gameSessionInfoProvider.CurrentContextType == ContextType.Menu)
+            return;
+        
         AddListeners();
         EvaluateTimerDecrease();
         EvaluateVariantDifficulty();
@@ -122,11 +128,15 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
 
     void AddListeners ()
     {
+        if (_miniGameManagerModel == null)
+            return;
         _miniGameManagerModel.OnMiniGameEnded += HandleMiniGameEnded;
     }
 
     void RemoveListeners ()
     {
+        if (_miniGameManagerModel == null)
+            return;
         _miniGameManagerModel.OnMiniGameEnded -= HandleMiniGameEnded;
     }
 

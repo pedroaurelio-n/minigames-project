@@ -1,4 +1,6 @@
-﻿public class MenuSceneChangerModel : BaseSceneChangerModel, IMenuSceneChangerModel
+﻿using System.Linq;
+
+public class MenuSceneChangerModel : BaseSceneChangerModel, IMenuSceneChangerModel
 {
     readonly IPlayerInfoModel _playerInfoModel;
     readonly IGameSessionInfoProvider _gameSessionInfoProvider;
@@ -26,8 +28,11 @@
     {
         _playerInfoModel.Reset();
         _gameSessionInfoProvider.HasStartedGameRun = true;
+
+        IMiniGameSkillTierSettings firstTierActiveMiniGames =
+            _miniGameSystemSettings.PoolSettings.SkillTierSettings.OrderBy(x => x.Tier).First();
         
-        MiniGameType randomType = _randomProvider.PickRandom(_miniGameSystemSettings.ActiveMiniGames);
+        MiniGameType randomType = _randomProvider.PickRandom(firstTierActiveMiniGames.ActiveMiniGames);
         _gameSessionInfoProvider.CurrentMiniGameType = randomType;
         
         ChangeToMinigameScene();

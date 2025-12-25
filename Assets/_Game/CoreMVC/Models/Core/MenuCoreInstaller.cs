@@ -59,8 +59,9 @@ public class MenuCoreInstaller : IInstaller
     
     public void Install (IContainerBuilder builder)
     {
-        builder.RegisterInstance(_gameSessionData.MetadataData);
         builder.RegisterInstance(_gameSessionData.MiniGameData);
+        builder.RegisterInstance(_gameSessionData.MiniGameCurrentRunData);
+        builder.RegisterInstance(_gameSessionData.MetadataData);
         builder.RegisterInstance(_persistenceModel);
         
         builder.RegisterInstance(_mainMenuView);
@@ -81,6 +82,8 @@ public class MenuCoreInstaller : IInstaller
         builder.RegisterInstance(_settingsManager.MiniGameSystemSettings.Instance);
         
         builder.Register<IMiniGameSettingsAccessor, MiniGameSettingsAccessor>(Lifetime.Singleton);
+        builder.Register<IMiniGameDifficultyModel, MiniGameDifficultyModel>(Lifetime.Singleton);
+        builder.Register<IMiniGameSelectorModel, MiniGameSelectorModel>(Lifetime.Singleton);
         
         builder.Register<IMenuSceneChangerModel, MenuSceneChangerModel>(Lifetime.Singleton);
         builder.Register<IMainMenuModel, MainMenuModel>(Lifetime.Singleton);

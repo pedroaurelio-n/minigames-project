@@ -9,6 +9,7 @@ public class LevelSelectPanelUIController : BaseMainMenuPanelUIController
     readonly PoolableViewFactory _viewFactory;
     readonly IMiniGameSystemSettings _miniGameSystemSettings;
     readonly IMiniGameSettingsAccessor _miniGameSettingsAccessor;
+    readonly IMiniGameSelectorModel _miniGameSelectorModel;
     readonly List<LevelSelectButtonUIView> _buttonUIViews = new();
     
     public LevelSelectPanelUIController (
@@ -17,7 +18,8 @@ public class LevelSelectPanelUIController : BaseMainMenuPanelUIController
         FadeToBlackManager fadeToBlackManager,
         PoolableViewFactory viewFactory,
         IMiniGameSystemSettings miniGameSystemSettings,
-        IMiniGameSettingsAccessor miniGameSettingsAccessor
+        IMiniGameSettingsAccessor miniGameSettingsAccessor,
+        IMiniGameSelectorModel miniGameSelectorModel
     ) : base(model)
     {
         _view = view;
@@ -25,6 +27,7 @@ public class LevelSelectPanelUIController : BaseMainMenuPanelUIController
         _viewFactory = viewFactory;
         _miniGameSystemSettings = miniGameSystemSettings;
         _miniGameSettingsAccessor = miniGameSettingsAccessor;
+        _miniGameSelectorModel = miniGameSelectorModel;
     }
     
     public override void Initialize ()
@@ -51,7 +54,7 @@ public class LevelSelectPanelUIController : BaseMainMenuPanelUIController
     void CreateMissingInstances ()
     {
         int activeCount = _buttonUIViews.Count;
-        int missingCount = _miniGameSystemSettings.ActiveMiniGames.Count - activeCount;
+        int missingCount = _miniGameSelectorModel.ActiveMiniGames.Count - activeCount;
         for (int i = activeCount; i < missingCount; i++)
         {
             LevelSelectButtonUIView buttonUIView = _viewFactory.GetView<LevelSelectButtonUIView>(_view.ButtonContainer);

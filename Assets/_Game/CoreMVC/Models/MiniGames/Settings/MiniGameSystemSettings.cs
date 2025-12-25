@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class MiniGameSystemSettings : IMiniGameSystemSettings
@@ -17,7 +16,10 @@ public class MiniGameSystemSettings : IMiniGameSystemSettings
     public bool CanRepeatPrevious { get; }
     
     [JsonProperty]
-    public IReadOnlyList<MiniGameType> ActiveMiniGames { get; }
+    public bool MiniGameSkillPoolActive { get; }
+    
+    [JsonProperty]
+    public IMiniGamePoolSettings PoolSettings { get; }
 
     [JsonConstructor]
     public MiniGameSystemSettings (
@@ -25,13 +27,15 @@ public class MiniGameSystemSettings : IMiniGameSystemSettings
         MiniGameDifficultySettings difficultySettings,
         bool randomOrder,
         bool canRepeatPrevious,
-        MiniGameType[] activeMiniGames
+        bool miniGameSkillPoolActive,
+        MiniGamePoolSettings poolSettings
     )
     {
         TimingSettings = timingSettings;
         DifficultySettings = difficultySettings;
         RandomOrder = randomOrder;
         CanRepeatPrevious = canRepeatPrevious;
-        ActiveMiniGames = activeMiniGames;
+        MiniGameSkillPoolActive = miniGameSkillPoolActive;
+        PoolSettings = poolSettings;
     }
 }
