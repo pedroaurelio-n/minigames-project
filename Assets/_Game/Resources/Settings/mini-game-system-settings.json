@@ -55,15 +55,15 @@
         "chances": [
           {
             "tier": 0,
-            "chance": 0.6
+            "chance": 0.5
           },
           {
             "tier": 1,
-            "chance": 0.25
+            "chance": 0.3
           },
           {
             "tier": 2,
-            "chance": 0.15
+            "chance": 0.2
           }
         ]
       },
@@ -72,11 +72,11 @@
         "chances": [
           {
             "tier": 0,
-            "chance": 0.35
+            "chance": 0.3
           },
           {
             "tier": 1,
-            "chance": 0.35
+            "chance": 0.4
           },
           {
             "tier": 2,

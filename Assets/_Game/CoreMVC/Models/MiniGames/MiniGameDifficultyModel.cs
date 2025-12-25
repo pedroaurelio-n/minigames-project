@@ -82,7 +82,8 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
                 return;
 
             _data.LastResults = new List<bool>();
-            _data.CurrentDifficultyLevel = Mathf.Max(1, _data.CurrentDifficultyLevel - 1);
+            int newDifficulty = Mathf.Max(1, _data.CurrentDifficultyLevel - 1);
+            _data.CurrentDifficultyLevel = newDifficulty;
             DebugUtils.Log($"Dynamic difficulty dropped to {CurrentDifficultyLevel}");
             return;
         }
@@ -93,10 +94,11 @@ public class MiniGameDifficultyModel : IMiniGameDifficultyModel
                 return;
             
             _data.LastResults = new List<bool>();
-            _data.CurrentDifficultyLevel = Mathf.Min(
+            int newDifficulty = Mathf.Min(
                 _settings.DifficultySettings.MaxDifficultyLevelIndex,
                 _data.CurrentDifficultyLevel + 1
             );
+            _data.CurrentDifficultyLevel = newDifficulty;
             DebugUtils.Log($"Dynamic difficulty increased to {CurrentDifficultyLevel}");
         }
     }
